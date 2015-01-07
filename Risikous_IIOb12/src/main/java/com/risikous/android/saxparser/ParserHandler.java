@@ -20,7 +20,7 @@ public class ParserHandler {
 
     public static void main(String args[]) {
 
-        final File file = new File("C:/Users/Excel/IdeaProjects/risikous/src/com/risikous/android/saxparser/test.xml");
+        final File file = new File("C:/Users/Excel/IdeaProjects/Risikous_IIOb12/Risikous_IIOb12/src/main/java/com/risikous/android/saxparser/test.xml");
 
         try {
 
