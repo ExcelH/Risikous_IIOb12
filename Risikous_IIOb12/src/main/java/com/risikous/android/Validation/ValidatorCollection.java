@@ -89,7 +89,7 @@ public class ValidatorCollection {
         return false;
     }
 
-    public boolean validateFileSize(File file, String s) throws IOException {
+    public boolean validateFileEncode(File file, String s) throws IOException {
         FileInputStream fis = null;
         InputStreamReader isr = null;
         String detectedEncode = null;
