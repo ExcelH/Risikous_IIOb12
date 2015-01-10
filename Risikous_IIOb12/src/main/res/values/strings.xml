@@ -2,6 +2,63 @@
 <resources>
 
     <string name="app_name">Risikous_IIOb12</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="activity_main_name">Name:</string>
+    <string name="activity_main_password">Passwort:</string>
+    <string name="activity_main_button_login">Anmelden</string>
+    <string name="activity_main_button_continue">Weiter</string>
+    <string name="incident_report_required_fields">*Pflichtfelder</string>
+    <string name="incident_report_circle_message">Meldekreis*</string>
+    <string name="incident_report_spinner">--</string>
+
+    <string-array name="spinner_arrays">
+        <item>Meldekreis 01</item>
+        <item>Meldekreis 02</item>
+        <item>Meldekreis 03</item>
+        <item>Meldekreis 04</item>
+        <item>Meldekreis 05</item>
+        <item>Meldekreis 06</item>
+        <item>Meldekreis 07</item>
+        <item>Meldekreis 08</item>
+        <item>Meldekreis 09</item>
+        <item>Meldekreis 10</item>
+    </string-array>
+
+    <string name="incident_report_event_description">Ereignisbeschreibung*</string>
+    <string name="incident_report_risk_assessment">Risikobewertung*</string>
+    <string name="incident_report_probability">Eintrittswahrscheinlichkeit</string>
+    <string name="incident_report_probability_of_detection">Entdeckungswahrscheinlichkeit</string>
+    <string name="incident_report_importance">Bedeutung</string>
+    <string name="incident_report_when_did_this_event_happen">Wann ist das Ereignis passiert?</string>
+    <string name="incident_report_date">Datum:</string>
+    <string name="incident_report_time">Uhrzeit:</string>
+    <string name="incident_report_where_did_this_event_happen">Wo ist das Ereignis passiert?</string>
+    <string name="incident_report_what_was_started_as_an_emergency_measure">Was wurde als Sofortmaßnahme eingeleitet?</string>
+    <string name="incident_report_after_effects">Folgen (z.B.: Personenschäden)</string>
+    <string name="incident_report_which_has_led_to_the_event">Was hat Ihrer Meinung nach zu dem Ereignis geführt?</string>
+    <string name="incident_report_personal_factors">Personenbezogene Faktoren (z.B. Müdigkeit, Motivation, Ausbildung)</string>
+    <string name="incident_report_organizational_factors">Organisatorische Faktoren (z.B. Abläufe, Standards)</string>
+    <string name="incident_report_additional_comments">Weitere Anmerkungen</string>
+    <string name="incident_report_attach_images_files">Bilder/Dateien anhängen</string>
+    <string name="incident_report_no_files">Keine Dateien</string>
+    <string name="incident_contact_information">Kontaktdaten</string>
+    <string name="incident_contact_high">hoch</string>
+    <string name="incident_contact_medium">mittel</string>
+    <string name="incident_contact_low">niedrig</string>
+    <string name="incident_button_choose_file">+ Datei(en) auswählen</string>
+    <string name="incident_button_send">Abschicken</string>
+    <string name="title_activity_incident_report">IncidentReportActivity</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="nav_title_arrays">
+        <item>Info</item>
+        <item>Meldung</item>
+        <item>Veröffentlichung</item>
+        <item>Hilfe</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="nav_drawer_open">open</string>
+    <string name="nav_drawer_close">close</string>
 
 </resources>
