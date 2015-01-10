@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="sub2backgroundcolor">#FFD2E6FF</color>
+    <color name="risikousmainbackground">#FFDAEDFF</color>
+    <color name="subbackgroundcolor">#FF609EFF</color>
+    <color name="risikousedittext">#FFFFFFFF</color>
+    <color name="risikous_incident_button">#ff4a1cff</color>
+    <color name="risikousactionbar1">#194795</color>
+    <color name="risikousactionbar2">#5073AE</color>
+</resources>

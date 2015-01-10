@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:background="@color/risikousmainbackground"
+        >
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/scrollView" android:layout_gravity="center_vertical" android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp" android:layout_alignParentTop="true" android:layout_marginTop="0dp">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_required_fields"
+                    android:id="@+id/textView14" android:layout_margin="5dp" android:padding="5dp"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_circle_message"
+                    android:id="@+id/textView15" android:background="@drawable/subbackgroundgradient"
+                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                    android:padding="5dp"/>
+            <Spinner
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner" android:layout_margin="5dp"
+                    android:entries="@array/spinner_arrays"
+                    android:prompt="@string/incident_report_spinner"
+                    android:spinnerMode="dropdown"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_event_description"
+                    android:id="@+id/textView16" android:background="@drawable/subbackgroundgradient"
+                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                    android:padding="5dp"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editText2" android:background="#ffffffff"
+                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:lines="5"
+                    android:autoText="false"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_risk_assessment"
+                    android:id="@+id/textView17" android:background="@drawable/subbackgroundgradient"
+                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                    android:padding="5dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_probability"
+                    android:id="@+id/textView18" android:nestedScrollingEnabled="true"
+                    android:layout_margin="5dp" android:padding="5dp"/>
+            <RadioGroup
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:orientation="horizontal" android:layout_margin="5dp">
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/incident_contact_low"
+                        android:id="@+id/radioButton11"/>
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/incident_contact_medium"
+                        android:id="@+id/radioButton12"/>
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/incident_contact_high"
+                        android:id="@+id/radioButton13"/>
+            </RadioGroup>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_probability_of_detection"
+                    android:id="@+id/textView19" android:layout_margin="5dp" android:padding="5dp"/>
+            <RadioGroup
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:orientation="horizontal" android:layout_margin="5dp">
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/incident_contact_low"
+                        android:id="@+id/radioButton14"/>
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/incident_contact_medium"
+                        android:id="@+id/radioButton15"/>
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/incident_contact_high"
+                        android:id="@+id/radioButton16"/>
+            </RadioGroup>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_importance"
+                    android:id="@+id/textView20" android:layout_margin="5dp" android:padding="5dp"/>
+            <RadioGroup
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:orientation="horizontal" android:layout_margin="5dp">
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/incident_contact_low"
+                        android:id="@+id/radioButton17"/>
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/incident_contact_medium"
+                        android:id="@+id/radioButton18"/>
+                <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/incident_contact_high"
+                        android:id="@+id/radioButton19"/>
+            </RadioGroup>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_when_did_this_event_happen"
+                    android:id="@+id/textView21" android:background="@drawable/subbackgroundgradient"
+                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                    android:padding="5dp"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent">
+                <TextView
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/incident_report_date"
+                        android:id="@+id/textView5" android:layout_margin="5dp"/>
+                <EditText
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:ems="10"
+                        android:id="@+id/editText" android:layout_margin="5dp"
+                        android:background="@color/risikousedittext"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:weightSum="1">
+                <TextView
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/incident_report_time"
+                        android:id="@+id/textView6" android:layout_margin="5dp"/>
+                <EditText
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="time"
+                        android:ems="10"
+                        android:id="@+id/editText4" android:background="@color/risikousedittext"
+                        android:layout_margin="5dp"
+                        android:longClickable="false"/>
+            </LinearLayout>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_where_did_this_event_happen"
+                    android:id="@+id/textView22" android:background="@drawable/subbackgroundgradient"
+                    android:layout_marginRight="5dp" android:layout_marginLeft="5dp"
+                    android:padding="5dp"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editText5"
+                    android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_what_was_started_as_an_emergency_measure"
+                    android:id="@+id/textView23" android:background="@drawable/subbackgroundgradient"
+                    android:layout_marginRight="5dp" android:layout_marginLeft="5dp"
+                    android:padding="5dp"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editText6"
+                    android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" android:lines="5"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_after_effects"
+                    android:id="@+id/textView24" android:background="@drawable/subbackgroundgradient"
+                    android:layout_marginRight="5dp" android:layout_marginLeft="5dp"
+                    android:padding="5dp"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editText7"
+                    android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" android:lines="5"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_which_has_led_to_the_event"
+                    android:id="@+id/textView25" android:background="@drawable/subbackgroundgradient"
+                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                    android:padding="5dp"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_personal_factors"
+                    android:id="@+id/textView26" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                    android:padding="5dp"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editText8"
+                    android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" android:lines="5"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_organizational_factors"
+                    android:id="@+id/textView27" android:layout_marginRight="5dp" android:layout_marginLeft="5dp"
+                    android:padding="5dp"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editText9"
+                    android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" android:lines="5"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_additional_comments"
+                    android:id="@+id/textView28" android:layout_marginRight="5dp" android:layout_marginLeft="5dp"
+                    android:padding="5dp"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editText10"
+                    android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" android:lines="5"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_attach_images_files"
+                    android:id="@+id/textView29" android:background="@drawable/subbackgroundgradient"
+                    android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/incident_button_choose_file"
+                    android:id="@+id/button3" android:layout_margin="5dp"
+                    android:background="@color/risikous_incident_button" android:textColor="#ffffffff"
+                    android:padding="5dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_report_no_files"
+                    android:id="@+id/textView30" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                    android:padding="5dp"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/incident_contact_information"
+                    android:id="@+id/textView31" android:background="@drawable/subbackgroundgradient"
+                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                    android:padding="5dp"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editText11"
+                    android:background="@color/risikousedittext" android:lines="5" android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/incident_button_send"
+                    android:id="@+id/button4" android:layout_margin="5dp"
+                    android:background="@color/risikous_incident_button" android:textColor="#ffffffff"
+                    android:padding="5dp"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
