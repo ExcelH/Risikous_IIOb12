@@ -15,12 +15,12 @@ import java.util.List;
 public class ParseSubComment {
 
     public List<Comment> parseComment(String xml) {
-        ParseXML2LIST pL = new ParseXML2LIST();
+//        ParseXML2LIST pL = new ParseXML2LIST();
         ParseXML2STRING pS = new ParseXML2STRING();
 
-        String subXML = pS.parseSubXML(xml, ListOfAnswers.class.getSimpleName().toLowerCase());
+//        String subXML = pS.parseSubXML(xml, ListOfAnswers.class.getSimpleName().toLowerCase());
 
-        List<String> author = new LinkedList<>();
+ /*       List<String> author = new LinkedList<>();
         List<String> text = new LinkedList<>();
         List<String> timeStamp = new LinkedList<>();
 
@@ -37,8 +37,8 @@ public class ParseSubComment {
             subComments.add(comment);
 
         }
-
-        return subComments;
+*/
+        return pS.parseSubXML(xml, ListOfAnswers.class.getSimpleName().toLowerCase());
     }
 
 

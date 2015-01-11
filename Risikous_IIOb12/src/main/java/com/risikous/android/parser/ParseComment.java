@@ -31,7 +31,7 @@ public class ParseComment {
         timeStamp = p.parseXML(xml, TimeStamp.class.getSimpleName().toLowerCase());
 
         List<Comment> comments = new LinkedList<>();
-        for (int i = 0; i < pubID.size(); i++) {
+        for (int i = 0; i < author.size(); i++) {
             Comment comment = new Comment();
             comment.setPubID(new PubID(pubID.get(i)));
             comment.setAuthor(new Author(author.get(i)));
