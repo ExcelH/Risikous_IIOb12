@@ -13,14 +13,14 @@ import org.xml.sax.helpers.DefaultHandler;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.StringReader;
-import java.security.Timestamp;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Excel on 10.01.2015.
  */
-public class ParseXML2STRING {
+public class ParseXML2LIST_SubComment {
     private List<Comment> mSubComments = new ArrayList<Comment>();
 
     private boolean mIsAuthor;
@@ -83,19 +83,32 @@ public class ParseXML2STRING {
                         mIsMainCommentID = false;
                     }
                     if (mIsTarget) {
+                        String string = new String(ch, start, length);
                         if (mIsAuthor) {
                             Author author = new Author();
-                            author.setName(new String(ch, start, length));
+                            try {
+                                author.setName(new String(string.getBytes("ISO-8859-1"), "UTF-8"));
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
                             mNewComment.setAuthor(author);
                             mIsAuthor = false;
                         } else if (mIsText) {
                             Text text = new Text();
-                            text.setName(new String(ch, start, length));
+                            try {
+                                text.setName(new String(string.getBytes("ISO-8859-1"), "UTF-8"));
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
                             mNewComment.setText(text);
                             mIsText = false;
                         } else if (mIsTimeStamp) {
                             TimeStamp timeStamp = new TimeStamp();
-                            timeStamp.setName(new String(ch, start, length));
+                            try {
+                                timeStamp.setName(new String(string.getBytes("ISO-8859-1"), "UTF-8"));
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
                             mNewComment.setTimeStamp(timeStamp);
                             mIsTimeStamp = false;
                         }
