@@ -8,6 +8,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class ParseXML2LIST {
             DefaultHandler handler = new DefaultHandler() {
 
                 boolean tag = false;
+                String string = null;
 
                 public void startElement(String uri, String localName, String tagName,
                                          Attributes attributes) throws SAXException {
@@ -44,7 +46,12 @@ public class ParseXML2LIST {
                 public void characters(char ch[], int start, int length) throws SAXException {
 
                     if (tag) {
-                        list.add(new String(ch, start, length));
+                        string = new String(ch, start, length);
+                        try {
+                            list.add(new String(string.getBytes("ISO-8859-1"), "UTF-8"));
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
                         tag = false;
                     }
 
