@@ -8,15 +8,14 @@ import org.xml.sax.helpers.DefaultHandler;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.StringReader;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by Excel on 10.01.2015.
  */
 public class ParseXML2STRING {
-    public List<String> parseXML(String xml, final String target, final String validationType) {
-        final List<String> list = new LinkedList<>();
+    String string = "";
+    public String parseSubXML(String xml, final String target) {
+
         try {
 
             SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -32,11 +31,23 @@ public class ParseXML2STRING {
 
                     if (tagName.equalsIgnoreCase(target)) {
                         tag = true;
-                        list.add(attributes.getValue(validationType));
                     }
 
                 }
 
+                public void endElement(String uri, String localName,
+                                       String tagName) throws SAXException {
+
+                }
+
+                public void characters(char ch[], int start, int length) throws SAXException {
+
+                    if (tag) {
+                        string = string + new String(ch, start, length);
+                        tag = false;
+                    }
+
+                }
 
             };
 
@@ -46,6 +57,6 @@ public class ParseXML2STRING {
             e.printStackTrace();
         }
 
-        return list;
+        return string;
     }
 }
