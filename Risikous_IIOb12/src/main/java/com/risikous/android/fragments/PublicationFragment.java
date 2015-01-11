@@ -103,7 +103,7 @@ public class PublicationFragment extends Fragment {
                     }
                 });
         // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("abbrechen",
+        alertDialog.setNegativeButton("abrechen",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Write your code here to execute after dialog
