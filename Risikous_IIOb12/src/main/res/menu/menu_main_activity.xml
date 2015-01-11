@@ -2,8 +2,9 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.risikous.android.fragments.IncidentReportActivity">
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
+    <group android:id="@+id/menugroup">
+        <item android:id="@+id/action_add_comment"
+              android:title="@string/action_add_comment"
+              app:showAsAction="never"/>
+    </group>
 </menu>

@@ -8,6 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +21,7 @@ import com.risikous.android.fragments.PublicationFragment;
 
 public class MainActivity extends ActionBarActivity {
 
+    private Fragment mCurrentFragment;
     private String[] mTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -113,6 +116,20 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.setGroupVisible(R.id.menugroup,false);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     /**
      * Swaps fragments in the main content view
      */
@@ -139,6 +156,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if (fragment != null) {
+            mCurrentFragment = fragment;
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment)
@@ -157,5 +175,16 @@ public class MainActivity extends ActionBarActivity {
     public void setTitle(CharSequence title) {
         mTitle = title;
         getSupportActionBar().setTitle(mTitle);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mCurrentFragment != null && mCurrentFragment instanceof PublicationFragment && ((PublicationFragment) mCurrentFragment).isCommentsContainerVisible()) {
+            ((PublicationFragment) mCurrentFragment).toggleCommmentsContainer();
+
+        }else{
+            super.onBackPressed();
+        }
+
     }
 }
