@@ -12,9 +12,14 @@ import com.risikous.android.R;
 import com.risikous.android.adapter.CommentsAdapter;
 import com.risikous.android.adapter.PublicationsAdapter;
 import com.risikous.android.model.comment.Comment;
+import com.risikous.android.model.comment.part.Author;
+import com.risikous.android.model.comment.part.PubID;
+import com.risikous.android.model.comment.part.Text;
 import com.risikous.android.model.publications.Publication;
 import com.risikous.android.request.GetRequest;
+import com.risikous.android.request.PostRequest;
 import com.risikous.android.url.Constants;
+import com.risikous.android.xml.builder.BuildComment;
 import com.risikous.android.xml.parser.ParseComment;
 import com.risikous.android.xml.parser.ParsePublication;
 import com.risikous.android.xml.parser.ParseSubComment;
@@ -34,7 +39,7 @@ public class PublicationFragment extends Fragment {
     private ExpandableListView expandableListView;
     private LinearLayout publicationIDContainer;
     private LinearLayout commentsContainer;
-
+    private String ClickID = null;
     public PublicationFragment() {
         // Required empty public constructor
     }
@@ -69,6 +74,7 @@ public class PublicationFragment extends Fragment {
                         ((TextView) publicationIDContainer.findViewById(R.id.status)).setText(fullObject.getStatus().getStatus());
                         ((TextView) publicationIDContainer.findViewById(R.id.numberofreports)).setText(fullObject.getNumberOfReports().getNumberOfReports());
                         ((TextView) publicationIDContainer.findViewById(R.id.numberofcomments)).setText(fullObject.getNumberOfComments().getNumberOfComments());
+                        ClickID = fullObject.getPubID().getPubID();
                         toggleCommmentsContainer();
                         new GET(new ResponseCallback() {
                             @Override
@@ -111,37 +117,46 @@ public class PublicationFragment extends Fragment {
     }
 
     private void showCommentDailog() {
-        // Creating alert Dialog with one Button
+
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
 
-        //AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-
-        // Setting Dialog Title
         alertDialog.setTitle("Kommentar hinzufügen");
 
-        final EditText input = new EditText(getActivity());
-        alertDialog.setView(input);
+        final EditText author = new EditText(getActivity());
+        final EditText commentText = new EditText(getActivity());
 
-        // Setting Positive "Yes" Button
+        LinearLayout ll=new LinearLayout(getActivity());
+        ll.setOrientation(LinearLayout.VERTICAL);
+        ll.addView(author);
+        ll.addView(commentText);
+        alertDialog.setView(ll);
+
         alertDialog.setPositiveButton("ok",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to execute after dialog
-                        Toast.makeText(getActivity(), input.getText(), Toast.LENGTH_SHORT).show();
+                        String xml = null;
+                        Comment comment = new Comment();
+                        BuildComment bC = new BuildComment();
+                        PostRequest pR = new PostRequest();
+
+                        comment.setPubID(new PubID(ClickID));
+                        comment.setAuthor(new Author(author.getText().toString().trim()));
+                        comment.setText(new Text(commentText.getText().toString().trim()));
+
+                        xml = bC.buildComment(comment);
+
+                        new POST(Constants.COMMENT_POST_URL, xml).execute();
+
                     }
                 });
-        // Setting Negative "NO" Button
+
         alertDialog.setNegativeButton("abrechen",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to execute after dialog
                         dialog.cancel();
                     }
                 });
 
-        // closed
-
-        // Showing Alert Message
         alertDialog.show();
 
     }
@@ -213,6 +228,33 @@ public class PublicationFragment extends Fragment {
                 responseCallback.onResponse(result);
 
         }
+    }
+    public class POST extends AsyncTask<Void, Void, Boolean> {
+
+        private String data = null;
+        private String url = null;
+
+        public POST(String url, String data) {
+            this.url = url;
+            this.data = data;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... arg0) {
+            PostRequest pR = new PostRequest();
+
+            if(pR.postXML(url, data))
+            return true;
+            else return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result == true)
+                Toast.makeText(getActivity(), "erfolgreich", Toast.LENGTH_LONG).show();
+            else Toast.makeText(getActivity(), "nicht erfolgreich", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private interface ResponseCallback {

@@ -10,6 +10,7 @@ public class Constants {
     }
     public static final String PUBLICATION_POST_URL = "http://94.101.38.155/RisikousRESTful/rest/questionnaire/addQuestionnaire";
     public static final String COMMENT_POST_URL = "http://94.101.38.155/RisikousRESTful/rest/publication/addComment";
+    //public static final  String COMMENT_POST_URL = "http://posttestserver.com/post.php";
     public static final String SUBCOMMENT_POST_URL = "http://94.101.38.155/RisikousRESTful/rest/comment/addAnswer";
 
 }

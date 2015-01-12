@@ -11,6 +11,7 @@ public class BuildComment {
     public String buildComment(Comment comment) {
 
         String commentString = "";
+        String xmlHeader = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
         BuildXMLTag build = new BuildXMLTag();
         StringBuilder sB = new StringBuilder();
 
@@ -19,8 +20,9 @@ public class BuildComment {
         commentString = sB.connectString(commentString, build.buildXMLTag(comment.getText().getTagName(), comment.getText().getName()));
 
         commentString = build.buildXMLTag(comment.getTagName(),commentString);
+        commentString = sB.connectString(xmlHeader, commentString);
 
-        System.out.println("StringComment:::::::::"+commentString);
+        System.out.println("StringComment:::::::::     "+commentString);
         return commentString;
     }
 }

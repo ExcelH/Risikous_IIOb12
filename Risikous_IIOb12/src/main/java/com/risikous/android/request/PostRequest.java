@@ -11,8 +11,8 @@ import java.net.URLEncoder;
  * Created by Excel on 11.01.2015.
  */
 public class PostRequest {
-
-    public void postXML(String xml, String url) {
+    public String line = null;
+    public boolean postXML(String url, String xml) {
 
         try {
             String data = URLEncoder.encode(xml, "UTF-8");
@@ -25,13 +25,14 @@ public class PostRequest {
             wr.flush();
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
             while ((line = rd.readLine()) != null) {
-                System.out.println(line);
+                return true;
             }
+
             wr.close();
             rd.close();
         } catch (Exception e) {
         }
+        return false;
     }
 }
