@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.*;
 import android.widget.*;
 import com.risikous.android.R;
@@ -29,9 +30,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 
 public class PublicationFragment extends Fragment {
 
@@ -40,6 +38,7 @@ public class PublicationFragment extends Fragment {
     private LinearLayout publicationIDContainer;
     private LinearLayout commentsContainer;
     private String ClickID = null;
+
     public PublicationFragment() {
         // Required empty public constructor
     }
@@ -125,7 +124,7 @@ public class PublicationFragment extends Fragment {
         final EditText author = new EditText(getActivity());
         final EditText commentText = new EditText(getActivity());
 
-        LinearLayout ll=new LinearLayout(getActivity());
+        LinearLayout ll = new LinearLayout(getActivity());
         ll.setOrientation(LinearLayout.VERTICAL);
         ll.addView(author);
         ll.addView(commentText);
@@ -146,6 +145,7 @@ public class PublicationFragment extends Fragment {
                         xml = bC.buildComment(comment);
 
                         new POST(Constants.COMMENT_POST_URL, xml).execute();
+
 
                     }
                 });
@@ -229,7 +229,8 @@ public class PublicationFragment extends Fragment {
 
         }
     }
-    public class POST extends AsyncTask<Void, Void, Boolean> {
+
+    public class POST extends AsyncTask<Void, Void, String> {
 
         private String data = null;
         private String url = null;
@@ -240,19 +241,22 @@ public class PublicationFragment extends Fragment {
         }
 
         @Override
-        protected Boolean doInBackground(Void... arg0) {
+        protected String doInBackground(Void... arg0) {
             PostRequest pR = new PostRequest();
 
-            if(pR.postXML(url, data))
-            return true;
-            else return false;
+            return pR.postXML(url, data);
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
-            if(result == true)
-                Toast.makeText(getActivity(), "erfolgreich", Toast.LENGTH_LONG).show();
-            else Toast.makeText(getActivity(), "nicht erfolgreich", Toast.LENGTH_LONG).show();
+        protected void onPostExecute(String result) {
+
+            Fragment frg = new PublicationFragment();
+            final FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(frg);
+            ft.attach(frg);
+            ft.commit();
+            Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
+
         }
 
     }
