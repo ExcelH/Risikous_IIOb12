@@ -5,6 +5,15 @@ package com.risikous.android.model.comment.part;
  */
 public class Author {
     private String name = "";
+    private String tagName = "author";
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
 
     public Author() {
 

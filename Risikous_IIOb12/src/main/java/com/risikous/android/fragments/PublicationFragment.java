@@ -13,11 +13,11 @@ import com.risikous.android.adapter.CommentsAdapter;
 import com.risikous.android.adapter.PublicationsAdapter;
 import com.risikous.android.model.comment.Comment;
 import com.risikous.android.model.publications.Publication;
-import com.risikous.android.parser.GetRequest;
-import com.risikous.android.parser.ParseComment;
-import com.risikous.android.parser.ParsePublication;
-import com.risikous.android.parser.ParseSubComment;
+import com.risikous.android.request.GetRequest;
 import com.risikous.android.url.Constants;
+import com.risikous.android.xml.parser.ParseComment;
+import com.risikous.android.xml.parser.ParsePublication;
+import com.risikous.android.xml.parser.ParseSubComment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,12 +91,12 @@ public class PublicationFragment extends Fragment {
                                 expandableListView.setAdapter(new CommentsAdapter(getActivity(), comment, commentHashMap));
 
                             }
-                        }, Constants.COMMENT_URL(fullObject.getPubID().getPubID())).execute();
+                        }, Constants.COMMENT_GET_URL(fullObject.getPubID().getPubID())).execute();
 
                     }
                 });
             }
-        }, Constants.PUBLICATION_URL).execute();
+        }, Constants.PUBLICATION_GET_URL).execute();
 
 
         return v;

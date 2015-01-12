@@ -1,4 +1,4 @@
-package com.risikous.android.parser;
+package com.risikous.android.xml.parser;
 
 import com.risikous.android.model.comment.Comment;
 import com.risikous.android.model.comment.part.Author;

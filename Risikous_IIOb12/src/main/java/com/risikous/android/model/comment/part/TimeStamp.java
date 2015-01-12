@@ -6,6 +6,16 @@ package com.risikous.android.model.comment.part;
 public class TimeStamp {
     private String name = "";
 
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+    private String tagName = "timeStamp";
+
     public TimeStamp() {
 
     }

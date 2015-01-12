@@ -1,4 +1,4 @@
-package com.risikous.android.parser;
+package com.risikous.android.xml.parser;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;

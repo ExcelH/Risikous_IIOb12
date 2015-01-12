@@ -1,4 +1,4 @@
-package com.risikous.android.parser;
+package com.risikous.android.xml.parser;
 
 
 import com.risikous.android.model.comment.Comment;
@@ -6,6 +6,7 @@ import com.risikous.android.model.comment.part.Author;
 import com.risikous.android.model.comment.part.PubID;
 import com.risikous.android.model.comment.part.Text;
 import com.risikous.android.model.comment.part.TimeStamp;
+import com.risikous.android.xml.builder.BuildComment;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class ParseComment {
 
     public List<Comment> parseComment(String xml) {
         ParseXML2LIST p = new ParseXML2LIST();
+        BuildComment bC = new BuildComment();
 
         List<String> pubID = new LinkedList<>();
         List<String> author = new LinkedList<>();
@@ -37,6 +39,7 @@ public class ParseComment {
             comment.setAuthor(new Author(author.get(i)));
             comment.setText(new Text(text.get(i)));
             comment.setTimeStamp(new TimeStamp(timeStamp.get(i)));
+            bC.buildComment(comment);
             comments.add(comment);
 
         }

@@ -1,4 +1,4 @@
-package com.risikous.android.parser;
+package com.risikous.android.request;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

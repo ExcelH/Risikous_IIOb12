@@ -13,6 +13,15 @@ public class Comment {
     private PubID pubID;
     private Text text;
     private TimeStamp timeStamp;
+    private String tagName = "comment";
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
 
     public Comment() {
     }
