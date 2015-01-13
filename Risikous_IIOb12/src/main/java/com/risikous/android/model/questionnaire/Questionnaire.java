@@ -25,6 +25,39 @@ public class Questionnaire {
     private RiskEstimation riskEstimation;
     private Significance significance;
     private Time time;
+    private String tagName = "questionnaire";
+
+    public Questionnaire(AdditionalNotes additionalNotes, Consequences consequences, ContactInformation contactInformation, Date date, DetectionRating detectionRating, File file, Files files, ImmediateMeasure immediateMeasure, IncidentDescription incidentDescription, Location location, OccurrenceRating occurrenceRating, OpinionOfReporter opinionOfReporter, OrganisationalFactors organisationalFactors, PersonalFactors personalFactors, PointOfTime pointOfTime, ReportingArea reportingArea, RiskEstimation riskEstimation, Significance significance, Time time, String tagName) {
+        this.additionalNotes = additionalNotes;
+        this.consequences = consequences;
+        this.contactInformation = contactInformation;
+        this.date = date;
+        this.detectionRating = detectionRating;
+        this.file = file;
+        this.files = files;
+        this.immediateMeasure = immediateMeasure;
+        this.incidentDescription = incidentDescription;
+        this.location = location;
+        this.occurrenceRating = occurrenceRating;
+        this.opinionOfReporter = opinionOfReporter;
+        this.organisationalFactors = organisationalFactors;
+        this.personalFactors = personalFactors;
+        this.pointOfTime = pointOfTime;
+        this.reportingArea = reportingArea;
+        this.riskEstimation = riskEstimation;
+        this.significance = significance;
+        this.time = time;
+        this.tagName = tagName;
+    }
+
+    public String getTagName() {
+
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
 
     public Questionnaire() {
     }

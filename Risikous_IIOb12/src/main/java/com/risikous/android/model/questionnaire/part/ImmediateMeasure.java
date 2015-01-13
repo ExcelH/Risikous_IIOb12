@@ -5,6 +5,20 @@ package com.risikous.android.model.questionnaire.part;
  */
 public class ImmediateMeasure {
     private String name = "";
+    private String tagName = "immediateMeasure";
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public ImmediateMeasure(String name, String tagName) {
+        this.name = name;
+        this.tagName = tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
 
     public String getName() {
         return name;

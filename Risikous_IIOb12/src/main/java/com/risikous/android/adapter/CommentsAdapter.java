@@ -52,12 +52,10 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.comment_layout, null);
         }
 
-        TextView pubID = (TextView) convertView.findViewById(R.id.pubid);
         TextView author = (TextView) convertView.findViewById(R.id.author);
         TextView text = (TextView) convertView.findViewById(R.id.text);
         TextView timeStamp = (TextView) convertView.findViewById(R.id.timestamp);
 
-        pubID.setText(childText.getPubID().getName());
         author.setText(childText.getAuthor().getName());
         text.setText(childText.getText().getName());
         timeStamp.setText(childText.getTimeStamp().getName());
@@ -95,17 +93,14 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.comment_layout, null);
         }
 
-        TextView pubID = (TextView) convertView.findViewById(R.id.pubid);
         TextView author = (TextView) convertView.findViewById(R.id.author);
         TextView text = (TextView) convertView.findViewById(R.id.text);
         TextView timeStamp = (TextView) convertView.findViewById(R.id.timestamp);
 
-        pubID.setTypeface(null, Typeface.BOLD);
         author.setTypeface(null, Typeface.BOLD);
         text.setTypeface(null, Typeface.BOLD);
         timeStamp.setTypeface(null, Typeface.BOLD);
 
-        pubID.setText(headerTitle.getPubID().getName());
         author.setText(headerTitle.getAuthor().getName());
         text.setText(headerTitle.getText().getName());
         timeStamp.setText(headerTitle.getTimeStamp().getName());

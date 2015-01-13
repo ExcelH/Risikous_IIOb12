@@ -5,6 +5,21 @@ package com.risikous.android.model.questionnaire.part;
  */
 public class DetectionRating {
     private String name = "";
+    private String tagName = "detectionRating";
+
+    public DetectionRating(String name, String tagName) {
+        this.name = name;
+        this.tagName = tagName;
+    }
+
+    public String getTagName() {
+
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
 
     public DetectionRating() {
 

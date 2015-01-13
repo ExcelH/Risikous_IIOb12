@@ -5,7 +5,21 @@ package com.risikous.android.model.questionnaire.part;
  */
 public class Consequences {
     private String name = "";
+    private String tagName = "consequences";
 
+    public Consequences(String name, String tagName) {
+        this.name = name;
+        this.tagName = tagName;
+    }
+
+    public String getTagName() {
+
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
 
     public Consequences(String name) {
         this.name = name;

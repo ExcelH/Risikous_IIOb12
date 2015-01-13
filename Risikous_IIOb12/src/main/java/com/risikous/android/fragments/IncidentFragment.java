@@ -3,7 +3,6 @@ package com.risikous.android.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,9 +15,7 @@ import com.risikous.android.R;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class IncidentFragment extends Fragment {
 
 
@@ -29,7 +26,7 @@ public class IncidentFragment extends Fragment {
     private ArrayList<String> mPathes = new ArrayList<String>();
 
     public IncidentFragment() {
-        // Required empty public constructor
+
     }
 
     @Override

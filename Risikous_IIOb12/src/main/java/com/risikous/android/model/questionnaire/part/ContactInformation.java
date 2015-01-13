@@ -5,6 +5,21 @@ package com.risikous.android.model.questionnaire.part;
  */
 public class ContactInformation {
     private String name = "";
+    private String tagName = "contactInformation";
+
+    public ContactInformation(String name, String tagName) {
+        this.name = name;
+        this.tagName = tagName;
+    }
+
+    public String getTagName() {
+
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
 
     public ContactInformation(String name) {
         this.name = name;

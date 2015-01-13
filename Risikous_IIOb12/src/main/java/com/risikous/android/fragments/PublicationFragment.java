@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.*;
 import android.widget.*;
 import com.risikous.android.R;
@@ -40,9 +39,7 @@ public class PublicationFragment extends Fragment {
     private String ClickID = null;
 
     public PublicationFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -250,11 +247,6 @@ public class PublicationFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-            Fragment frg = new PublicationFragment();
-            final FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.detach(frg);
-            ft.attach(frg);
-            ft.commit();
             Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
 
         }

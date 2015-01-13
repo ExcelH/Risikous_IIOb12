@@ -5,6 +5,21 @@ package com.risikous.android.model.questionnaire.part;
  */
 public class Files {
     private String name = "";
+    private String tagName = "files";
+
+    public Files(String name, String tagName) {
+        this.name = name;
+        this.tagName = tagName;
+    }
+
+    public String getTagName() {
+
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
 
     public String getName() {
         return name;
