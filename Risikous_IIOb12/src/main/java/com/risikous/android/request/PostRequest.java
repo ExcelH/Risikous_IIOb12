@@ -1,6 +1,5 @@
 package com.risikous.android.request;
 
-import android.util.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -42,8 +41,6 @@ public class PostRequest {
 
         StatusLine statusLine = response.getStatusLine();
         int statusCode = statusLine.getStatusCode();
-        Log.v("INFO TOM", String.valueOf(statusCode));
-        System.out.println("ServerResponse:::::  " + statusCode);
         HttpEntity entityRes = response.getEntity();
         InputStream content = null;
         try {

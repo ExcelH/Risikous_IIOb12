@@ -11,20 +11,20 @@ public class Questionnaire {
     private ContactInformation contactInformation;
     private Date date;
     private DetectionRating detectionRating;
-    private File file;
-    private Files files;
+    private File file = new File();
     private ImmediateMeasure immediateMeasure;
     private IncidentDescription incidentDescription;
     private Location location;
     private OccurrenceRating occurrenceRating;
-    private OpinionOfReporter opinionOfReporter;
     private OrganisationalFactors organisationalFactors;
     private PersonalFactors personalFactors;
-    private PointOfTime pointOfTime;
     private ReportingArea reportingArea;
-    private RiskEstimation riskEstimation;
     private Significance significance;
     private Time time;
+    private PointOfTime pointOfTime = new PointOfTime();
+    private Files files = new Files();
+    private RiskEstimation riskEstimation = new RiskEstimation();
+    private OpinionOfReporter opinionOfReporter = new OpinionOfReporter();
     private String tagName = "questionnaire";
 
     public Questionnaire(AdditionalNotes additionalNotes, Consequences consequences, ContactInformation contactInformation, Date date, DetectionRating detectionRating, File file, Files files, ImmediateMeasure immediateMeasure, IncidentDescription incidentDescription, Location location, OccurrenceRating occurrenceRating, OpinionOfReporter opinionOfReporter, OrganisationalFactors organisationalFactors, PersonalFactors personalFactors, PointOfTime pointOfTime, ReportingArea reportingArea, RiskEstimation riskEstimation, Significance significance, Time time, String tagName) {
@@ -235,4 +235,5 @@ public class Questionnaire {
     public void setTime(Time time) {
         this.time = time;
     }
+
 }

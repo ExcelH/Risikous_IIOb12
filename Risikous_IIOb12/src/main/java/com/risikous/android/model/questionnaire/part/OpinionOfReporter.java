@@ -5,7 +5,7 @@ package com.risikous.android.model.questionnaire.part;
  */
 public class OpinionOfReporter {
     private String name = "";
-    private String tagName = "reportingArea";
+    private String tagName = "opinionOfReporter";
 
     public OpinionOfReporter(String name, String tagName) {
         this.name = name;

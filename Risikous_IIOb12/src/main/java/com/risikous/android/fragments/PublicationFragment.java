@@ -127,7 +127,7 @@ public class PublicationFragment extends Fragment {
         ll.addView(commentText);
         alertDialog.setView(ll);
 
-        alertDialog.setPositiveButton("ok",
+        alertDialog.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String xml = null;
@@ -147,7 +147,7 @@ public class PublicationFragment extends Fragment {
                     }
                 });
 
-        alertDialog.setNegativeButton("abrechen",
+        alertDialog.setNegativeButton("Abbrechen",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

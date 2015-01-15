@@ -5,7 +5,7 @@ package com.risikous.android.model.questionnaire.part;
  */
 public class PointOfTime {
     private String name = "";
-    private String tagName = "reportingArea";
+    private String tagName = "pointOfTime";
 
     public PointOfTime(String name, String tagName) {
         this.name = name;

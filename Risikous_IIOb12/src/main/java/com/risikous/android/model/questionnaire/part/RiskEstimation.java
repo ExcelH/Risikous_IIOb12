@@ -5,7 +5,7 @@ package com.risikous.android.model.questionnaire.part;
  */
 public class RiskEstimation {
     private String name = "";
-    private String tagName = "reportingArea";
+    private String tagName = "riskEstimation";
 
     public RiskEstimation(String name, String tagName) {
         this.name = name;
