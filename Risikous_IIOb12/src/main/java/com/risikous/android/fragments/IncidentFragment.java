@@ -39,7 +39,6 @@ public class IncidentFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_incident, container, false);
 
-<<<<<<< HEAD
         final EditText incidentDescription_EditText = (EditText) v.findViewById(R.id.incidenDescription_EditText);
         final Spinner reportingOfArea_Spinner = (Spinner) v.findViewById(R.id.reportingOfArea_Spinner);
         final RadioGroup occurrenceRating_Group = (RadioGroup) v.findViewById(R.id.occurrenceRating_Group);
@@ -149,7 +148,6 @@ public class IncidentFragment extends Fragment {
         });
 
         //File_Dialog
-=======
         mfileAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
         ListView lView = ((ListView) v.findViewById(R.id.ListViewFiles));
         lView.setAdapter(mfileAdapter);
@@ -166,7 +164,6 @@ public class IncidentFragment extends Fragment {
                 return true;
             }
         });
->>>>>>> parent of 7e79cec... Questionnaire Validation + PostRequest
         v.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,9 +174,6 @@ public class IncidentFragment extends Fragment {
                 startActivityForResult(intent, REQUEST_CODE_PICK);
             }
         });
-
-<<<<<<< HEAD
-        //send_Post
         v.findViewById(R.id.publicationEnter_Button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -331,10 +325,6 @@ public class IncidentFragment extends Fragment {
 
             }
         });
-
-
-=======
->>>>>>> parent of 7e79cec... Questionnaire Validation + PostRequest
         return v;
     }
 
