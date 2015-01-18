@@ -2,6 +2,8 @@ package com.risikous.android.model.questionnaire;
 
 import com.risikous.android.model.questionnaire.part.*;
 
+import java.util.List;
+
 /**
  * Created by Excel on 10.01.2015.
  */
@@ -11,7 +13,8 @@ public class Questionnaire {
     private ContactInformation contactInformation;
     private Date date;
     private DetectionRating detectionRating;
-    private File file = new File();
+    private File file;
+    private List<File> fileCollection = null;
     private ImmediateMeasure immediateMeasure;
     private IncidentDescription incidentDescription;
     private Location location;
@@ -83,6 +86,13 @@ public class Questionnaire {
         this.significance = significance;
         this.time = time;
     }
+
+    public void addAttachment(File file){
+        fileCollection.add(file);
+        for(File fileName : fileCollection){
+            System.out.println(fileName.getName());
+        };
+    };
 
     public AdditionalNotes getAdditionalNotes() {
         return additionalNotes;

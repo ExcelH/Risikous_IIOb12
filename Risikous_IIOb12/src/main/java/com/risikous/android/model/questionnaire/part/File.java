@@ -7,6 +7,22 @@ public class File {
     private String name = "";
     private String tagName = "file";
 
+    public File(String name, String tagName, java.io.File file) {
+        this.name = name;
+        this.tagName = tagName;
+        this.file = file;
+    }
+
+    public java.io.File getFile() {
+        return file;
+    }
+
+    public void setFile(java.io.File file) {
+        this.file = file;
+    }
+
+    private java.io.File file = null;
+
     public File(String name, String tagName) {
         this.name = name;
         this.tagName = tagName;

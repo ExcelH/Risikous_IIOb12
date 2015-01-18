@@ -35,6 +35,8 @@ public class IncidentFragment extends Fragment {
 
     private ArrayList<String> mPathes = new ArrayList<>();
 
+    final Questionnaire questionnaire = new Questionnaire();
+
     public IncidentFragment() {
 
     }
@@ -60,6 +62,7 @@ public class IncidentFragment extends Fragment {
         final EditText organisationalFactors_EditText = (EditText) v.findViewById(R.id.organisationalFactors_EditText);
         final EditText additionalNotes_EditText = (EditText) v.findViewById(R.id.additionalNotes_EditText);
         final EditText contactInformation_EditText = (EditText) v.findViewById(R.id.contactInformation_EditText);
+
 
         mfileAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
         Spinner fileSpinner = ((Spinner) v.findViewById(R.id.file_Spinner));
@@ -164,7 +167,7 @@ public class IncidentFragment extends Fragment {
         v.findViewById(R.id.publicationEnter_Button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                final Questionnaire questionnaire = new Questionnaire();
+
                 ValidatorCollection vC = new ValidatorCollection();
                 boolean validateStatus = true;
 
@@ -316,6 +319,17 @@ public class IncidentFragment extends Fragment {
                 mfileAdapter.add(string[string.length - 1]);
                 mfileAdapter.notifyDataSetChanged();
                 System.out.println("files::::::::" + mPathes.toString());
+            }
+            if(!mPathes.isEmpty()){
+                for(String currentPath : mPathes){
+                    String[] path = currentPath.split(":");
+                    java.io.File currentFile = new java.io.File(path[1]);
+                    com.risikous.android.model.questionnaire.part.File file = new com.risikous.android.model.questionnaire.part.File();
+                    file.setName(currentFile.getName());
+                    System.out.println("INFO:::::   " + currentFile.getAbsolutePath());
+                    file.setFile(currentFile);
+                    questionnaire.addAttachment(file);
+                }
             }
         }
 
