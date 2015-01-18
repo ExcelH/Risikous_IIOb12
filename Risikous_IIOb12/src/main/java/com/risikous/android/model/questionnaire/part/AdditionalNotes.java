@@ -15,9 +15,7 @@ public class AdditionalNotes {
         this.tagName = tagName;
     }
 
-    public AdditionalNotes(String name) {
-        this.name = name;
-    }
+
 
     public AdditionalNotes() {
 

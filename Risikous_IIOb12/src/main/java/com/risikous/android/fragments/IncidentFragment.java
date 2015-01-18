@@ -3,32 +3,22 @@ package com.risikous.android.fragments;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import com.risikous.android.R;
-import com.risikous.android.model.questionnaire.Questionnaire;
-import com.risikous.android.model.questionnaire.part.*;
-import com.risikous.android.request.PostRequest;
-import com.risikous.android.url.Constants;
-import com.risikous.android.validation.ValidatorCollection;
-import com.risikous.android.xml.builder.BuildPublication;
 
 
 import java.io.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 
 public class IncidentFragment extends Fragment {
@@ -47,8 +37,9 @@ public class IncidentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_incident, container, false);
+        View v = inflater.inflate(R.layout.fragment_incident, container, false);
 
+<<<<<<< HEAD
         final EditText incidentDescription_EditText = (EditText) v.findViewById(R.id.incidenDescription_EditText);
         final Spinner reportingOfArea_Spinner = (Spinner) v.findViewById(R.id.reportingOfArea_Spinner);
         final RadioGroup occurrenceRating_Group = (RadioGroup) v.findViewById(R.id.occurrenceRating_Group);
@@ -158,6 +149,24 @@ public class IncidentFragment extends Fragment {
         });
 
         //File_Dialog
+=======
+        mfileAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
+        ListView lView = ((ListView) v.findViewById(R.id.ListViewFiles));
+        lView.setAdapter(mfileAdapter);
+        lView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String[] string = mPathes.get(position).split("/");
+                mfileAdapter.remove(string[string.length-1]);
+                mfileAdapter.notifyDataSetChanged();
+                mPathes.remove(position);
+                if (mPathes.isEmpty()) {
+                    mPathes.add(getActivity().getString(R.string.incident_report_no_files));
+                }
+                return true;
+            }
+        });
+>>>>>>> parent of 7e79cec... Questionnaire Validation + PostRequest
         v.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,6 +178,7 @@ public class IncidentFragment extends Fragment {
             }
         });
 
+<<<<<<< HEAD
         //send_Post
         v.findViewById(R.id.publicationEnter_Button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,6 +333,8 @@ public class IncidentFragment extends Fragment {
         });
 
 
+=======
+>>>>>>> parent of 7e79cec... Questionnaire Validation + PostRequest
         return v;
     }
 
@@ -342,31 +354,4 @@ public class IncidentFragment extends Fragment {
         }
 
     }
-    public class POST extends AsyncTask<Void, Void, String> {
-
-        private String data = null;
-        private String url = null;
-
-        public POST(String url, String data) {
-            this.url = url;
-            this.data = data;
-        }
-
-        @Override
-        protected String doInBackground(Void... arg0) {
-            PostRequest pR = new PostRequest();
-
-            return pR.postXML(url, data);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
-
-        }
-
-    }
-
-
 }

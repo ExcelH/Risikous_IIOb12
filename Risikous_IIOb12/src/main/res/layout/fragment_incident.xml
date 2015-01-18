@@ -35,7 +35,7 @@
             <Spinner
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/reportingOfArea_Spinner" android:layout_margin="5dp"
+                    android:id="@+id/spinner" android:layout_margin="5dp"
                     android:entries="@array/spinner_arrays"
                     android:prompt="@string/incident_report_spinner"
                     android:spinnerMode="dropdown"/>
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:id="@+id/incidenDescription_EditText" android:background="#ffffffff"
+                    android:id="@+id/editText2" android:background="#ffffffff"
                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:lines="5"
                     android:autoText="false"/>
             <TextView
@@ -71,27 +71,23 @@
                     android:id="@+id/textView18" android:nestedScrollingEnabled="true"
                     android:layout_margin="5dp" android:padding="5dp"/>
             <RadioGroup
-                    android:id="@+id/occurrenceRating_Group"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" android:orientation="horizontal" android:layout_margin="5dp">
                 <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/incident_contact_low"
-                        android:tag="1"
-                        android:id="@+id/occurrenceRating_Button1"/>
+                        android:id="@+id/radioButton11"/>
                 <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/incident_contact_medium"
-                        android:tag="2"
-                        android:id="@+id/occurrenceRating_Button2"/>
+                        android:id="@+id/radioButton12"/>
                 <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/incident_contact_high"
-                        android:tag="3"
-                        android:id="@+id/occurrenceRating_Button3"/>
+                        android:id="@+id/radioButton13"/>
             </RadioGroup>
             <TextView
                     android:layout_width="wrap_content"
@@ -100,27 +96,23 @@
                     android:text="@string/incident_report_probability_of_detection"
                     android:id="@+id/textView19" android:layout_margin="5dp" android:padding="5dp"/>
             <RadioGroup
-                    android:id="@+id/detectionRating_Group"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" android:orientation="horizontal" android:layout_margin="5dp">
+                    android:layout_height="fill_parent" android:orientation="horizontal" android:layout_margin="5dp">
                 <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/incident_contact_low"
-                        android:tag="1"
-                        android:id="@+id/detectionRating_Button1"/>
+                        android:id="@+id/radioButton14"/>
                 <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/incident_contact_medium"
-                        android:tag="2"
-                        android:id="@+id/detectionRating_Button2"/>
+                        android:id="@+id/radioButton15"/>
                 <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/incident_contact_high"
-                        android:tag="3"
-                        android:id="@+id/detectionRating_Button3"/>
+                        android:id="@+id/radioButton16"/>
             </RadioGroup>
             <TextView
                     android:layout_width="wrap_content"
@@ -129,27 +121,23 @@
                     android:text="@string/incident_report_importance"
                     android:id="@+id/textView20" android:layout_margin="5dp" android:padding="5dp"/>
             <RadioGroup
-                    android:id="@+id/significance_Group"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" android:orientation="horizontal" android:layout_margin="5dp">
                 <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/incident_contact_low"
-                        android:tag="1"
-                        android:id="@+id/significance_Button1"/>
+                        android:id="@+id/radioButton17"/>
                 <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/incident_contact_medium"
-                        android:tag="2"
-                        android:id="@+id/significance_Button2"/>
+                        android:id="@+id/radioButton18"/>
                 <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/incident_contact_high"
-                        android:tag="3"
-                        android:id="@+id/significance_Button3"/>
+                        android:id="@+id/radioButton19"/>
             </RadioGroup>
             <TextView
                     android:layout_width="match_parent"
@@ -165,42 +153,20 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/incident_report_date"
                     android:id="@+id/textView5" android:layout_margin="5dp"/>
-            <EditText
+            <DatePicker
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
-                    android:id="@+id/date_EditText" android:background="#ffffffff"
-                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:lines="5"
-                    android:autoText="false"/>
-            <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Datum wählen"
-                    android:id="@+id/date_Button" android:layout_below="@+id/timestamp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"/>
+                    android:id="@+id/datePicker"/>
             <TextView
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/incident_report_time"
                     android:id="@+id/textView6" android:layout_margin="5dp"/>
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
-                    android:id="@+id/time_EditText" android:background="#ffffffff"
-                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:lines="5"
-                    android:autoText="false"/>
-            <Button
+            <TimePicker
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Uhrzeit wählen"
-                    android:id="@+id/time_Button" android:layout_below="@+id/timestamp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"/>
+                    android:id="@+id/timePicker"/>
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -214,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:id="@+id/location_EditText"
+                    android:id="@+id/editText5"
                     android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"/>
             <TextView
@@ -230,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:id="@+id/immediateMeasure_EditText"
+                    android:id="@+id/editText6"
                     android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp" android:lines="5"/>
             <TextView
@@ -246,7 +212,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:id="@+id/consequences_EditText"
+                    android:id="@+id/editText7"
                     android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp" android:lines="5"/>
             <TextView
@@ -269,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:id="@+id/personalFactors_EditText"
+                    android:id="@+id/editText8"
                     android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp" android:lines="5"/>
             <TextView
@@ -284,7 +250,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:id="@+id/organisationalFactors_EditText"
+                    android:id="@+id/editText9"
                     android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp" android:lines="5"/>
             <TextView
@@ -299,7 +265,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:id="@+id/additionalNotes_EditText"
+                    android:id="@+id/editText10"
                     android:background="@color/risikousedittext" android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp" android:lines="5"/>
             <TextView
@@ -343,14 +309,14 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:id="@+id/contactInformation_EditText"
+                    android:id="@+id/editText11"
                     android:background="@color/risikousedittext" android:lines="5" android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"/>
             <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/incident_button_send"
-                    android:id="@+id/publicationEnter_Button" android:layout_margin="5dp"
+                    android:id="@+id/button4" android:layout_margin="5dp"
                     android:background="@drawable/risikousbuttonpress" android:textColor="#ffffffff"
                     android:padding="5dp"
                     android:shadowColor="#A8A8A8"

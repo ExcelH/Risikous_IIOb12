@@ -24,41 +24,42 @@ public class BuildPublication {
         questionnaireString = sB.connectString(questionnaireString, "</" + q.getRiskEstimation().getTagName() + ">");
 
         //optional
-        if(!q.getDate().getName().isEmpty()||!q.getTime().getName().isEmpty()){
+        if(q.getDate().getName()!=""||q.getTime().getName()!=""){
             questionnaireString = sB.connectString(questionnaireString, "<" + q.getPointOfTime().getTagName() + ">");
-            if(!q.getDate().getName().isEmpty())
+            if(q.getDate().getName()!="")
                 questionnaireString = sB.connectString(questionnaireString,build.buildXMLTag(q.getDate().getTagName(), q.getDate().getName()));
-            if(!q.getTime().getName().isEmpty())
+            if(q.getTime().getName()!="")
                 questionnaireString = sB.connectString(questionnaireString,build.buildXMLTag(q.getTime().getTagName(), q.getTime().getName()));
             questionnaireString = sB.connectString(questionnaireString, "</" + q.getPointOfTime().getTagName() + ">");
         }
-        if(!q.getLocation().getName().isEmpty())
+        if(q.getLocation().getName()!="")
             questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getLocation().getTagName(), q.getLocation().getName()));
-        if(!q.getImmediateMeasure().getName().isEmpty())
+        if(q.getImmediateMeasure().getName()!="")
             questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getImmediateMeasure().getTagName(), q.getImmediateMeasure().getName()));
-        if(!q.getConsequences().getName().isEmpty())
+        if(q.getConsequences().getName()!="")
             questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getConsequences().getTagName(), q.getConsequences().getName()));
-        if(!q.getPersonalFactors().getName().isEmpty()||!q.getOrganisationalFactors().getName().isEmpty()||!q.getAdditionalNotes().getName().isEmpty()){
+        if(q.getPersonalFactors().getName()!=""||q.getOrganisationalFactors().getName()!=""||q.getAdditionalNotes().getName()!=""){
             questionnaireString = sB.connectString(questionnaireString, "<" + q.getOpinionOfReporter().getTagName() + ">");
-            if(!q.getPersonalFactors().getName().isEmpty())
+            if(q.getPersonalFactors().getName()!="")
                 questionnaireString = sB.connectString(questionnaireString,build.buildXMLTag(q.getPersonalFactors().getTagName(), q.getPersonalFactors().getName()));
-            if(!q.getOrganisationalFactors().getName().isEmpty())
+            if(q.getOrganisationalFactors().getName()!="")
                 questionnaireString = sB.connectString(questionnaireString,build.buildXMLTag(q.getOrganisationalFactors().getTagName(), q.getOrganisationalFactors().getName()));
-            if(!q.getAdditionalNotes().getName().isEmpty())
+            if(q.getAdditionalNotes().getName()!="")
                 questionnaireString = sB.connectString(questionnaireString,build.buildXMLTag(q.getAdditionalNotes().getTagName(), q.getAdditionalNotes().getName()));
             questionnaireString = sB.connectString(questionnaireString, "</" + q.getOpinionOfReporter().getTagName() + ">");
         }
-        if(!q.getFile().getName().isEmpty()){
+        if(q.getFile().getName()!=""){
             questionnaireString = sB.connectString(questionnaireString, "<" + q.getFiles().getTagName() + ">");
             questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getFile().getTagName(), q.getFile().getName()));
             questionnaireString = sB.connectString(questionnaireString, "</" + q.getFiles().getTagName() + ">");
         }
-        if(!q.getContactInformation().getName().isEmpty())
+        if(q.getContactInformation().getName()!="")
             questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getContactInformation().getTagName(), q.getContactInformation().getName()));
 
         questionnaireString = build.buildXMLTag(q.getTagName(),questionnaireString);
         questionnaireString = sB.connectString(xmlHeader, questionnaireString);
 
+        System.out.println("StringComment:::::::::     "+questionnaireString);
         return questionnaireString;
     }
 }
