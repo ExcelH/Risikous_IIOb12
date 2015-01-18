@@ -2,6 +2,9 @@ package com.risikous.android.model.questionnaire;
 
 import com.risikous.android.model.questionnaire.part.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by Excel on 10.01.2015.
  */
@@ -11,7 +14,7 @@ public class Questionnaire {
     private ContactInformation contactInformation;
     private Date date;
     private DetectionRating detectionRating;
-    private File file = new File();
+    private Files file = new Files();
     private ImmediateMeasure immediateMeasure;
     private IncidentDescription incidentDescription;
     private Location location;
@@ -22,7 +25,7 @@ public class Questionnaire {
     private Significance significance;
     private Time time;
     private PointOfTime pointOfTime = new PointOfTime();
-    private Files files = new Files();
+    private List<File> files = new LinkedList<File>();
     private RiskEstimation riskEstimation = new RiskEstimation();
     private OpinionOfReporter opinionOfReporter = new OpinionOfReporter();
     private String tagName = "questionnaire";
@@ -33,8 +36,7 @@ public class Questionnaire {
         this.contactInformation = contactInformation;
         this.date = date;
         this.detectionRating = detectionRating;
-        this.file = file;
-        this.files = files;
+        this.file = files;
         this.immediateMeasure = immediateMeasure;
         this.incidentDescription = incidentDescription;
         this.location = location;
@@ -48,6 +50,7 @@ public class Questionnaire {
         this.significance = significance;
         this.time = time;
         this.tagName = tagName;
+        this.files = new LinkedList<File>();
     }
 
     public String getTagName() {
@@ -69,7 +72,7 @@ public class Questionnaire {
         this.date = date;
         this.detectionRating = detectionRating;
         this.file = file;
-        this.files = files;
+        this.files = new LinkedList<Files>();
         this.immediateMeasure = immediateMeasure;
         this.incidentDescription = incidentDescription;
         this.location = location;
@@ -236,4 +239,10 @@ public class Questionnaire {
         this.time = time;
     }
 
+    public void addAttachment(File file) {
+        if(this.files == null){
+            this.files = new LinkedList<File>();
+        }
+        this.files.add(file);
+    }
 }

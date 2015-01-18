@@ -1,6 +1,7 @@
 package com.risikous.android.fragments;
 
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,9 @@ import com.risikous.android.url.Constants;
 import com.risikous.android.validation.ValidatorCollection;
 import com.risikous.android.xml.builder.BuildPublication;
 
+
+import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -33,7 +38,7 @@ public class IncidentFragment extends Fragment {
 
     private ArrayAdapter<String> mfileAdapter = null;
 
-    private ArrayList<String> mPathes = new ArrayList<>();
+    private ArrayList<String> mPathes = new ArrayList<String>();
 
     public IncidentFragment() {
 
@@ -62,22 +67,37 @@ public class IncidentFragment extends Fragment {
         final EditText contactInformation_EditText = (EditText) v.findViewById(R.id.contactInformation_EditText);
 
 
-        mfileAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
-        ListView lView = ((ListView) v.findViewById(R.id.ListViewFiles));
+        mfileAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
+        Spinner lView = ((Spinner) v.findViewById(R.id.ListViewFiles));
         lView.setAdapter(mfileAdapter);
-        lView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String[] string = mPathes.get(position).split("/");
-                mfileAdapter.remove(string[string.length - 1]);
-                mfileAdapter.notifyDataSetChanged();
-                mPathes.remove(position);
-                if (mPathes.isEmpty()) {
-                    mPathes.add(getActivity().getString(R.string.incident_report_no_files));
-                }
-                return true;
-            }
-        });
+        mfileAdapter.add(getActivity().getString(R.string.incident_report_no_files));
+        mfileAdapter.notifyDataSetChanged();
+
+       lView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           @Override
+           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               String selected = (String) parent.getItemAtPosition(position);
+               if(selected.equals(getActivity().getString(R.string.incident_report_no_files))){
+                   return;
+               }
+               if(!mPathes.isEmpty()){
+                   if(mPathes.contains(selected)){
+                       mPathes.remove(selected);
+                   }
+                   mfileAdapter.remove(selected);
+                   mfileAdapter.notifyDataSetChanged();
+               }
+               if (mPathes.isEmpty() && !selected.equals(getActivity().getString(R.string.incident_report_no_files))) {
+                   mfileAdapter.add(getActivity().getString(R.string.incident_report_no_files));
+               }
+           }
+
+           @Override
+           public void onNothingSelected(AdapterView<?> parent) {
+
+           }
+
+       });
 
         //Date_Dialog
         v.findViewById(R.id.date_Button).setOnClickListener(new View.OnClickListener() {
@@ -251,6 +271,19 @@ public class IncidentFragment extends Fragment {
                     }
                 }
 
+                if(!mPathes.isEmpty()){
+                    for(String currentPath : mPathes){
+                        String[] path = currentPath.split(":");
+                        java.io.File currentFile = new java.io.File(path[1]);
+                        com.risikous.android.model.questionnaire.part.File file = new com.risikous.android.model.questionnaire.part.File();
+                        file.setName(currentFile.getName());
+                        Log.v("INFO TOM", currentFile.getAbsolutePath());
+                        file.setFile(currentFile);
+                        questionnaire.addAttachment(file);
+                    }
+                }
+
+
                 questionnaire.setContactInformation(new ContactInformation(contactInformation_EditText.getText().toString()));
                 if (!questionnaire.getContactInformation().getName().equals("")) {
                     if (!vC.validateCountChar(questionnaire.getContactInformation().getName(), 1000)) {
@@ -300,7 +333,8 @@ public class IncidentFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_CODE_PICK) {
                 String path = data.getData().toString();
-                mPathes.add(path.toString());
+                mPathes.add(path);
+                Log.v("INFO TOM", path);
                 String[] string = path.split("/");
                 mfileAdapter.add(string[string.length - 1]);
                 mfileAdapter.notifyDataSetChanged();

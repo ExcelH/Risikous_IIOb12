@@ -39,7 +39,7 @@
     <string name="incident_report_organizational_factors">Organisatorische Faktoren (z.B. Abläufe, Standards)</string>
     <string name="incident_report_additional_comments">Weitere Anmerkungen</string>
     <string name="incident_report_attach_images_files">Bilder/Dateien anhängen</string>
-    <string name="incident_report_no_files">Keine Dateien</string>
+    <string name="incident_report_no_files">Angehangene Dateien</string>
     <string name="incident_contact_information">Kontaktdaten</string>
     <string name="incident_contact_high">hoch</string>
     <string name="incident_contact_medium">mittel</string>

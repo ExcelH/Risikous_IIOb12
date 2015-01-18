@@ -8,8 +8,12 @@
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/scrollView" android:layout_gravity="center_vertical" android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp" android:layout_alignParentTop="true" android:layout_marginTop="0dp">
+            android:id="@+id/scrollView"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
@@ -310,7 +314,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/incident_button_choose_file"
                     android:id="@+id/button3" android:layout_margin="5dp"
-                    android:background="@drawable/risikousbuttonpress" android:textColor="#ffffffff"
+                    android:background="@drawable/risikousbuttonpress"
+                    android:textColor="#ffffffff"
                     android:padding="5dp"
                     android:shadowColor="#A8A8A8"
                     android:shadowDx="0"
@@ -318,10 +323,12 @@
                     android:shadowRadius="5"
                     android:layout_gravity="center"
                     />
-            <ListView
+            <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ListViewFiles" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                    android:id="@+id/ListViewFiles"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:padding="5dp"/>
             <TextView
                     android:layout_width="match_parent"
