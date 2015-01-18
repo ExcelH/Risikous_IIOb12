@@ -35,4 +35,44 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
+    <TextView android:id="@+id/incidentReport"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
+    <TextView android:id="@+id/minRPZofReporter"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
+    <TextView android:id="@+id/avgRPZofReporter"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
+    <TextView android:id="@+id/maxRPZofReporter"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
+    <TextView android:id="@+id/minRPZofQMB"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
+    <TextView android:id="@+id/avgRPZofQMB"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
+    <TextView android:id="@+id/maxRPZofQMB"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
+    <TextView android:id="@+id/category"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
+    <TextView android:id="@+id/action"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
+    <TextView android:id="@+id/assignedReports"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:padding="5dp"/>
 </LinearLayout>

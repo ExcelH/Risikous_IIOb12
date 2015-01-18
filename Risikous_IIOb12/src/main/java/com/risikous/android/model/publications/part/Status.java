@@ -6,17 +6,18 @@ package com.risikous.android.model.publications.part;
 public class Status {
     private String name = "";
 
-    public Status(){}
+    public Status() {
+    }
 
     public Status(String s) {
         this.name = s;
     }
 
-    public void setStatus(String name) {
-        this.name = name;
-    }
-
     public String getStatus() {
         return name;
+    }
+
+    public void setStatus(String name) {
+        this.name = name;
     }
 }

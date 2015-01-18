@@ -6,17 +6,18 @@ package com.risikous.android.model.publications.part;
 public class NumberOfReports {
     private String name = "";
 
-    public NumberOfReports(){}
+    public NumberOfReports() {
+    }
 
     public NumberOfReports(String s) {
         this.name = s;
     }
 
-    public void setNumberOfReports(String name) {
-        this.name = name;
-    }
-
     public String getNumberOfReports() {
         return name;
+    }
+
+    public void setNumberOfReports(String name) {
+        this.name = name;
     }
 }

@@ -7,9 +7,9 @@ public class BuildXMLTag {
 
     public String buildXMLTag(String Tag, String value) {
 
-        java.lang.StringBuilder str = new java.lang.StringBuilder("<"+Tag+">");
+        java.lang.StringBuilder str = new java.lang.StringBuilder("<" + Tag + ">");
         str.append(value);
-        str.append("</"+Tag+">");
+        str.append("</" + Tag + ">");
 
         return str.toString();
     }

@@ -12,7 +12,7 @@ import org.apache.http.util.EntityUtils;
  */
 public class GetRequest {
 
-    public String GetXML(String url, String data){
+    public String GetXML(String url, String data) {
         HttpClient client = new DefaultHttpClient();
 
         try {

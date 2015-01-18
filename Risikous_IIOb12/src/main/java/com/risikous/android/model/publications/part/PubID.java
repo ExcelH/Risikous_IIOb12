@@ -6,7 +6,12 @@ package com.risikous.android.model.publications.part;
 public class PubID {
     private String name = "";
 
-    public PubID(){}
+    public PubID() {
+    }
+
+    public PubID(String s) {
+        this.name = s;
+    }
 
     @Override
     public String toString() {
@@ -15,15 +20,11 @@ public class PubID {
                 '}';
     }
 
-    public PubID(String s) {
-        this.name = s;
+    public String getPubID() {
+        return name;
     }
 
     public void setPubID(String name) {
         this.name = name;
-    }
-
-    public String getPubID() {
-        return name;
     }
 }

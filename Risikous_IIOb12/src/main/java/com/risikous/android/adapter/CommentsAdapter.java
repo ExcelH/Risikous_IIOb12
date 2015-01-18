@@ -23,7 +23,7 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
     private HashMap<Comment, List<Comment>> listSubComment;
 
     public CommentsAdapter(Context context, List<Comment> listComment,
-                                 HashMap<Comment, List<Comment>> listSubComment) {
+                           HashMap<Comment, List<Comment>> listSubComment) {
         this._context = context;
         this.listComment = listComment;
         this.listSubComment = listSubComment;

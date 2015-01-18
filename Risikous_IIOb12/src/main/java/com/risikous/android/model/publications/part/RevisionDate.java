@@ -6,17 +6,18 @@ package com.risikous.android.model.publications.part;
 public class RevisionDate {
     private String name = "";
 
-    public RevisionDate(){}
+    public RevisionDate() {
+    }
 
     public RevisionDate(String s) {
         this.name = s;
     }
 
-    public void setRevisionDate(String name) {
-        this.name = name;
-    }
-
     public String getRevisionDate() {
         return name;
+    }
+
+    public void setRevisionDate(String name) {
+        this.name = name;
     }
 }

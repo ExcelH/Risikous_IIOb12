@@ -11,23 +11,23 @@
     <string name="incident_report_spinner">--</string>
 
     <string-array name="spinner_arrays">
-        <item>Meldekreis 01</item>
-        <item>Meldekreis 02</item>
-        <item>Meldekreis 03</item>
-        <item>Meldekreis 04</item>
-        <item>Meldekreis 05</item>
-        <item>Meldekreis 06</item>
-        <item>Meldekreis 07</item>
-        <item>Meldekreis 08</item>
-        <item>Meldekreis 09</item>
-        <item>Meldekreis 10</item>
+        <item>M01</item>
+        <item>M02</item>
+        <item>M03</item>
+        <item>M04</item>
+        <item>M05</item>
+        <item>M06</item>
+        <item>M07</item>
+        <item>M08</item>
+        <item>M09</item>
+        <item>M10</item>
     </string-array>
 
     <string name="incident_report_event_description">Ereignisbeschreibung*</string>
     <string name="incident_report_risk_assessment">Risikobewertung*</string>
     <string name="incident_report_probability">Eintrittswahrscheinlichkeit</string>
     <string name="incident_report_probability_of_detection">Entdeckungswahrscheinlichkeit</string>
-    <string name="incident_report_importance">Bedeutung</string>
+    <string name="incident_report_importance">Priorität</string>
     <string name="incident_report_when_did_this_event_happen">Wann ist das Ereignis passiert?</string>
     <string name="incident_report_date">Datum:</string>
     <string name="incident_report_time">Uhrzeit:</string>
@@ -39,7 +39,7 @@
     <string name="incident_report_organizational_factors">Organisatorische Faktoren (z.B. Abläufe, Standards)</string>
     <string name="incident_report_additional_comments">Weitere Anmerkungen</string>
     <string name="incident_report_attach_images_files">Bilder/Dateien anhängen</string>
-    <string name="incident_report_no_files">Angehangene Dateien</string>
+    <string name="incident_report_no_files">Keine Dateien</string>
     <string name="incident_contact_information">Kontaktdaten</string>
     <string name="incident_contact_high">hoch</string>
     <string name="incident_contact_medium">mittel</string>

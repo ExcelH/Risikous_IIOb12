@@ -6,17 +6,18 @@ package com.risikous.android.model.publications.part;
 public class NumberOfComments {
     private String name = "";
 
-    public NumberOfComments(){}
+    public NumberOfComments() {
+    }
 
     public NumberOfComments(String s) {
         this.name = s;
     }
 
-    public void setNumberOfComments(String name) {
-        this.name = name;
-    }
-
     public String getNumberOfComments() {
         return name;
+    }
+
+    public void setNumberOfComments(String name) {
+        this.name = name;
     }
 }

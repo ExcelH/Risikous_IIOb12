@@ -1,6 +1,5 @@
 package com.risikous.android;
 
-
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -126,7 +125,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.setGroupVisible(R.id.menugroup,false);
+        menu.setGroupVisible(R.id.menugroup, false);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -183,7 +182,7 @@ public class MainActivity extends ActionBarActivity {
         if (mCurrentFragment != null && mCurrentFragment instanceof PublicationFragment && ((PublicationFragment) mCurrentFragment).isCommentsContainerVisible()) {
             ((PublicationFragment) mCurrentFragment).toggleCommmentsContainer();
 
-        }else{
+        } else {
             super.onBackPressed();
         }
 

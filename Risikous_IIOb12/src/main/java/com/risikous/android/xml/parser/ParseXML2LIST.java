@@ -37,7 +37,6 @@ public class ParseXML2LIST {
                                          Attributes attributes) throws SAXException {
 
 
-
                     if (tagName.equalsIgnoreCase(target)) {
                         tag = true;
                     } else if (tagName.equalsIgnoreCase("comment")) {

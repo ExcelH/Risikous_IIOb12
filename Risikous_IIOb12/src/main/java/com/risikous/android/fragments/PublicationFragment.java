@@ -70,6 +70,26 @@ public class PublicationFragment extends Fragment {
                         ((TextView) publicationIDContainer.findViewById(R.id.status)).setText(fullObject.getStatus().getStatus());
                         ((TextView) publicationIDContainer.findViewById(R.id.numberofreports)).setText(fullObject.getNumberOfReports().getNumberOfReports());
                         ((TextView) publicationIDContainer.findViewById(R.id.numberofcomments)).setText(fullObject.getNumberOfComments().getNumberOfComments());
+
+                        new GET(new ResponseCallback() {
+                            @Override
+                            public void onResponse(String s) {
+                                Publication tmp = new Publication();
+                                ParsePublication parsePublication = new ParsePublication();
+                                parsePublication.parseCompletedPublication(s, tmp);
+                                ((TextView) publicationIDContainer.findViewById(R.id.incidentReport)).setText(tmp.getIncidentReport().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.minRPZofReporter)).setText(tmp.getMinRPZofReporter().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.avgRPZofReporter)).setText(tmp.getAvgRPZofReporter().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.maxRPZofReporter)).setText(tmp.getMaxRPZofReporter().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.minRPZofQMB)).setText(tmp.getMinRPZofQMB().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.avgRPZofQMB)).setText(tmp.getAvgRPZofQMB().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.maxRPZofQMB)).setText(tmp.getMaxRPZofQMB().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.category)).setText(tmp.getCategory().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.action)).setText(tmp.getAction().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.assignedReports)).setText(tmp.getAssignedReports().getName());
+                            }
+                        }, Constants.PUBLICATION_GET_FULL_PUB_URL(fullObject.getPubID().getPubID())).execute();
+
                         ClickID = fullObject.getPubID().getPubID();
                         toggleCommmentsContainer();
                         new GET(new ResponseCallback() {
@@ -127,7 +147,7 @@ public class PublicationFragment extends Fragment {
         ll.addView(commentText);
         alertDialog.setView(ll);
 
-        alertDialog.setPositiveButton("ok",
+        alertDialog.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String xml = null;
@@ -147,7 +167,7 @@ public class PublicationFragment extends Fragment {
                     }
                 });
 
-        alertDialog.setNegativeButton("abrechen",
+        alertDialog.setNegativeButton("Abbrechen",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -201,6 +221,11 @@ public class PublicationFragment extends Fragment {
     }
 
 
+    private interface ResponseCallback {
+        public void onResponse(String s);
+
+    }
+
     public class GET extends AsyncTask<Void, Void, String> {
 
 
@@ -250,11 +275,6 @@ public class PublicationFragment extends Fragment {
             Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
 
         }
-
-    }
-
-    private interface ResponseCallback {
-        public void onResponse(String s);
 
     }
 }

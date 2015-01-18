@@ -6,7 +6,7 @@ package com.risikous.android.model.publications.part;
 public class EntryDate {
     private String name = "";
 
-    public EntryDate(){
+    public EntryDate() {
 
     }
 
@@ -14,12 +14,12 @@ public class EntryDate {
         this.name = s;
     }
 
-    public void setEntryDate(String name) {
-        this.name = name;
-    }
-
     public String getEntryDate() {
         return name;
+    }
+
+    public void setEntryDate(String name) {
+        this.name = name;
     }
 
 

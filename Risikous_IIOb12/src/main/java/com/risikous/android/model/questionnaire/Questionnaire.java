@@ -2,9 +2,6 @@ package com.risikous.android.model.questionnaire;
 
 import com.risikous.android.model.questionnaire.part.*;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Created by Excel on 10.01.2015.
  */
@@ -14,31 +11,20 @@ public class Questionnaire {
     private ContactInformation contactInformation;
     private Date date;
     private DetectionRating detectionRating;
-<<<<<<< HEAD
-    private Files file = new Files();
-=======
->>>>>>> parent of 7e79cec... Questionnaire Validation + PostRequest
-    private File file;
-    private Files files;
+    private File file = new File();
     private ImmediateMeasure immediateMeasure;
     private IncidentDescription incidentDescription;
     private Location location;
     private OccurrenceRating occurrenceRating;
-    private OpinionOfReporter opinionOfReporter;
     private OrganisationalFactors organisationalFactors;
     private PersonalFactors personalFactors;
-    private PointOfTime pointOfTime;
     private ReportingArea reportingArea;
-    private RiskEstimation riskEstimation;
     private Significance significance;
     private Time time;
-<<<<<<< HEAD
     private PointOfTime pointOfTime = new PointOfTime();
-    private List<File> files = new LinkedList<File>();
+    private Files files = new Files();
     private RiskEstimation riskEstimation = new RiskEstimation();
     private OpinionOfReporter opinionOfReporter = new OpinionOfReporter();
-=======
->>>>>>> parent of 7e79cec... Questionnaire Validation + PostRequest
     private String tagName = "questionnaire";
 
     public Questionnaire(AdditionalNotes additionalNotes, Consequences consequences, ContactInformation contactInformation, Date date, DetectionRating detectionRating, File file, Files files, ImmediateMeasure immediateMeasure, IncidentDescription incidentDescription, Location location, OccurrenceRating occurrenceRating, OpinionOfReporter opinionOfReporter, OrganisationalFactors organisationalFactors, PersonalFactors personalFactors, PointOfTime pointOfTime, ReportingArea reportingArea, RiskEstimation riskEstimation, Significance significance, Time time, String tagName) {
@@ -47,7 +33,8 @@ public class Questionnaire {
         this.contactInformation = contactInformation;
         this.date = date;
         this.detectionRating = detectionRating;
-        this.file = files;
+        this.file = file;
+        this.files = files;
         this.immediateMeasure = immediateMeasure;
         this.incidentDescription = incidentDescription;
         this.location = location;
@@ -61,7 +48,6 @@ public class Questionnaire {
         this.significance = significance;
         this.time = time;
         this.tagName = tagName;
-        this.files = new LinkedList<File>();
     }
 
     public String getTagName() {
@@ -83,7 +69,7 @@ public class Questionnaire {
         this.date = date;
         this.detectionRating = detectionRating;
         this.file = file;
-        this.files = new LinkedList<Files>();
+        this.files = files;
         this.immediateMeasure = immediateMeasure;
         this.incidentDescription = incidentDescription;
         this.location = location;
@@ -249,13 +235,5 @@ public class Questionnaire {
     public void setTime(Time time) {
         this.time = time;
     }
-<<<<<<< HEAD
-    public void addAttachment(File file) {
-        if(this.files == null){
-            this.files = new LinkedList<File>();
-        }
-        this.files.add(file);
-    }
-=======
->>>>>>> parent of 7e79cec... Questionnaire Validation + PostRequest
+
 }

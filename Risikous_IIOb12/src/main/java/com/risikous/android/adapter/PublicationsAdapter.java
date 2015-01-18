@@ -1,7 +1,6 @@
 package com.risikous.android.adapter;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 import com.risikous.android.R;
 import com.risikous.android.model.publications.Publication;
 
-import java.lang.Override;import java.util.List;
+import java.util.List;
 
 /**
  * Created by Excel on 08.01.2015.
@@ -52,6 +51,19 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         pubStatus.setText(currentPublication.getStatus().getStatus());
         pubNumberOfReports.setText(currentPublication.getNumberOfReports().getNumberOfReports());
         pubNumberOfComments.setText(currentPublication.getNumberOfComments().getNumberOfComments());
+
+        //verschwinden
+
+        vi.findViewById(R.id.incidentReport).setVisibility(View.GONE);
+        vi.findViewById(R.id.minRPZofReporter).setVisibility(View.GONE);
+        vi.findViewById(R.id.avgRPZofReporter).setVisibility(View.GONE);
+        vi.findViewById(R.id.maxRPZofReporter).setVisibility(View.GONE);
+        vi.findViewById(R.id.minRPZofQMB).setVisibility(View.GONE);
+        vi.findViewById(R.id.avgRPZofQMB).setVisibility(View.GONE);
+        vi.findViewById(R.id.maxRPZofQMB).setVisibility(View.GONE);
+        vi.findViewById(R.id.category).setVisibility(View.GONE);
+        vi.findViewById(R.id.action).setVisibility(View.GONE);
+        vi.findViewById(R.id.assignedReports).setVisibility(View.GONE);
 
         return vi;
     }

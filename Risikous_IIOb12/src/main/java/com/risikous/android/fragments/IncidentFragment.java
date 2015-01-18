@@ -1,24 +1,29 @@
 package com.risikous.android.fragments;
 
 
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.*;
 import com.risikous.android.R;
+import com.risikous.android.model.questionnaire.Questionnaire;
+import com.risikous.android.model.questionnaire.part.*;
+import com.risikous.android.request.PostRequest;
+import com.risikous.android.url.Constants;
+import com.risikous.android.validation.ValidatorCollection;
+import com.risikous.android.xml.builder.BuildPublication;
 
-
-import java.io.*;
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class IncidentFragment extends Fragment {
@@ -28,7 +33,7 @@ public class IncidentFragment extends Fragment {
 
     private ArrayAdapter<String> mfileAdapter = null;
 
-    private ArrayList<String> mPathes = new ArrayList<String>();
+    private ArrayList<String> mPathes = new ArrayList<>();
 
     public IncidentFragment() {
 
@@ -37,9 +42,8 @@ public class IncidentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_incident, container, false);
+        final View v = inflater.inflate(R.layout.fragment_incident, container, false);
 
-<<<<<<< HEAD
         final EditText incidentDescription_EditText = (EditText) v.findViewById(R.id.incidenDescription_EditText);
         final Spinner reportingOfArea_Spinner = (Spinner) v.findViewById(R.id.reportingOfArea_Spinner);
         final RadioGroup occurrenceRating_Group = (RadioGroup) v.findViewById(R.id.occurrenceRating_Group);
@@ -57,38 +61,34 @@ public class IncidentFragment extends Fragment {
         final EditText additionalNotes_EditText = (EditText) v.findViewById(R.id.additionalNotes_EditText);
         final EditText contactInformation_EditText = (EditText) v.findViewById(R.id.contactInformation_EditText);
 
+        mfileAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
+        Spinner fileSpinner = ((Spinner) v.findViewById(R.id.file_Spinner));
+        fileSpinner.setAdapter(mfileAdapter);
+        mfileAdapter.add(getString(R.string.incident_report_no_files));
+        fileSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selected = (String) parent.getItemAtPosition(position);
+                if (selected.equals(getActivity().getString(R.string.incident_report_no_files))) {
+                    return;
+                }
+                if (!mPathes.isEmpty()) {
+                    if (mPathes.contains(selected)) {
+                        mPathes.remove(selected);
+                    }
+                    mfileAdapter.remove(selected);
+                    mfileAdapter.notifyDataSetChanged();
+                }
+                if (mPathes.isEmpty() && !selected.equals(getActivity().getString(R.string.incident_report_no_files))) {
+                    mfileAdapter.add(getActivity().getString(R.string.incident_report_no_files));
+                }
+            }
 
-        mfileAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
-        Spinner lView = ((Spinner) v.findViewById(R.id.ListViewFiles));
-        lView.setAdapter(mfileAdapter);
-        mfileAdapter.add(getActivity().getString(R.string.incident_report_no_files));
-        mfileAdapter.notifyDataSetChanged();
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-       lView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-           @Override
-           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               String selected = (String) parent.getItemAtPosition(position);
-               if(selected.equals(getActivity().getString(R.string.incident_report_no_files))){
-                   return;
-               }
-               if(!mPathes.isEmpty()){
-                   if(mPathes.contains(selected)){
-                       mPathes.remove(selected);
-                   }
-                   mfileAdapter.remove(selected);
-                   mfileAdapter.notifyDataSetChanged();
-               }
-               if (mPathes.isEmpty() && !selected.equals(getActivity().getString(R.string.incident_report_no_files))) {
-                   mfileAdapter.add(getActivity().getString(R.string.incident_report_no_files));
-               }
-           }
-
-           @Override
-           public void onNothingSelected(AdapterView<?> parent) {
-
-           }
-
-       });
+            }
+        });
 
         //Date_Dialog
         v.findViewById(R.id.date_Button).setOnClickListener(new View.OnClickListener() {
@@ -149,38 +149,18 @@ public class IncidentFragment extends Fragment {
         });
 
         //File_Dialog
-        mfileAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
-        ListView lView = ((ListView) v.findViewById(R.id.ListViewFiles));
-        lView.setAdapter(mfileAdapter);
-=======
-        mfileAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
-        ListView lView = ((ListView) v.findViewById(R.id.ListViewFiles));
-        lView.setAdapter(mfileAdapter);
->>>>>>> parent of 7e79cec... Questionnaire Validation + PostRequest
-        lView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String[] string = mPathes.get(position).split("/");
-                mfileAdapter.remove(string[string.length-1]);
-                mfileAdapter.notifyDataSetChanged();
-                mPathes.remove(position);
-                if (mPathes.isEmpty()) {
-                    mPathes.add(getActivity().getString(R.string.incident_report_no_files));
-                }
-                return true;
-            }
-        });
         v.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("*/*");
+                intent.setType("image/*");
                 Intent i = Intent.createChooser(intent, "File");
                 startActivityForResult(intent, REQUEST_CODE_PICK);
             }
         });
-<<<<<<< HEAD
+
+        //send_Post
         v.findViewById(R.id.publicationEnter_Button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -282,19 +262,6 @@ public class IncidentFragment extends Fragment {
                     }
                 }
 
-                if(!mPathes.isEmpty()){
-                    for(String currentPath : mPathes){
-                        String[] path = currentPath.split(":");
-                        java.io.File currentFile = new java.io.File(path[1]);
-                        com.risikous.android.model.questionnaire.part.File file = new com.risikous.android.model.questionnaire.part.File();
-                        file.setName(currentFile.getName());
-                        Log.v("INFO TOM", currentFile.getAbsolutePath());
-                        file.setFile(currentFile);
-                        questionnaire.addAttachment(file);
-                    }
-                }
-
-
                 questionnaire.setContactInformation(new ContactInformation(contactInformation_EditText.getText().toString()));
                 if (!questionnaire.getContactInformation().getName().equals("")) {
                     if (!vC.validateCountChar(questionnaire.getContactInformation().getName(), 1000)) {
@@ -332,9 +299,8 @@ public class IncidentFragment extends Fragment {
 
             }
         });
-=======
 
->>>>>>> parent of 7e79cec... Questionnaire Validation + PostRequest
+
         return v;
     }
 
@@ -345,13 +311,41 @@ public class IncidentFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_CODE_PICK) {
                 String path = data.getData().toString();
-                mPathes.add(path);
-                Log.v("INFO TOM", path);
+                mPathes.add(path.toString());
                 String[] string = path.split("/");
                 mfileAdapter.add(string[string.length - 1]);
                 mfileAdapter.notifyDataSetChanged();
+                System.out.println("files::::::::" + mPathes.toString());
             }
         }
 
     }
+
+    public class POST extends AsyncTask<Void, Void, String> {
+
+        private String data = null;
+        private String url = null;
+
+        public POST(String url, String data) {
+            this.url = url;
+            this.data = data;
+        }
+
+        @Override
+        protected String doInBackground(Void... arg0) {
+            PostRequest pR = new PostRequest();
+
+            return pR.postXML(url, data);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
+
+        }
+
+    }
+
+
 }
