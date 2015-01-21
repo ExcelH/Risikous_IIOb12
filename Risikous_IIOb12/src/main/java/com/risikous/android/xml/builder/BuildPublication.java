@@ -48,9 +48,13 @@ public class BuildPublication {
                 questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getAdditionalNotes().getTagName(), q.getAdditionalNotes().getName()));
             questionnaireString = sB.connectString(questionnaireString, "</" + q.getOpinionOfReporter().getTagName() + ">");
         }
-        if (!q.getFile().getName().isEmpty()) {
+        if (!q.getFileCollection().isEmpty()) {
             questionnaireString = sB.connectString(questionnaireString, "<" + q.getFiles().getTagName() + ">");
-            questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getFile().getTagName(), q.getFile().getName()));
+            for (int i = 0; i < q.getFileCollection().size(); i++) {
+
+                questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getFile().getTagName(), q.getFile().getBase64()));
+
+            }
             questionnaireString = sB.connectString(questionnaireString, "</" + q.getFiles().getTagName() + ">");
         }
         if (!q.getContactInformation().getName().isEmpty())

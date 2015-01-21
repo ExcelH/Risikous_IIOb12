@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,12 +19,13 @@ import com.risikous.android.R;
 import com.risikous.android.model.questionnaire.Questionnaire;
 import com.risikous.android.model.questionnaire.part.*;
 import com.risikous.android.request.PostRequest;
-import com.risikous.android.url.Constants;
+import com.risikous.android.url_uri.Constants;
+import com.risikous.android.url_uri.ImageFilePath;
 import com.risikous.android.validation.ValidatorCollection;
 import com.risikous.android.xml.builder.BuildPublication;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class IncidentFragment extends Fragment {
@@ -33,9 +35,9 @@ public class IncidentFragment extends Fragment {
 
     private ArrayAdapter<String> mfileAdapter = null;
 
-    private ArrayList<String> mPathes = new ArrayList<>();
-
     final Questionnaire questionnaire = new Questionnaire();
+
+    private List<File> fileCollection = null;
 
     public IncidentFragment() {
 
@@ -65,25 +67,40 @@ public class IncidentFragment extends Fragment {
 
 
         mfileAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
-        Spinner fileSpinner = ((Spinner) v.findViewById(R.id.file_Spinner));
+        final Spinner fileSpinner = ((Spinner) v.findViewById(R.id.file_Spinner));
         fileSpinner.setAdapter(mfileAdapter);
         mfileAdapter.add(getString(R.string.incident_report_no_files));
         fileSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selected = (String) parent.getItemAtPosition(position);
+                final String selected = fileSpinner.getSelectedItem().toString();
                 if (selected.equals(getActivity().getString(R.string.incident_report_no_files))) {
                     return;
                 }
-                if (!mPathes.isEmpty()) {
-                    if (mPathes.contains(selected)) {
-                        mPathes.remove(selected);
-                    }
-                    mfileAdapter.remove(selected);
-                    mfileAdapter.notifyDataSetChanged();
-                }
-                if (mPathes.isEmpty() && !selected.equals(getActivity().getString(R.string.incident_report_no_files))) {
-                    mfileAdapter.add(getActivity().getString(R.string.incident_report_no_files));
+                if (!fileCollection.isEmpty()) {
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    questionnaire.removeObjectFromList(selected);
+                                    mfileAdapter.remove(selected);
+                                    mfileAdapter.notifyDataSetChanged();
+                                    Toast.makeText(getActivity(), selected + " wurde entfernt.", Toast.LENGTH_SHORT).show();
+                                    for (int i = 0; i < fileCollection.size(); i++) {
+                                        System.out.println(fileCollection.size() + " -> Elemente der Liste::" + fileCollection.get(i).getName());
+                                    }
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    dialog.cancel();
+                                    break;
+                            }
+                        }
+                    };
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Wollen Sie dieses Foto aus der Auswahl entfernen?").setPositiveButton("OK", dialogClickListener)
+                            .setNegativeButton("Abbrechen", dialogClickListener).show();
                 }
             }
 
@@ -155,11 +172,15 @@ public class IncidentFragment extends Fragment {
         v.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/*");
+                intent.setType("image/jpeg");
                 Intent i = Intent.createChooser(intent, "File");
-                startActivityForResult(intent, REQUEST_CODE_PICK);
+                startActivityForResult(intent, REQUEST_CODE_PICK);*/
+                Intent intent = new Intent();
+                intent.setType("image/jpeg");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_CODE_PICK);
             }
         });
 
@@ -265,6 +286,15 @@ public class IncidentFragment extends Fragment {
                     }
                 }
 
+                if (!fileCollection.isEmpty()) {
+                    for (int i = 0; i < fileCollection.size(); i++) {
+                        if (!vC.validateFileSize(fileCollection.get(i).getFile(), 5)) {
+                            validateStatus = false;
+                            Toast.makeText(getActivity(), "Das Foto " + fileCollection.get(i).getName() + " darf höchstens 5MB groß sein.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
                 questionnaire.setContactInformation(new ContactInformation(contactInformation_EditText.getText().toString()));
                 if (!questionnaire.getContactInformation().getName().equals("")) {
                     if (!vC.validateCountChar(questionnaire.getContactInformation().getName(), 1000)) {
@@ -313,27 +343,28 @@ public class IncidentFragment extends Fragment {
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_CODE_PICK) {
-                String path = data.getData().toString();
-                mPathes.add(path.toString());
-                String[] string = path.split("/");
-                mfileAdapter.add(string[string.length - 1]);
+                Uri path = data.getData();
+
+                String selectedImagePath = ImageFilePath.getPath(getActivity(), path);
+
+                java.io.File currentFile = new java.io.File(selectedImagePath);
+                com.risikous.android.model.questionnaire.part.File file = new com.risikous.android.model.questionnaire.part.File();
+
+                file.setName(currentFile.getName());
+                file.setFile(currentFile.getAbsoluteFile());
+                questionnaire.addAttachment(file);
+                mfileAdapter.add(currentFile.getName());
                 mfileAdapter.notifyDataSetChanged();
-                System.out.println("files::::::::" + mPathes.toString());
-            }
-            if(!mPathes.isEmpty()){
-                for(String currentPath : mPathes){
-                    String[] path = currentPath.split(":");
-                    java.io.File currentFile = new java.io.File(path[1]);
-                    com.risikous.android.model.questionnaire.part.File file = new com.risikous.android.model.questionnaire.part.File();
-                    file.setName(currentFile.getName());
-                    System.out.println("INFO:::::   " + currentFile.getAbsolutePath());
-                    file.setFile(currentFile);
-                    questionnaire.addAttachment(file);
+
+                fileCollection = questionnaire.getFileCollection();
+                Toast.makeText(getActivity(), currentFile.getName() + " wurde hinzugefügt.", Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < fileCollection.size(); i++) {
+                    System.out.println(fileCollection.size() + " -> Elemente der Liste::" + fileCollection.get(i).getName());
                 }
             }
         }
-
     }
+
 
     public class POST extends AsyncTask<Void, Void, String> {
 
@@ -358,8 +389,6 @@ public class IncidentFragment extends Fragment {
             Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
 
         }
-
     }
-
-
 }
+

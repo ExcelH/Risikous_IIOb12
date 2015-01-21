@@ -18,7 +18,7 @@ import com.risikous.android.model.comment.part.Text;
 import com.risikous.android.model.publications.Publication;
 import com.risikous.android.request.GetRequest;
 import com.risikous.android.request.PostRequest;
-import com.risikous.android.url.Constants;
+import com.risikous.android.url_uri.Constants;
 import com.risikous.android.xml.builder.BuildComment;
 import com.risikous.android.xml.parser.ParseComment;
 import com.risikous.android.xml.parser.ParsePublication;

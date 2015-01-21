@@ -2,6 +2,7 @@ package com.risikous.android.model.questionnaire;
 
 import com.risikous.android.model.questionnaire.part.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -87,12 +88,27 @@ public class Questionnaire {
         this.time = time;
     }
 
+    public List<File> getFileCollection() {
+        return fileCollection;
+    }
+
+    public void setFileCollection(List<File> fileCollection) {
+        this.fileCollection = fileCollection;
+    }
+
     public void addAttachment(File file){
+        if(fileCollection == null) this.fileCollection = new ArrayList<File>();
         fileCollection.add(file);
-        for(File fileName : fileCollection){
-            System.out.println(fileName.getName());
-        };
-    };
+    }
+
+    public void removeObjectFromList(String name){
+        for (int i=0; i<fileCollection.size(); i++) {
+            String string = fileCollection.get(i).getName();
+            if (string.equals(name)){
+                fileCollection.remove(i);
+            }
+        }
+    }
 
     public AdditionalNotes getAdditionalNotes() {
         return additionalNotes;
