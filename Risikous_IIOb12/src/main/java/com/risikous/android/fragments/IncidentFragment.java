@@ -18,12 +18,14 @@ import android.widget.*;
 import com.risikous.android.R;
 import com.risikous.android.model.questionnaire.Questionnaire;
 import com.risikous.android.model.questionnaire.part.*;
+import com.risikous.android.model.questionnaire.part.File;
 import com.risikous.android.request.PostRequest;
 import com.risikous.android.url_uri.Constants;
 import com.risikous.android.url_uri.ImageFilePath;
 import com.risikous.android.validation.ValidatorCollection;
 import com.risikous.android.xml.builder.BuildPublication;
 
+import java.io.*;
 import java.util.Calendar;
 import java.util.List;
 
@@ -172,11 +174,6 @@ public class IncidentFragment extends Fragment {
         v.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/jpeg");
-                Intent i = Intent.createChooser(intent, "File");
-                startActivityForResult(intent, REQUEST_CODE_PICK);*/
                 Intent intent = new Intent();
                 intent.setType("image/jpeg");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -287,10 +284,19 @@ public class IncidentFragment extends Fragment {
                 }
 
                 if (!fileCollection.isEmpty()) {
-                    for (int i = 0; i < fileCollection.size(); i++) {
-                        if (!vC.validateFileSize(fileCollection.get(i).getFile(), 5)) {
+                    for (File file : fileCollection) {
+                        if (!vC.validateFileSize(file.getFile(), 5)) {
                             validateStatus = false;
-                            Toast.makeText(getActivity(), "Das Foto " + fileCollection.get(i).getName() + " darf höchstens 5MB groß sein.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Das Foto " + file.getName() + " darf höchstens 5MB groß sein.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    if(validateStatus){
+                        for (File file : fileCollection) {
+                            try {
+                                file.setBase64(vC.encodeFileToBase64Binary(file.getFile()));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -313,7 +319,7 @@ public class IncidentFragment extends Fragment {
                                     Toast.makeText(getActivity(), "Meldung verschickt.", Toast.LENGTH_SHORT).show();
                                     BuildPublication bP = new BuildPublication();
                                     xml = bP.buildQuestionnaire(questionnaire);
-                                    System.out.println(xml);
+
                                     new POST(Constants.PUBLICATION_POST_URL, xml).execute();
                                     v.refreshDrawableState();
                                     break;

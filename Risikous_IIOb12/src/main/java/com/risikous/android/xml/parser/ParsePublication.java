@@ -17,17 +17,17 @@ public class ParsePublication {
     public Publication parseCompletedPublication(String xml, Publication publication) {
         ParseXML2LIST p = new ParseXML2LIST();
 
-        List<String> title = new LinkedList<>();
-        List<String> incidentReporter = new LinkedList<>();
-        List<String> minRPZofReporter = new LinkedList<>();
-        List<String> avgRPZofReporter = new LinkedList<>();
-        List<String> maxRPZofReporter = new LinkedList<>();
-        List<String> minRPZofQMB = new LinkedList<>();
-        List<String> avgRPZofQMB = new LinkedList<>();
-        List<String> maxRPZofQMB = new LinkedList<>();
-        List<String> category = new LinkedList<>();
-        List<String> action = new LinkedList<>();
-        List<String> assignedReports = new LinkedList<>();
+        List<String> title;
+        List<String> incidentReporter;
+        List<String> minRPZofReporter;
+        List<String> avgRPZofReporter;
+        List<String> maxRPZofReporter;
+        List<String> minRPZofQMB;
+        List<String> avgRPZofQMB;
+        List<String> maxRPZofQMB;
+        List<String> category;
+        List<String> action;
+        List<String> assignedReports;
 
         title = p.parseXML(xml, Title.class.getSimpleName().toLowerCase());
         incidentReporter = p.parseXML(xml, IncidentReport.class.getSimpleName().toLowerCase());
@@ -54,7 +54,6 @@ public class ParsePublication {
             publication.setAction(new Action(action.get(i)));
             publication.setAssignedReports(new AssignedReports(assignedReports.get(i)));
 
-
         }
 
         return publication;
@@ -63,13 +62,13 @@ public class ParsePublication {
     public List<Publication> parsePublication(String xml) {
         ParseXML2LIST p = new ParseXML2LIST();
 
-        List<String> pubID = new LinkedList<>();
-        List<String> entryDate = new LinkedList<>();
-        List<String> revisionDate = new LinkedList<>();
-        List<String> title = new LinkedList<>();
-        List<String> status = new LinkedList<>();
-        List<String> numberOfReports = new LinkedList<>();
-        List<String> numberOfComments = new LinkedList<>();
+        List<String> pubID;
+        List<String> entryDate;
+        List<String> revisionDate;
+        List<String> title;
+        List<String> status;
+        List<String> numberOfReports;
+        List<String> numberOfComments;
 
         pubID = p.parseXML(xml, "ID");
         entryDate = p.parseXML(xml, EntryDate.class.getSimpleName().toLowerCase());

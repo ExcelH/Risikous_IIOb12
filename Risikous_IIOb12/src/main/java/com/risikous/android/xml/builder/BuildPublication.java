@@ -52,7 +52,7 @@ public class BuildPublication {
             questionnaireString = sB.connectString(questionnaireString, "<" + q.getFiles().getTagName() + ">");
             for (int i = 0; i < q.getFileCollection().size(); i++) {
 
-                questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getFile().getTagName(), q.getFile().getBase64()));
+                questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getFile().getTagName(), q.getFileCollection().get(i).getBase64()));
 
             }
             questionnaireString = sB.connectString(questionnaireString, "</" + q.getFiles().getTagName() + ">");

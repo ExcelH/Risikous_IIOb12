@@ -14,7 +14,6 @@ public class Questionnaire {
     private ContactInformation contactInformation;
     private Date date;
     private DetectionRating detectionRating;
-    private File file;
     private List<File> fileCollection = null;
     private ImmediateMeasure immediateMeasure;
     private IncidentDescription incidentDescription;
@@ -25,6 +24,7 @@ public class Questionnaire {
     private ReportingArea reportingArea;
     private Significance significance;
     private Time time;
+    private File file = new File();
     private PointOfTime pointOfTime = new PointOfTime();
     private Files files = new Files();
     private RiskEstimation riskEstimation = new RiskEstimation();

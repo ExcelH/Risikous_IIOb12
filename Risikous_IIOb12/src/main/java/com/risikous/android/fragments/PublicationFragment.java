@@ -201,23 +201,20 @@ public class PublicationFragment extends Fragment {
 
     private List<Publication> GetPublication(String xml) {
         ParsePublication p = new ParsePublication();
-        List<Publication> results = p.parsePublication(xml);
 
-        return results;
+        return p.parsePublication(xml);
     }
 
     private List<Comment> GetComment(String xml) {
         ParseComment p = new ParseComment();
-        List<Comment> results = p.parseComment(xml);
 
-        return results;
+        return p.parseComment(xml);
     }
 
     private List<Comment> GetSubComment(String xml) {
         ParseSubComment p = new ParseSubComment();
-        List<Comment> results = p.parseComment(xml);
 
-        return results;
+        return p.parseComment(xml);
     }
 
 
