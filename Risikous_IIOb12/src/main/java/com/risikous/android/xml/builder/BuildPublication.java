@@ -48,14 +48,16 @@ public class BuildPublication {
                 questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getAdditionalNotes().getTagName(), q.getAdditionalNotes().getName()));
             questionnaireString = sB.connectString(questionnaireString, "</" + q.getOpinionOfReporter().getTagName() + ">");
         }
-        if (!q.getFileCollection().isEmpty()) {
-            questionnaireString = sB.connectString(questionnaireString, "<" + q.getFiles().getTagName() + ">");
-            for (int i = 0; i < q.getFileCollection().size(); i++) {
+        if (q.getFileCollection() != null) {
+            if (!q.getFileCollection().isEmpty()) {
+                questionnaireString = sB.connectString(questionnaireString, "<" + q.getFiles().getTagName() + ">");
+                for (int i = 0; i < q.getFileCollection().size(); i++) {
 
-                questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getFile().getTagName(), q.getFileCollection().get(i).getBase64()));
+                    questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getFile().getTagName(), q.getFileCollection().get(i).getBase64()));
 
+                }
+                questionnaireString = sB.connectString(questionnaireString, "</" + q.getFiles().getTagName() + ">");
             }
-            questionnaireString = sB.connectString(questionnaireString, "</" + q.getFiles().getTagName() + ">");
         }
         if (!q.getContactInformation().getName().isEmpty())
             questionnaireString = sB.connectString(questionnaireString, build.buildXMLTag(q.getContactInformation().getTagName(), q.getContactInformation().getName()));

@@ -1,5 +1,8 @@
 package com.risikous.android;
 
+import android.app.AlertDialog;
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,10 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -21,7 +21,7 @@ import com.risikous.android.fragments.PublicationFragment;
 
 public class MainActivity extends ActionBarActivity {
 
-    private Fragment mCurrentFragment;
+    private Fragment mCurrentFragment = null;
     private String[] mTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -41,30 +41,27 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+
+        mDrawerList.setAdapter(new ArrayAdapter<>(this,
                 R.layout.drawer_list_item, mTitles));
-        // Set the list's click listener
+
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.nav_drawer_open, R.string.nav_drawer_close) {
 
-            /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 setTitle(mTitles[_currentPosition]);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu();
             }
 
-            /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 setTitle("Risikous");
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu();
             }
         };
 
-        // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         configureActionbar();
@@ -94,7 +91,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
 
@@ -106,12 +102,10 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        // Handle your other action bar items...
 
         return super.onOptionsItemSelected(item);
     }
@@ -130,9 +124,6 @@ public class MainActivity extends ActionBarActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    /**
-     * Swaps fragments in the main content view
-     */
     private void selectItem(int position, boolean closeDrawerAfterSelection) {
 
         Fragment fragment = null;
@@ -143,6 +134,9 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case 1:
                 fragment = new IncidentFragment();
+                FragmentTransaction mFragmentTransaction = getFragmentManager()
+                        .beginTransaction();
+                mFragmentTransaction.addToBackStack(null);
                 _currentPosition = position;
                 break;
             case 2:
@@ -160,9 +154,10 @@ public class MainActivity extends ActionBarActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment)
+                    //.addToBackStack(null)
                     .commit();
 
-            // Highlight the selected item, update the title, and close the drawer
+
             mDrawerList.setItemChecked(position, true);
         }
 
@@ -178,13 +173,33 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        if (mCurrentFragment != null && mCurrentFragment instanceof PublicationFragment && ((PublicationFragment) mCurrentFragment).isCommentsContainerVisible()) {
-            ((PublicationFragment) mCurrentFragment).toggleCommmentsContainer();
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            System.out.println("currentFragment:::" + mCurrentFragment);
+            if (mCurrentFragment != null && mCurrentFragment instanceof InfoFragment) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                finish();
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                dialog.cancel();
+                                break;
+                        }
+                    }
+                };
 
-        } else {
-            super.onBackPressed();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Wollen Sie die Anwenung schließen?").setPositiveButton("OK", dialogClickListener)
+                        .setNegativeButton("Abbrechen", dialogClickListener).show();
+            }
+
+            if (mCurrentFragment != null && mCurrentFragment instanceof IncidentFragment || mCurrentFragment instanceof PublicationFragment) {
+                selectItem(0, true);
+                setTitle("Info");
+            }
         }
-
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +19,13 @@ import android.widget.*;
 import com.risikous.android.R;
 import com.risikous.android.model.questionnaire.Questionnaire;
 import com.risikous.android.model.questionnaire.part.*;
-import com.risikous.android.model.questionnaire.part.File;
 import com.risikous.android.request.PostRequest;
 import com.risikous.android.url_uri.Constants;
 import com.risikous.android.url_uri.ImageFilePath;
 import com.risikous.android.validation.ValidatorCollection;
 import com.risikous.android.xml.builder.BuildPublication;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -166,6 +166,7 @@ public class IncidentFragment extends Fragment {
                                 time_EditText.setText(sbHour + ":" + sbMinute);
                             }
                         }, mHour, mMinute, true);
+
                 tpd.show();
             }
         });
@@ -283,19 +284,21 @@ public class IncidentFragment extends Fragment {
                     }
                 }
 
-                if (!fileCollection.isEmpty()) {
-                    for (File file : fileCollection) {
-                        if (!vC.validateFileSize(file.getFile(), 5)) {
-                            validateStatus = false;
-                            Toast.makeText(getActivity(), "Das Foto " + file.getName() + " darf höchstens 5MB groß sein.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    if(validateStatus){
+                if (fileCollection != null) {
+                    if (!fileCollection.isEmpty()) {
                         for (File file : fileCollection) {
-                            try {
-                                file.setBase64(vC.encodeFileToBase64Binary(file.getFile()));
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            if (!vC.validateFileSize(file.getFile(), 5)) {
+                                validateStatus = false;
+                                Toast.makeText(getActivity(), "Das Foto " + file.getName() + " darf höchstens 5MB groß sein.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        if (validateStatus) {
+                            for (File file : fileCollection) {
+                                try {
+                                    file.setBase64(vC.encodeFileToBase64Binary(file.getFile()));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -315,11 +318,11 @@ public class IncidentFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which) {
                                 case DialogInterface.BUTTON_POSITIVE:
-                                    String xml = null;
+                                    String xml;
                                     Toast.makeText(getActivity(), "Meldung verschickt.", Toast.LENGTH_SHORT).show();
                                     BuildPublication bP = new BuildPublication();
                                     xml = bP.buildQuestionnaire(questionnaire);
-
+                                    Log.v("XML:::::::", xml);
                                     new POST(Constants.PUBLICATION_POST_URL, xml).execute();
                                     v.refreshDrawableState();
                                     break;
