@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import com.risikous.android.R;
 
 
-public class InfoFragment extends Fragment {
+public class HelpFragment extends Fragment {
 
 
-    public InfoFragment() {
+    public HelpFragment() {
 
     }
 
@@ -22,7 +22,7 @@ public class InfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        return inflater.inflate(R.layout.fragment_help, container, false);
     }
 
 

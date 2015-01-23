@@ -17,6 +17,8 @@ public class ParsePublication {
     public Publication parseCompletedPublication(String xml, Publication publication) {
         ParseXML2LIST p = new ParseXML2LIST();
 
+        String noEntry = "Kein Eintrag";
+
         List<String> title;
         List<String> incidentReporter;
         List<String> minRPZofReporter;
@@ -42,18 +44,29 @@ public class ParsePublication {
         assignedReports = p.parseXML(xml, AssignedReports.class.getSimpleName().toLowerCase());
 
         for (int i = 0; i < title.size(); i++) {
-            publication.setTitle(new Title(title.get(i)));
-            publication.setIncidentReport(new IncidentReport(incidentReporter.get(i)));
-            publication.setMinRPZofReporter(new MinRPZofReporter(minRPZofReporter.get(i)));
-            publication.setAvgRPZofReporter(new AvgRPZofReporter(avgRPZofReporter.get(i)));
-            publication.setMaxRPZofReporter(new MaxRPZofReporter(maxRPZofReporter.get(i)));
-            publication.setMinRPZofQMB(new MinRPZofQMB(minRPZofQMB.get(i)));
-            publication.setAvgRPZofQMB(new AvgRPZofQMB(avgRPZofQMB.get(i)));
-            publication.setMaxRPZofQMB(new MaxRPZofQMB(maxRPZofQMB.get(i)));
-            publication.setCategory(new Category(category.get(i)));
-            publication.setAction(new Action(action.get(i)));
-            publication.setAssignedReports(new AssignedReports(assignedReports.get(i)));
 
+            if(!title.isEmpty()) publication.setTitle(new Title(title.get(i)));
+            else publication.setTitle(new Title(noEntry));
+            if(!incidentReporter.isEmpty()) publication.setIncidentReport(new IncidentReport(incidentReporter.get(i)));
+            else publication.setIncidentReport(new IncidentReport(noEntry));
+            if(!minRPZofReporter.isEmpty()) publication.setMinRPZofReporter(new MinRPZofReporter(minRPZofReporter.get(i)));
+            else publication.setMinRPZofReporter(new MinRPZofReporter(noEntry));
+            if(!avgRPZofReporter.isEmpty()) publication.setAvgRPZofReporter(new AvgRPZofReporter(avgRPZofReporter.get(i)));
+            else publication.setAvgRPZofReporter(new AvgRPZofReporter(noEntry));
+            if(!maxRPZofReporter.isEmpty()) publication.setMaxRPZofReporter(new MaxRPZofReporter(maxRPZofReporter.get(i)));
+            else publication.setMaxRPZofReporter(new MaxRPZofReporter(noEntry));
+            if(!minRPZofQMB.isEmpty()) publication.setMinRPZofQMB(new MinRPZofQMB(minRPZofQMB.get(i)));
+            else publication.setMinRPZofQMB(new MinRPZofQMB(noEntry));
+            if(!avgRPZofQMB.isEmpty()) publication.setAvgRPZofQMB(new AvgRPZofQMB(avgRPZofQMB.get(i)));
+            else publication.setAvgRPZofQMB(new AvgRPZofQMB(noEntry));
+            if(!maxRPZofQMB.isEmpty()) publication.setMaxRPZofQMB(new MaxRPZofQMB(maxRPZofQMB.get(i)));
+            else publication.setMaxRPZofQMB(new MaxRPZofQMB(noEntry));
+            if(!category.isEmpty()) publication.setCategory(new Category(category.get(i)));
+            else publication.setCategory(new Category(noEntry));
+            if(!action.isEmpty()) publication.setAction(new Action(action.get(i)));
+            else publication.setAction(new Action(noEntry));
+            if(!assignedReports.isEmpty()) publication.setAssignedReports(new AssignedReports(assignedReports.get(i)));
+            else publication.setAssignedReports(new AssignedReports(noEntry));
         }
 
         return publication;
@@ -81,13 +94,13 @@ public class ParsePublication {
         List<Publication> publications = new LinkedList<>();
         for (int i = 0; i < pubID.size(); i++) {
             Publication publication = new Publication();
-            publication.setPubID(new PubID(pubID.get(i)));
-            publication.setEntryDate(new EntryDate(entryDate.get(i)));
-            publication.setRevisionDate(new RevisionDate(revisionDate.get(i)));
-            publication.setTitle(new Title(title.get(i)));
-            publication.setStatus(new Status(status.get(i)));
-            publication.setNumberOfReports(new NumberOfReports(numberOfReports.get(i)));
-            publication.setNumberOfComments(new NumberOfComments(numberOfComments.get(i)));
+            if(pubID.get(i) != null) publication.setPubID(new PubID(pubID.get(i)));
+            if(entryDate.get(i) != null) publication.setEntryDate(new EntryDate(entryDate.get(i)));
+            if(revisionDate.get(i) != null) publication.setRevisionDate(new RevisionDate(revisionDate.get(i)));
+            if(title.get(i) != null) publication.setTitle(new Title(title.get(i)));
+            if(status.get(i) != null) publication.setStatus(new Status(status.get(i)));
+            if(numberOfReports.get(i) != null) publication.setNumberOfReports(new NumberOfReports(numberOfReports.get(i)));
+            if(numberOfComments.get(i) != null) publication.setNumberOfComments(new NumberOfComments(numberOfComments.get(i)));
             publications.add(publication);
 
         }

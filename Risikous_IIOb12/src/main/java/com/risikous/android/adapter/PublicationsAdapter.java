@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import com.risikous.android.R;
 import com.risikous.android.model.publications.Publication;
 
@@ -52,18 +53,7 @@ public class PublicationsAdapter extends ArrayAdapter<Publication> {
         pubNumberOfReports.setText(currentPublication.getNumberOfReports().getNumberOfReports());
         pubNumberOfComments.setText(currentPublication.getNumberOfComments().getNumberOfComments());
 
-        //verschwinden
-
-        vi.findViewById(R.id.incidentReport).setVisibility(View.GONE);
-        vi.findViewById(R.id.minRPZofReporter).setVisibility(View.GONE);
-        vi.findViewById(R.id.avgRPZofReporter).setVisibility(View.GONE);
-        vi.findViewById(R.id.maxRPZofReporter).setVisibility(View.GONE);
-        vi.findViewById(R.id.minRPZofQMB).setVisibility(View.GONE);
-        vi.findViewById(R.id.avgRPZofQMB).setVisibility(View.GONE);
-        vi.findViewById(R.id.maxRPZofQMB).setVisibility(View.GONE);
-        vi.findViewById(R.id.category).setVisibility(View.GONE);
-        vi.findViewById(R.id.action).setVisibility(View.GONE);
-        vi.findViewById(R.id.assignedReports).setVisibility(View.GONE);
+        vi.findViewById(R.id.subpublication).setVisibility(View.GONE);
 
         return vi;
     }

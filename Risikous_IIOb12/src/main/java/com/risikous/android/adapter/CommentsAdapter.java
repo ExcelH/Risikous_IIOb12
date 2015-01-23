@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.risikous.android.R;
 import com.risikous.android.model.comment.Comment;
 
@@ -54,7 +56,9 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
 
         TextView author = (TextView) convertView.findViewById(R.id.author);
         TextView text = (TextView) convertView.findViewById(R.id.text);
-        TextView timeStamp = (TextView) convertView.findViewById(R.id.timestamp);
+        TextView timeStamp = (TextView) convertView.findViewById(R.id.timestamp_comment);
+
+        convertView.findViewById(R.id.comm4).setVisibility(View.GONE);
 
         author.setText(childText.getAuthor().getName());
         text.setText(childText.getText().getName());
@@ -95,15 +99,18 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
 
         TextView author = (TextView) convertView.findViewById(R.id.author);
         TextView text = (TextView) convertView.findViewById(R.id.text);
-        TextView timeStamp = (TextView) convertView.findViewById(R.id.timestamp);
-
-        author.setTypeface(null, Typeface.BOLD);
-        text.setTypeface(null, Typeface.BOLD);
-        timeStamp.setTypeface(null, Typeface.BOLD);
+        TextView timeStamp = (TextView) convertView.findViewById(R.id.timestamp_comment);
 
         author.setText(headerTitle.getAuthor().getName());
         text.setText(headerTitle.getText().getName());
         timeStamp.setText(headerTitle.getTimeStamp().getName());
+
+        convertView.findViewById(R.id.answercomment_Button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Antworten wird noch nicht unterstützt.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         return convertView;

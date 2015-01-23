@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/incident_report_date"
-                    android:id="@+id/textView5" android:layout_margin="5dp"/>
+                    android:id="@+id/revisiondatetext" android:layout_margin="5dp"/>
             <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

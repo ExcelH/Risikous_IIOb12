@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Risikous_IIOb12</string>
+    <string name="app_name">Risikous</string>
     <string name="activity_main_name">Name:</string>
     <string name="activity_main_password">Passwort:</string>
     <string name="activity_main_button_login">Anmelden</string>
@@ -9,6 +9,9 @@
     <string name="incident_report_required_fields">*Pflichtfelder</string>
     <string name="incident_report_circle_message">Meldekreis*</string>
     <string name="incident_report_spinner">--</string>
+
+    <string name="comment_button_author">Author (optional)</string>
+    <string name="comment_button_comment">Kommentar</string>
 
     <string-array name="spinner_arrays">
         <item>M01</item>

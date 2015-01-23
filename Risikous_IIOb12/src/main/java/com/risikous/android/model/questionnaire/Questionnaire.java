@@ -96,15 +96,15 @@ public class Questionnaire {
         this.fileCollection = fileCollection;
     }
 
-    public void addAttachment(File file){
-        if(fileCollection == null) this.fileCollection = new ArrayList<File>();
+    public void addAttachment(File file) {
+        if (fileCollection == null) this.fileCollection = new ArrayList<File>();
         fileCollection.add(file);
     }
 
-    public void removeObjectFromList(String name){
-        for (int i=0; i<fileCollection.size(); i++) {
+    public void removeObjectFromList(String name) {
+        for (int i = 0; i < fileCollection.size(); i++) {
             String string = fileCollection.get(i).getName();
-            if (string.equals(name)){
+            if (string.equals(name)) {
                 fileCollection.remove(i);
             }
         }

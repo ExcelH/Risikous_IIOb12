@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" android:background="@color/risikousmainbackground"
-                android:minHeight="400dp"
-                android:tag="publication_fragment">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/risikousmainbackground"
+    android:minHeight="400dp"
+    android:orientation="vertical"
+    android:tag="publication_fragment"
+    android:id="@+id/publication_fragment">
+
     <ListView
+        android:id="@+id/listView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/commentLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/risikousmainbackground"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <include
+            android:id="@+id/publicationLayout"
+            layout="@layout/publication_layout" />
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/listView"/>
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/commentLayout"
-            android:visibility="gone"
-            android:background="@color/risikousmainbackground" android:clickable="true">
-        <include layout="@layout/publication_layout"
-                 android:id="@+id/publicationLayout"/>
-        <ExpandableListView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minHeight="400dp"
-                android:id="@+id/expandableListView"/>
+            android:text="Kommentare"
+            android:id="@+id/comment_button" android:layout_margin="5dp"
+            android:background="@drawable/risikousbuttonpress" android:textColor="#ffffffff"
+            android:padding="5dp"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:layout_gravity="center"
+            />
     </LinearLayout>
 
 

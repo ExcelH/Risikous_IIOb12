@@ -15,6 +15,9 @@ import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.risikous.android.fragments.CommentFragment;
+import com.risikous.android.fragments.HelpFragment;
 import com.risikous.android.fragments.IncidentFragment;
 import com.risikous.android.fragments.InfoFragment;
 import com.risikous.android.fragments.PublicationFragment;
@@ -29,6 +32,9 @@ public class MainActivity extends ActionBarActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private int _currentPosition = -1;
+
+    public MainActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +74,9 @@ public class MainActivity extends ActionBarActivity {
 
         mDrawerLayout.openDrawer(mDrawerList);
         mDrawerList.setSelection(0);
-        selectItem(0, false);
+        selectItem(0, true);
+
+
     }
 
     private void configureActionbar() {
@@ -144,8 +152,13 @@ public class MainActivity extends ActionBarActivity {
                 _currentPosition = position;
                 break;
             case 3:
+                fragment = new HelpFragment();
+                _currentPosition = position;
+                break;
+            case 4:
                 closeDrawerAfterSelection = false;
                 break;
+
 
         }
 
@@ -154,7 +167,6 @@ public class MainActivity extends ActionBarActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, fragment)
-                    //.addToBackStack(null)
                     .commit();
 
 
@@ -164,7 +176,13 @@ public class MainActivity extends ActionBarActivity {
         if (closeDrawerAfterSelection) {
             mDrawerLayout.closeDrawer(mDrawerList);
         }
+
+        if (!closeDrawerAfterSelection){
+            mDrawerLayout.openDrawer(mDrawerList);
+        }
     }
+
+
 
     @Override
     public void setTitle(CharSequence title) {
@@ -175,7 +193,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            System.out.println("currentFragment:::" + mCurrentFragment);
             if (mCurrentFragment != null && mCurrentFragment instanceof InfoFragment) {
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
@@ -195,9 +212,24 @@ public class MainActivity extends ActionBarActivity {
                         .setNegativeButton("Abbrechen", dialogClickListener).show();
             }
 
-            if (mCurrentFragment != null && mCurrentFragment instanceof IncidentFragment || mCurrentFragment instanceof PublicationFragment) {
-                selectItem(0, true);
-                setTitle("Info");
+            if (mCurrentFragment != null && mCurrentFragment instanceof IncidentFragment || mCurrentFragment instanceof PublicationFragment || mCurrentFragment instanceof HelpFragment) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                selectItem(0, true);
+                                setTitle("Info");
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                dialog.cancel();
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Wollen Sie zu dem Startbildschirm zurückkehren?").setPositiveButton("OK", dialogClickListener)
+                        .setNegativeButton("Abbrechen", dialogClickListener).show();
             }
         }
         return super.onKeyDown(keyCode, event);

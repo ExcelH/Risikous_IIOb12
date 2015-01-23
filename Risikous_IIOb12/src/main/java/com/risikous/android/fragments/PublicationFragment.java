@@ -3,11 +3,16 @@ package com.risikous.android.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.*;
 import android.widget.*;
+
+import com.risikous.android.MainActivity;
 import com.risikous.android.R;
 import com.risikous.android.adapter.CommentsAdapter;
 import com.risikous.android.adapter.PublicationsAdapter;
@@ -33,9 +38,9 @@ import java.util.List;
 public class PublicationFragment extends Fragment {
 
     private ListView publicationListView;
-    private ExpandableListView expandableListView;
-    private LinearLayout publicationIDContainer;
+    private RelativeLayout publicationIDContainer;
     private LinearLayout commentsContainer;
+    private ExpandableListView expandableListView;
     private String ClickID = null;
 
     public PublicationFragment() {
@@ -48,8 +53,9 @@ public class PublicationFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_publication, container, false);
         publicationListView = (ListView) v.findViewById(R.id.listView);
         expandableListView = (ExpandableListView) v.findViewById(R.id.expandableListView);
-        publicationIDContainer = (LinearLayout) v.findViewById(R.id.publicationLayout);
+        publicationIDContainer = (RelativeLayout) v.findViewById(R.id.publicationLayout);
         commentsContainer = (LinearLayout) v.findViewById(R.id.commentLayout);
+
 
         new GET(new ResponseCallback() {
             @Override
@@ -77,49 +83,41 @@ public class PublicationFragment extends Fragment {
                                 Publication tmp = new Publication();
                                 ParsePublication parsePublication = new ParsePublication();
                                 parsePublication.parseCompletedPublication(s, tmp);
-                                ((TextView) publicationIDContainer.findViewById(R.id.incidentReport)).setText(tmp.getIncidentReport().getName());
-                                ((TextView) publicationIDContainer.findViewById(R.id.minRPZofReporter)).setText(tmp.getMinRPZofReporter().getName());
-                                ((TextView) publicationIDContainer.findViewById(R.id.avgRPZofReporter)).setText(tmp.getAvgRPZofReporter().getName());
-                                ((TextView) publicationIDContainer.findViewById(R.id.maxRPZofReporter)).setText(tmp.getMaxRPZofReporter().getName());
-                                ((TextView) publicationIDContainer.findViewById(R.id.minRPZofQMB)).setText(tmp.getMinRPZofQMB().getName());
-                                ((TextView) publicationIDContainer.findViewById(R.id.avgRPZofQMB)).setText(tmp.getAvgRPZofQMB().getName());
-                                ((TextView) publicationIDContainer.findViewById(R.id.maxRPZofQMB)).setText(tmp.getMaxRPZofQMB().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.incidentreport)).setText(tmp.getIncidentReport().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.minrpzofreporter)).setText(tmp.getMinRPZofReporter().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.avgrpzofreporter)).setText(tmp.getAvgRPZofReporter().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.maxrpzofreporter)).setText(tmp.getMaxRPZofReporter().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.minrpzofqmb)).setText(tmp.getMinRPZofQMB().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.avgrpzofqmb)).setText(tmp.getAvgRPZofQMB().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.maxrpzofqmb)).setText(tmp.getMaxRPZofQMB().getName());
                                 ((TextView) publicationIDContainer.findViewById(R.id.category)).setText(tmp.getCategory().getName());
                                 ((TextView) publicationIDContainer.findViewById(R.id.action)).setText(tmp.getAction().getName());
-                                ((TextView) publicationIDContainer.findViewById(R.id.assignedReports)).setText(tmp.getAssignedReports().getName());
+                                ((TextView) publicationIDContainer.findViewById(R.id.assignedreports)).setText(tmp.getAssignedReports().getName());
                             }
                         }, Constants.PUBLICATION_GET_FULL_PUB_URL(fullObject.getPubID().getPubID())).execute();
 
                         ClickID = fullObject.getPubID().getPubID();
                         toggleCommmentsContainer();
-                        new GET(new ResponseCallback() {
-                            @Override
-                            public void onResponse(String s) {
-                                List<Comment> comment = GetComment(s);
-                                List<Comment> subComment = GetSubComment(s);
-                                HashMap<Comment, List<Comment>> commentHashMap = new HashMap<Comment, List<Comment>>();
-                                for (Comment tmpComment : comment) {
-                                    List<Comment> tmpSubComments = new ArrayList<Comment>();
-                                    Iterator<Comment> i = subComment.iterator();
-                                    while (i.hasNext()) {
-                                        Comment tmpSubComment = i.next();
-                                        if (tmpSubComment.getPubID() != null && tmpComment.getPubID() != null && tmpComment.getPubID().getName().equalsIgnoreCase(tmpSubComment.getPubID().getName())) {
-                                            tmpSubComments.add(tmpSubComment);
-                                            i.remove();
-                                        }
-                                    }
-                                    commentHashMap.put(tmpComment, tmpSubComments);
-                                }
-                                expandableListView.setAdapter(new CommentsAdapter(getActivity(), comment, commentHashMap));
 
-                            }
-                        }, Constants.COMMENT_GET_URL(fullObject.getPubID().getPubID())).execute();
 
                     }
                 });
             }
         }, Constants.PUBLICATION_GET_URL).execute();
 
+        v.findViewById(R.id.comment_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new CommentFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("pubID", ClickID);
+                fragment.setArguments(bundle);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content_frame, fragment);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.commit();
+            }
+        });
 
         return v;
     }
@@ -139,7 +137,9 @@ public class PublicationFragment extends Fragment {
         alertDialog.setTitle("Kommentar hinzufügen");
 
         final EditText author = new EditText(getActivity());
+        author.setHint("Author (optional)");
         final EditText commentText = new EditText(getActivity());
+        commentText.setHint("Kommentar");
 
         LinearLayout ll = new LinearLayout(getActivity());
         ll.setOrientation(LinearLayout.VERTICAL);
@@ -204,19 +204,6 @@ public class PublicationFragment extends Fragment {
 
         return p.parsePublication(xml);
     }
-
-    private List<Comment> GetComment(String xml) {
-        ParseComment p = new ParseComment();
-
-        return p.parseComment(xml);
-    }
-
-    private List<Comment> GetSubComment(String xml) {
-        ParseSubComment p = new ParseSubComment();
-
-        return p.parseComment(xml);
-    }
-
 
     private interface ResponseCallback {
         public void onResponse(String s);

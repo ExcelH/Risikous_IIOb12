@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
 import com.risikous.android.R;
 import com.risikous.android.model.questionnaire.Questionnaire;
 import com.risikous.android.model.questionnaire.part.*;
