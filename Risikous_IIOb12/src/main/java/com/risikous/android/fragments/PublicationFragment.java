@@ -39,7 +39,7 @@ public class PublicationFragment extends Fragment {
 
     private ListView publicationListView;
     private RelativeLayout publicationIDContainer;
-    private LinearLayout commentsContainer;
+    private View commentsContainer;
     private ExpandableListView expandableListView;
     private String ClickID = null;
 
@@ -54,7 +54,7 @@ public class PublicationFragment extends Fragment {
         publicationListView = (ListView) v.findViewById(R.id.listView);
         expandableListView = (ExpandableListView) v.findViewById(R.id.expandableListView);
         publicationIDContainer = (RelativeLayout) v.findViewById(R.id.publicationLayout);
-        commentsContainer = (LinearLayout) v.findViewById(R.id.commentLayout);
+        commentsContainer =  v.findViewById(R.id.commentLayout);
 
 
         new GET(new ResponseCallback() {
@@ -120,6 +120,14 @@ public class PublicationFragment extends Fragment {
         });
 
         return v;
+    }
+
+    public boolean onBackPressed () {
+        if(commentsContainer.getVisibility() == View.VISIBLE) {
+            commentsContainer.setVisibility(View.GONE);
+            return true;
+        }
+        return false;
     }
 
     @Override

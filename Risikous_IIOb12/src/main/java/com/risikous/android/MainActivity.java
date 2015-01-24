@@ -177,11 +177,10 @@ public class MainActivity extends ActionBarActivity {
             mDrawerLayout.closeDrawer(mDrawerList);
         }
 
-        if (!closeDrawerAfterSelection){
+        if (!closeDrawerAfterSelection) {
             mDrawerLayout.openDrawer(mDrawerList);
         }
     }
-
 
 
     @Override
@@ -190,7 +189,58 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setTitle(mTitle);
     }
 
+
     @Override
+    public void onBackPressed() {
+        if (mCurrentFragment != null && mCurrentFragment instanceof InfoFragment) {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            finish();
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            dialog.cancel();
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Wollen Sie die Anwenung schließen?").setPositiveButton("OK", dialogClickListener)
+                    .setNegativeButton("Abbrechen", dialogClickListener).show();
+        }
+
+        if (mCurrentFragment != null && mCurrentFragment instanceof PublicationFragment) {
+            if(((PublicationFragment) mCurrentFragment).onBackPressed()){
+                return;
+            }
+
+        }
+
+        if (mCurrentFragment != null && mCurrentFragment instanceof IncidentFragment || mCurrentFragment instanceof HelpFragment || mCurrentFragment instanceof PublicationFragment) {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            selectItem(0, true);
+                            setTitle("Info");
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            dialog.cancel();
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Wollen Sie zu dem Startbildschirm zurückkehren?").setPositiveButton("OK", dialogClickListener)
+                    .setNegativeButton("Abbrechen", dialogClickListener).show();
+        }
+        //super.onBackPressed();
+    }
+
+    /*@Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (mCurrentFragment != null && mCurrentFragment instanceof InfoFragment) {
@@ -233,5 +283,5 @@ public class MainActivity extends ActionBarActivity {
             }
         }
         return super.onKeyDown(keyCode, event);
-    }
+    }*/
 }

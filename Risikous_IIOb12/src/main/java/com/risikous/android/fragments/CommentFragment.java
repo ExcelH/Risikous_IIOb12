@@ -55,6 +55,7 @@ public class CommentFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_comment, container, false);
         expandableListView = (ExpandableListView) v.findViewById(R.id.expandableListView);
 
+        setHasOptionsMenu(true);
         Bundle bundle = this.getArguments();
         ClickID = bundle.getString("pubID");
 
