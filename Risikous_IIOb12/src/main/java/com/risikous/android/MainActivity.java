@@ -1,7 +1,10 @@
 package com.risikous.android;
 
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v4.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.risikous.android.fragments.CommentFragment;
 import com.risikous.android.fragments.HelpFragment;
@@ -32,6 +36,7 @@ public class MainActivity extends ActionBarActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private int _currentPosition = -1;
+    private Fragment replaceFragement;
 
     public MainActivity() {
     }
@@ -141,15 +146,16 @@ public class MainActivity extends ActionBarActivity {
                 _currentPosition = position;
                 break;
             case 1:
+                if(isConnected()){
                 fragment = new IncidentFragment();
-                FragmentTransaction mFragmentTransaction = getFragmentManager()
-                        .beginTransaction();
-                mFragmentTransaction.addToBackStack(null);
-                _currentPosition = position;
+                _currentPosition = position;}
+                else Toast.makeText(this, "Keine Internetverbindung.", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                fragment = new PublicationFragment();
-                _currentPosition = position;
+                if(isConnected()){
+                    fragment = new PublicationFragment();
+                    _currentPosition = position;}
+                else Toast.makeText(this, "Keine Internetverbindung.", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
                 fragment = new HelpFragment();
@@ -164,9 +170,11 @@ public class MainActivity extends ActionBarActivity {
 
         if (fragment != null) {
             mCurrentFragment = fragment;
+            if (mCurrentFragment instanceof PublicationFragment)
+                replaceFragement = mCurrentFragment;
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment)
+            FragmentTransaction fT = fragmentManager.beginTransaction();
+            fT.replace(R.id.content_frame, fragment)
                     .commit();
 
 
@@ -182,6 +190,17 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    public void startCommentActivity(String clickID){
+        Fragment fragment = new CommentFragment();
+        mCurrentFragment = fragment;
+        Bundle bundle = new Bundle();
+        bundle.putString("pubID", clickID);
+        fragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.content_frame, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commit();
+    }
 
     @Override
     public void setTitle(CharSequence title) {
@@ -212,7 +231,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if (mCurrentFragment != null && mCurrentFragment instanceof PublicationFragment) {
-            if(((PublicationFragment) mCurrentFragment).onBackPressed()){
+            if (((PublicationFragment) mCurrentFragment).onBackPressed()) {
                 return;
             }
 
@@ -237,9 +256,18 @@ public class MainActivity extends ActionBarActivity {
             builder.setMessage("Wollen Sie zu dem Startbildschirm zurückkehren?").setPositiveButton("OK", dialogClickListener)
                     .setNegativeButton("Abbrechen", dialogClickListener).show();
         }
-        //super.onBackPressed();
+
+        if (mCurrentFragment != null && mCurrentFragment instanceof CommentFragment) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,replaceFragement).commit();
+            mCurrentFragment = replaceFragement;
+        }
     }
 
+    public boolean isConnected(){
+        ConnectivityManager cM = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cM.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
     /*@Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

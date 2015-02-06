@@ -108,14 +108,7 @@ public class PublicationFragment extends Fragment {
         v.findViewById(R.id.comment_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new CommentFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("pubID", ClickID);
-                fragment.setArguments(bundle);
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content_frame, fragment);
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.commit();
+                ((MainActivity) getActivity()).startCommentActivity(ClickID);
             }
         });
 

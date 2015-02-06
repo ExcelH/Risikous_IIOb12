@@ -30,7 +30,7 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/subbackgroundgradient"
             android:padding="5dp"
-            android:text="CIRCS Prozess"
+            android:text="CIRS Prozess"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/subbackgroundgradient"
             android:padding="5dp"
-            android:text="Was ist CIRCS?"
+            android:text="Was ist CIRS?"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView

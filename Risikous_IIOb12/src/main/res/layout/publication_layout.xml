@@ -239,7 +239,8 @@
             <RelativeLayout
                 android:id="@+id/sub2"
                 android:layout_width="fill_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:layout_below="@+id/sub1">
 
                 <TextView
@@ -522,7 +523,8 @@
             <RelativeLayout
                 android:id="@+id/sub11"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:layout_below="@+id/sub10"
                 android:orientation="vertical">
 
