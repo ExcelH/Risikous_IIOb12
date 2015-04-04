@@ -37,14 +37,6 @@ public class ParsePublication {
         commentDB = new SQLiteHelper_Comment(activity);
         subCommentDB = new SQLiteHelper_SubComment(activity);
 
-        for(int i = 0; i < commentDB.getAllComments().size(); i++){
-            commentDB.deleteComment(commentDB.getAllComments().get(i));
-        }
-
-        for(int i = 0; i < subCommentDB.getAllSubComments().size(); i++){
-            subCommentDB.deleteSubComment(subCommentDB.getAllSubComments().get(i));
-        }
-
         final List<String> pubID;
         List<String> entryDate;
         List<String> revisionDate;

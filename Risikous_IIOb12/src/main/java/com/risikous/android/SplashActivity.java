@@ -20,6 +20,8 @@ public class SplashActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        this.deleteDatabase("commentDB");
+        this.deleteDatabase("subCommentDB");
         new GetData(this);
 
         new Handler().postDelayed(new Runnable() {

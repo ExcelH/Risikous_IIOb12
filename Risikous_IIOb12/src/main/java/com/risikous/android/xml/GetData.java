@@ -66,6 +66,7 @@ public class GetData {
     }
 
     private void GetPublication(String xml) {
+
         SQLiteHelper_Publication db = new SQLiteHelper_Publication(activity);
         ParsePublication p = new ParsePublication(activity);
         p.parsePublication(xml, db);
