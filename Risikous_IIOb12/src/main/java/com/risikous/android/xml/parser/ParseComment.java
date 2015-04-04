@@ -48,10 +48,11 @@ public class ParseComment {
 
         for (int i = 0; i < author.size(); i++) {
             Comment comment = new Comment();
-            comment.setPubID(new PubID(pubID.get(i)));
-            comment.setAuthor(new Author(author.get(i)));
-            comment.setText(new Text(text.get(i)));
-            comment.setTimeStamp(new TimeStamp(timeStamp.get(i)));
+            comment.setPubIDDB(pubID.get(i));
+            System.out.println(" Comment ID "+pubID.get(i));
+            comment.setAuthorDB(author.get(i));
+            comment.setTextDB(text.get(i));
+            comment.setTimeStampDB(timeStamp.get(i));
 
             if (comment.getPubIDDB() != null)
                 db.addComment(comment);

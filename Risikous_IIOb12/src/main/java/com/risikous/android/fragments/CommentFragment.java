@@ -65,11 +65,24 @@ public class CommentFragment extends Fragment {
 
         commentDB = new SQLiteHelper_Comment(getActivity());
         subCommentDB = new SQLiteHelper_SubComment(getActivity());
-        List<Comment> comment = commentDB.getAllComments();
-        System.out.println(" List Size ::: "+comment.size());
-        for(int i =0;i<comment.size();i++)
-            System.out.println(" List Comment ::: "+comment.get(i).getText().getName());
-        List<Comment> subComment = subCommentDB.getAllSubComments();
+        List<Comment> allComments = commentDB.getAllComments();
+        List<Comment> allSubComments = subCommentDB.getAllSubComments();
+
+        List<Comment> comment = new ArrayList<>();
+        List<Comment> subComment = new ArrayList<>();
+
+        for(int i=0;i<allComments.size();i++){
+            System.out.println(" ClickID "+ClickID+" "+allComments.get(i).getPubID().getName());
+            if(allComments.get(i).getPubID().getName() == ClickID){
+                comment.add(allComments.get(i));
+            }
+        }
+
+        for(int i=0;i<allSubComments.size();i++){
+            if(allSubComments.get(i).getPubID().getName() == ClickID){
+                subComment.add(allSubComments.get(i));
+            }
+        }
 
         ((TextView) v.findViewById(R.id.comment_title)).setText("Kommentare zu " + ClickID);
 
@@ -88,7 +101,6 @@ public class CommentFragment extends Fragment {
         }
         expandableListView.setAdapter(new CommentsAdapter(getActivity(), comment, commentHashMap));
         getActivity().supportInvalidateOptionsMenu();
-
 
         return v;
     }
