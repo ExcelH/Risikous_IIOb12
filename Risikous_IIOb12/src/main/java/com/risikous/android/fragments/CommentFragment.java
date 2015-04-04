@@ -72,14 +72,13 @@ public class CommentFragment extends Fragment {
         List<Comment> subComment = new ArrayList<>();
 
         for(int i=0;i<allComments.size();i++){
-            System.out.println(" ClickID "+ClickID+" "+allComments.get(i).getPubID().getName());
-            if(allComments.get(i).getPubID().getName() == ClickID){
+            if(allComments.get(i).getPubID().getName().equals(ClickID)){
                 comment.add(allComments.get(i));
             }
         }
 
         for(int i=0;i<allSubComments.size();i++){
-            if(allSubComments.get(i).getPubID().getName() == ClickID){
+            if(allSubComments.get(i).getPubID().getName().equals(ClickID)){
                 subComment.add(allSubComments.get(i));
             }
         }

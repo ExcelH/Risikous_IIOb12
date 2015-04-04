@@ -33,30 +33,32 @@ import java.util.List;
 
 public class ParseComment {
 
-    public void parseComment(String xml, SQLiteHelper_Comment db) {
+    public void parseComment(String xml, SQLiteHelper_Comment db, String publicationID) {
         ParseXML2LIST p = new ParseXML2LIST();
 
-        List<String> pubID;
+        List<String> comID;
         List<String> author;
         List<String> text;
         List<String> timeStamp;
 
-        pubID = p.parseXML(xml, "ID");
+        comID = p.parseXML(xml, "ID");
         author = p.parseXML(xml, Author.class.getSimpleName().toLowerCase());
         text = p.parseXML(xml, Text.class.getSimpleName().toLowerCase());
         timeStamp = p.parseXML(xml, TimeStamp.class.getSimpleName().toLowerCase());
 
-        for (int i = 0; i < author.size(); i++) {
+
+        for (int i = 0; i < text.size(); i++) {
             Comment comment = new Comment();
-            comment.setPubIDDB(pubID.get(i));
-            System.out.println(" Comment ID "+pubID.get(i));
+            comment.setComIDDB(comID.get(i));
             comment.setAuthorDB(author.get(i));
             comment.setTextDB(text.get(i));
             comment.setTimeStampDB(timeStamp.get(i));
+            comment.setPubIDDB(publicationID);
 
-            if (comment.getPubIDDB() != null)
+            if (comment.getTextDB() != null)
                 db.addComment(comment);
 
         }
     }
 }
+

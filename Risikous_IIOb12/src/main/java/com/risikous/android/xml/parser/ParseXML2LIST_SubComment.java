@@ -2,7 +2,7 @@ package com.risikous.android.xml.parser;
 
 import com.risikous.android.model.comment.Comment;
 import com.risikous.android.model.comment.part.Author;
-import com.risikous.android.model.comment.part.PubID;
+import com.risikous.android.model.comment.part.ComID;
 import com.risikous.android.model.comment.part.Text;
 import com.risikous.android.model.comment.part.TimeStamp;
 
@@ -11,13 +11,13 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Created by Excel on 10.01.2015.
@@ -62,9 +62,9 @@ public class ParseXML2LIST_SubComment {
                     if (tagName.equalsIgnoreCase(target)) {
                         mIsTarget = true;
                         mNewComment = new Comment();
-                        PubID pubID = new PubID();
-                        pubID.setName(mCurrentCommentID);
-                        mNewComment.setPubID(pubID);
+                        ComID comID = new ComID();
+                        comID.setName(mCurrentCommentID);
+                        mNewComment.setComID(comID);
                     }
 
                 }

@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.risikous.android.model.comment.Comment;
 import com.risikous.android.model.comment.part.Author;
+import com.risikous.android.model.comment.part.ComID;
 import com.risikous.android.model.comment.part.PubID;
 import com.risikous.android.model.comment.part.Text;
 import com.risikous.android.model.comment.part.TimeStamp;
@@ -32,8 +33,10 @@ public class SQLiteHelper_Comment extends SQLiteOpenHelper {
     private static final String COMMENTPUBID = "commentPubID";
     private static final String COMMENTTEXT = "commentText";
     private static final String COMMENTTIMESTAMP = "commentTimestamp";
+    private static final String COMMENTCOMID = "commentComID";
 
-    private static final String[] COLUMNS = {KEY_ID, COMMENTAUTHOR, COMMENTPUBID, COMMENTTEXT, COMMENTTIMESTAMP};
+
+    private static final String[] COLUMNS = {KEY_ID, COMMENTAUTHOR, COMMENTCOMID, COMMENTTEXT, COMMENTTIMESTAMP, COMMENTPUBID};
 
 
     public SQLiteHelper_Comment(Context context) {
@@ -49,9 +52,10 @@ public class SQLiteHelper_Comment extends SQLiteOpenHelper {
         String CREATE_COMMENTS_TABLE = "CREATE TABLE comments ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "commentAuthor TEXT, " +
-                "commentPubID TEXT, " +
+                "commentComID TEXT, " +
                 "commentText TEXT, " +
-                "commentTimestamp TEXT)";
+                "commentTimestamp TEXT, " +
+                "commentPubID TEXT)";
 
         db.execSQL(CREATE_COMMENTS_TABLE);
     }
@@ -74,9 +78,10 @@ public class SQLiteHelper_Comment extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(COMMENTAUTHOR, comment.getAuthorDB());
-        values.put(COMMENTPUBID, comment.getPubIDDB());
+        values.put(COMMENTCOMID, comment.getComIDDB());
         values.put(COMMENTTEXT, comment.getTextDB());
         values.put(COMMENTTIMESTAMP, comment.getTimeStampDB());
+        values.put(COMMENTPUBID, comment.getPubIDDB());
 
         db.insert(TABLE_COMMENTS, null, values);
         db.close();
@@ -97,9 +102,10 @@ public class SQLiteHelper_Comment extends SQLiteOpenHelper {
                 comment = new Comment();
                 comment.setID(cursor.getInt(0));
                 comment.setAuthor(new Author(cursor.getString(1)));
-                comment.setPubID(new PubID(cursor.getString(2)));
+                comment.setComID(new ComID(cursor.getString(2)));
                 comment.setText(new Text(cursor.getString(3)));
                 comment.setTimeStamp(new TimeStamp(cursor.getString(4)));
+                comment.setPubID(new PubID(cursor.getString(5)));
 
                 comments.add(comment);
             } while (cursor.moveToNext());
@@ -113,10 +119,12 @@ public class SQLiteHelper_Comment extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(KEY_ID, comment.getID());
         values.put(COMMENTAUTHOR, comment.getAuthorDB());
-        values.put(COMMENTPUBID, comment.getPubIDDB());
+        values.put(COMMENTCOMID, comment.getComIDDB());
         values.put(COMMENTTEXT, comment.getTextDB());
         values.put(COMMENTTIMESTAMP, comment.getTimeStampDB());
+        values.put(COMMENTPUBID, comment.getPubIDDB());
 
         int i = db.update(TABLE_COMMENTS,
                 values,
@@ -136,7 +144,7 @@ public class SQLiteHelper_Comment extends SQLiteOpenHelper {
 
         db.delete(TABLE_COMMENTS,
                 KEY_ID + " = ?",
-                new String[]{String.valueOf(comment.getPubIDDB())});
+                new String[]{String.valueOf(comment.getID())});
 
         db.close();
 

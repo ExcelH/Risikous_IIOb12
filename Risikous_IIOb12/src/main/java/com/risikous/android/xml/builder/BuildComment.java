@@ -15,7 +15,7 @@ public class BuildComment {
         BuildXMLTag build = new BuildXMLTag();
         StringBuilder sB = new StringBuilder();
 
-        commentString = sB.connectString(commentString, build.buildXMLTag(comment.getPubID().getTagName(), comment.getPubID().getName()));
+        commentString = sB.connectString(commentString, build.buildXMLTag(comment.getComID().getTagName(), comment.getComID().getName()));
         commentString = sB.connectString(commentString, build.buildXMLTag(comment.getAuthor().getTagName(), comment.getAuthor().getName()));
         commentString = sB.connectString(commentString, build.buildXMLTag(comment.getText().getTagName(), comment.getText().getName()));
 

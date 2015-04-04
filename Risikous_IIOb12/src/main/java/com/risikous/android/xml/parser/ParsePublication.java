@@ -24,6 +24,8 @@ public class ParsePublication {
 
 
     Activity activity;
+    SQLiteHelper_Comment commentDB;
+    SQLiteHelper_SubComment subCommentDB;
 
     public ParsePublication(Activity activity) {
         this.activity = activity;
@@ -32,7 +34,18 @@ public class ParsePublication {
     public void parsePublication(final String xml, final SQLiteHelper_Publication db) {
         final ParseXML2LIST p = new ParseXML2LIST();
 
-        List<String> pubID;
+        commentDB = new SQLiteHelper_Comment(activity);
+        subCommentDB = new SQLiteHelper_SubComment(activity);
+
+        for(int i = 0; i < commentDB.getAllComments().size(); i++){
+            commentDB.deleteComment(commentDB.getAllComments().get(i));
+        }
+
+        for(int i = 0; i < subCommentDB.getAllSubComments().size(); i++){
+            subCommentDB.deleteSubComment(subCommentDB.getAllSubComments().get(i));
+        }
+
+        final List<String> pubID;
         List<String> entryDate;
         List<String> revisionDate;
         List<String> title;
@@ -51,6 +64,7 @@ public class ParsePublication {
 
         for (int i = 0; i < pubID.size(); i++) {
             final Publication publication = new Publication();
+            final String publicationID = pubID.get(i);
             if (pubID.get(i) != null) publication.setPubIDDB(pubID.get(i));
             if (entryDate.get(i) != null) publication.setEntryDateDB(entryDate.get(i));
             if (revisionDate.get(i) != null) publication.setRevisionDateDB(revisionDate.get(i));
@@ -133,15 +147,18 @@ public class ParsePublication {
                 }
             }, completedXML_URL).execute();
 
+            final int finalI = i;
             new GET(new ResponseCallback() {
                 @Override
                 public void onResponse(String commentXML) {
 
-                    GetComment(commentXML);
-                    GetSubComment(commentXML);
+                    GetComment(commentXML, publicationID);
+                    GetSubComment(commentXML, publicationID);
 
                 }
             }, Constants.COMMENT_GET_URL(pubID.get(i))).execute();
+            commentDB.close();
+            subCommentDB.close();
         }
     }
 
@@ -177,18 +194,16 @@ public class ParsePublication {
 
     }
 
-    private void GetComment(String xml) {
+    private void GetComment(String xml, String pubID) {
         ParseComment p = new ParseComment();
-        SQLiteHelper_Comment db = new SQLiteHelper_Comment(activity);
-        p.parseComment(xml, db);
-        db.close();
+        p.parseComment(xml, commentDB, pubID);
+
     }
 
-    private void GetSubComment(String xml) {
+    private void GetSubComment(String xml, String pubID) {
         ParseSubComment p = new ParseSubComment();
-        SQLiteHelper_SubComment db = new SQLiteHelper_SubComment(activity);
-        p.parseComment(xml, db);
-        db.close();
+        p.parseComment(xml, subCommentDB, pubID);
+
     }
 }
 

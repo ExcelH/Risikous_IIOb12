@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ParseSubComment {
 
-    public void parseComment(String xml, SQLiteHelper_SubComment db) {
+    public void parseComment(String xml, SQLiteHelper_SubComment db, String publicationID) {
         ParseXML2LIST_SubComment pS = new ParseXML2LIST_SubComment();
 
         List<Comment> subComments = pS.parseSubXML(xml, ListOfAnswers.class.getSimpleName().toLowerCase());
@@ -22,13 +22,14 @@ public class ParseSubComment {
         for(int i=0; i<subComments.size(); i++){
             Comment comment = new Comment();
             comment.setAuthorDB(subComments.get(i).getAuthor().getName());
-            comment.setPubIDDB(subComments.get(i).getPubID().getName());
+            comment.setComIDDB(subComments.get(i).getComID().getName());
             comment.setTextDB(subComments.get(i).getText().getName());
             comment.setTimeStampDB(subComments.get(i).getTimeStamp().getName());
+            comment.setPubIDDB(publicationID);
 
-            if (comment.getPubIDDB() != null && !db.verification(comment.getPubIDDB())) {
+            if (comment.getTextDB() != null)
                 db.addSubComment(comment);
-            } else db.updateSubComment(comment);
+
         }
 
     }

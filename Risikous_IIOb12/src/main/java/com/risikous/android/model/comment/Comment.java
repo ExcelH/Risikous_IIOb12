@@ -1,6 +1,7 @@
 package com.risikous.android.model.comment;
 
 import com.risikous.android.model.comment.part.Author;
+import com.risikous.android.model.comment.part.ComID;
 import com.risikous.android.model.comment.part.PubID;
 import com.risikous.android.model.comment.part.Text;
 import com.risikous.android.model.comment.part.TimeStamp;
@@ -13,6 +14,8 @@ public class Comment {
     private String authorDB;
     private PubID pubID;
     private String pubIDDB;
+    private ComID comID;
+    private String comIDDB;
     private Text text;
     private String textDB;
     private TimeStamp timeStamp;
@@ -31,11 +34,28 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Author author, PubID pubID, Text text, TimeStamp timeStamp) {
+    public Comment(Author author, PubID pubID, ComID comID, Text text, TimeStamp timeStamp) {
         this.author = author;
         this.pubID = pubID;
+        this.comID = comID;
         this.text = text;
         this.timeStamp = timeStamp;
+    }
+
+    public ComID getComID() {
+        return comID;
+    }
+
+    public void setComID(ComID comID) {
+        this.comID = comID;
+    }
+
+    public String getComIDDB() {
+        return comIDDB;
+    }
+
+    public void setComIDDB(String comIDDB) {
+        this.comIDDB = comIDDB;
     }
 
     public int getID() {

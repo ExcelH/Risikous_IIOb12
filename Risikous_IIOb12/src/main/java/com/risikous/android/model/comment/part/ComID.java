@@ -3,14 +3,24 @@ package com.risikous.android.model.comment.part;
 /**
  * Created by Excel on 11.01.2015.
  */
-public class PubID {
+public class ComID {
     private String name = "";
 
-    public PubID() {
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+    private String tagName = "id";
+
+    public ComID() {
 
     }
 
-    public PubID(String name) {
+    public ComID(String name) {
 
         this.name = name;
     }
