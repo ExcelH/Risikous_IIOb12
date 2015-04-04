@@ -25,7 +25,7 @@ import com.risikous.android.fragments.HelpFragment;
 import com.risikous.android.fragments.IncidentFragment;
 import com.risikous.android.fragments.InfoFragment;
 import com.risikous.android.fragments.PublicationFragment;
-
+// Erik war hier :)
 public class MainActivity extends ActionBarActivity {
 
     private Fragment mCurrentFragment = null;
