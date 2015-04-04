@@ -26,6 +26,8 @@ import com.risikous.android.model.comment.part.Text;
 import com.risikous.android.model.publications.Publication;
 import com.risikous.android.request.GetRequest;
 import com.risikous.android.request.PostRequest;
+import com.risikous.android.sqlite.SQLiteHelper_Comment;
+import com.risikous.android.sqlite.SQLiteHelper_SubComment;
 import com.risikous.android.url_uri.Constants;
 import com.risikous.android.xml.builder.BuildComment;
 import com.risikous.android.xml.parser.ParseComment;
@@ -42,6 +44,8 @@ import java.util.List;
 public class CommentFragment extends Fragment {
     private ExpandableListView expandableListView;
     private String ClickID;
+    SQLiteHelper_Comment commentDB;
+    SQLiteHelper_SubComment subCommentDB;
 
     public CommentFragment() {
 
@@ -59,31 +63,32 @@ public class CommentFragment extends Fragment {
         Bundle bundle = this.getArguments();
         ClickID = bundle.getString("pubID");
 
+        commentDB = new SQLiteHelper_Comment(getActivity());
+        subCommentDB = new SQLiteHelper_SubComment(getActivity());
+        List<Comment> comment = commentDB.getAllComments();
+        System.out.println(" List Size ::: "+comment.size());
+        for(int i =0;i<comment.size();i++)
+            System.out.println(" List Comment ::: "+comment.get(i).getText().getName());
+        List<Comment> subComment = subCommentDB.getAllSubComments();
+
         ((TextView) v.findViewById(R.id.comment_title)).setText("Kommentare zu " + ClickID);
 
-        new GET(new ResponseCallback() {
-            @Override
-            public void onResponse(String s) {
-                List<Comment> comment = GetComment(s);
-                List<Comment> subComment = GetSubComment(s);
-                HashMap<Comment, List<Comment>> commentHashMap = new HashMap<Comment, List<Comment>>();
-                for (Comment tmpComment : comment) {
-                    List<Comment> tmpSubComments = new ArrayList<Comment>();
-                    Iterator<Comment> i = subComment.iterator();
-                    while (i.hasNext()) {
-                        Comment tmpSubComment = i.next();
-                        if (tmpSubComment.getPubID() != null && tmpComment.getPubID() != null && tmpComment.getPubID().getName().equalsIgnoreCase(tmpSubComment.getPubID().getName())) {
-                            tmpSubComments.add(tmpSubComment);
-                            i.remove();
-                        }
-                    }
-                    commentHashMap.put(tmpComment, tmpSubComments);
+        HashMap<Comment, List<Comment>> commentHashMap = new HashMap<>();
+        for (Comment tmpComment : comment) {
+            List<Comment> tmpSubComments = new ArrayList<>();
+            Iterator<Comment> i = subComment.iterator();
+            while (i.hasNext()) {
+                Comment tmpSubComment = i.next();
+                if (tmpSubComment.getPubID() != null && tmpComment.getPubID() != null && tmpComment.getPubID().getName().equalsIgnoreCase(tmpSubComment.getPubID().getName())) {
+                    tmpSubComments.add(tmpSubComment);
+                    i.remove();
                 }
-                expandableListView.setAdapter(new CommentsAdapter(getActivity(), comment, commentHashMap));
-                getActivity().supportInvalidateOptionsMenu();
-
             }
-        }, Constants.COMMENT_GET_URL(ClickID)).execute();
+            commentHashMap.put(tmpComment, tmpSubComments);
+        }
+        expandableListView.setAdapter(new CommentsAdapter(getActivity(), comment, commentHashMap));
+        getActivity().supportInvalidateOptionsMenu();
+
 
         return v;
     }
@@ -152,17 +157,6 @@ public class CommentFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private List<Comment> GetComment(String xml) {
-        ParseComment p = new ParseComment();
-
-        return p.parseComment(xml);
-    }
-
-    private List<Comment> GetSubComment(String xml) {
-        ParseSubComment p = new ParseSubComment();
-
-        return p.parseComment(xml);
-    }
 
     private interface ResponseCallback {
         public void onResponse(String s);
@@ -184,7 +178,7 @@ public class CommentFragment extends Fragment {
         @Override
         protected String doInBackground(Void... arg0) {
             GetRequest gr = new GetRequest();
-            return gr.GetXML(url, data);
+            return gr.GetXML(url);
         }
 
         @Override

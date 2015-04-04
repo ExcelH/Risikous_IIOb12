@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@drawable/risikousactionbargrandient</item>
+        <item name="colorPrimary">#194795</item>
     </style>
 
 </resources>

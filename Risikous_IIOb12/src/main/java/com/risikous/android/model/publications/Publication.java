@@ -9,55 +9,51 @@ import com.risikous.android.model.publications.part.*;
  */
 
 public class Publication {
+    int ID = -1;
     private EntryDate entryDate;
+    private String entryDateDB;
     private PubID pubID;
+    private String pubIDDB;
     private NumberOfReports numberOfReports;
+    private String numberOfReportsDB;
     private NumberOfComments numberOfComments;
+    private String numberOfCommentsDB;
     private RevisionDate revisionDate;
+    private String revisionDateDB;
     private Status status;
+    private String statusDB;
     private Title title;
+    private String titleDB;
     private IncidentReport incidentReport;
+    private String incidentReportDB;
     private MinRPZofReporter minRPZofReporter;
+    private String minRPZofReporterDB;
     private AvgRPZofReporter avgRPZofReporter;
+    private String avgRPZofReporterDB;
     private MaxRPZofReporter maxRPZofReporter;
+    private String maxRPZofReporterDB;
     private MinRPZofQMB minRPZofQMB;
+    private String minRPZofQMBDB;
     private AvgRPZofQMB avgRPZofQMB;
+    private String avgRPZofQMBDB;
     private MaxRPZofQMB maxRPZofQMB;
+    private String maxRPZofQMBDB;
     private Category category;
+    private String categoryDB;
     private Action action;
+    private String actionDB;
     private AssignedReports assignedReports;
-
-    public Publication(EntryDate entryDate, PubID pubID, NumberOfReports numberOfReports, NumberOfComments numberOfComments, RevisionDate revisionDate, Status status, Title title, IncidentReport incidentReport, MinRPZofReporter minRPZofReporter, AvgRPZofReporter avgRPZofReporter, MaxRPZofReporter maxRPZofReporter, MinRPZofQMB minRPZofQMB, AvgRPZofQMB avgRPZofQMB, MaxRPZofQMB maxRPZofQMB, Category category, Action action, AssignedReports assignedReports) {
-        this.entryDate = entryDate;
-        this.pubID = pubID;
-        this.numberOfReports = numberOfReports;
-        this.numberOfComments = numberOfComments;
-        this.revisionDate = revisionDate;
-        this.status = status;
-        this.title = title;
-        this.incidentReport = incidentReport;
-        this.minRPZofReporter = minRPZofReporter;
-        this.avgRPZofReporter = avgRPZofReporter;
-        this.maxRPZofReporter = maxRPZofReporter;
-        this.minRPZofQMB = minRPZofQMB;
-        this.avgRPZofQMB = avgRPZofQMB;
-        this.maxRPZofQMB = maxRPZofQMB;
-        this.category = category;
-        this.action = action;
-        this.assignedReports = assignedReports;
-    }
-
-    public Publication(EntryDate entryDate, PubID pubID, NumberOfReports numberOfReports, NumberOfComments numberOfComments, RevisionDate revisionDate, Status status, Title title) {
-        this.entryDate = entryDate;
-        this.pubID = pubID;
-        this.numberOfReports = numberOfReports;
-        this.numberOfComments = numberOfComments;
-        this.revisionDate = revisionDate;
-        this.status = status;
-        this.title = title;
-    }
+    private String assignedReportsDB;
 
     public Publication() {
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public IncidentReport getIncidentReport() {
@@ -195,6 +191,142 @@ public class Publication {
 
     public void setTitle(Title title) {
         this.title = title;
+    }
+
+    public String getEntryDateDB() {
+        return entryDateDB;
+    }
+
+    public void setEntryDateDB(String entryDateDB) {
+        this.entryDateDB = entryDateDB;
+    }
+
+    public String getPubIDDB() {
+        return pubIDDB;
+    }
+
+    public void setPubIDDB(String pubIDDB) {
+        this.pubIDDB = pubIDDB;
+    }
+
+    public String getNumberOfReportsDB() {
+        return numberOfReportsDB;
+    }
+
+    public void setNumberOfReportsDB(String numberOfReportsDB) {
+        this.numberOfReportsDB = numberOfReportsDB;
+    }
+
+    public String getNumberOfCommentsDB() {
+        return numberOfCommentsDB;
+    }
+
+    public void setNumberOfCommentsDB(String numberOfCommentsDB) {
+        this.numberOfCommentsDB = numberOfCommentsDB;
+    }
+
+    public String getRevisionDateDB() {
+        return revisionDateDB;
+    }
+
+    public void setRevisionDateDB(String revisionDateDB) {
+        this.revisionDateDB = revisionDateDB;
+    }
+
+    public String getStatusDB() {
+        return statusDB;
+    }
+
+    public void setStatusDB(String statusDB) {
+        this.statusDB = statusDB;
+    }
+
+    public String getTitleDB() {
+        return titleDB;
+    }
+
+    public void setTitleDB(String titleDB) {
+        this.titleDB = titleDB;
+    }
+
+    public String getIncidentReportDB() {
+        return incidentReportDB;
+    }
+
+    public void setIncidentReportDB(String incidentReportDB) {
+        this.incidentReportDB = incidentReportDB;
+    }
+
+    public String getMinRPZofReporterDB() {
+        return minRPZofReporterDB;
+    }
+
+    public void setMinRPZofReporterDB(String minRPZofReporterDB) {
+        this.minRPZofReporterDB = minRPZofReporterDB;
+    }
+
+    public String getAvgRPZofReporterDB() {
+        return avgRPZofReporterDB;
+    }
+
+    public void setAvgRPZofReporterDB(String avgRPZofReporterDB) {
+        this.avgRPZofReporterDB = avgRPZofReporterDB;
+    }
+
+    public String getMaxRPZofReporterDB() {
+        return maxRPZofReporterDB;
+    }
+
+    public void setMaxRPZofReporterDB(String maxRPZofReporterDB) {
+        this.maxRPZofReporterDB = maxRPZofReporterDB;
+    }
+
+    public String getMinRPZofQMBDB() {
+        return minRPZofQMBDB;
+    }
+
+    public void setMinRPZofQMBDB(String minRPZofQMBDB) {
+        this.minRPZofQMBDB = minRPZofQMBDB;
+    }
+
+    public String getAvgRPZofQMBDB() {
+        return avgRPZofQMBDB;
+    }
+
+    public void setAvgRPZofQMBDB(String avgRPZofQMBDB) {
+        this.avgRPZofQMBDB = avgRPZofQMBDB;
+    }
+
+    public String getMaxRPZofQMBDB() {
+        return maxRPZofQMBDB;
+    }
+
+    public void setMaxRPZofQMBDB(String maxRPZofQMBDB) {
+        this.maxRPZofQMBDB = maxRPZofQMBDB;
+    }
+
+    public String getCategoryDB() {
+        return categoryDB;
+    }
+
+    public void setCategoryDB(String categoryDB) {
+        this.categoryDB = categoryDB;
+    }
+
+    public String getActionDB() {
+        return actionDB;
+    }
+
+    public void setActionDB(String actionDB) {
+        this.actionDB = actionDB;
+    }
+
+    public String getAssignedReportsDB() {
+        return assignedReportsDB;
+    }
+
+    public void setAssignedReportsDB(String assignedReportsDB) {
+        this.assignedReportsDB = assignedReportsDB;
     }
 
     @Override

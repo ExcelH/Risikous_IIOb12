@@ -146,16 +146,14 @@ public class MainActivity extends ActionBarActivity {
                 _currentPosition = position;
                 break;
             case 1:
-                if(isConnected()){
-                fragment = new IncidentFragment();
-                _currentPosition = position;}
-                else Toast.makeText(this, "Keine Internetverbindung.", Toast.LENGTH_SHORT).show();
+                if (isConnected()) {
+                    fragment = new IncidentFragment();
+                    _currentPosition = position;
+                } else Toast.makeText(this, "Keine Internetverbindung.", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                if(isConnected()){
-                    fragment = new PublicationFragment();
-                    _currentPosition = position;}
-                else Toast.makeText(this, "Keine Internetverbindung.", Toast.LENGTH_SHORT).show();
+                fragment = new PublicationFragment();
+                _currentPosition = position;
                 break;
             case 3:
                 fragment = new HelpFragment();
@@ -190,7 +188,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public void startCommentActivity(String clickID){
+    public void startCommentActivity(String clickID) {
         Fragment fragment = new CommentFragment();
         mCurrentFragment = fragment;
         Bundle bundle = new Bundle();
@@ -258,12 +256,12 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if (mCurrentFragment != null && mCurrentFragment instanceof CommentFragment) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,replaceFragement).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, replaceFragement).commit();
             mCurrentFragment = replaceFragement;
         }
     }
 
-    public boolean isConnected(){
+    public boolean isConnected() {
         ConnectivityManager cM = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cM.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();

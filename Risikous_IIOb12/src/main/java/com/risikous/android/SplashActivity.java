@@ -1,20 +1,17 @@
-package com.risikous.android.splashscreens;
+package com.risikous.android;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.widget.ProgressBar;
 
-import com.risikous.android.MainActivity;
-import com.risikous.android.R;
+import com.risikous.android.xml.GetData;
 
 /**
  * Created by Excel on 22.01.2015.
  */
 
-public class MainSplashScreen extends Activity{
+public class SplashActivity extends Activity{
 
     private static int SPLASH_TIME_OUT = 5000;
 
@@ -23,12 +20,14 @@ public class MainSplashScreen extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        new GetData(this);
+
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
 
-                Intent i = new Intent(MainSplashScreen.this, MainActivity.class);
+                Intent i = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(i);
 
                 finish();

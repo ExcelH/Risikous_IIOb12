@@ -10,10 +10,15 @@ import com.risikous.android.model.comment.part.TimeStamp;
  */
 public class Comment {
     private Author author;
+    private String authorDB;
     private PubID pubID;
+    private String pubIDDB;
     private Text text;
+    private String textDB;
     private TimeStamp timeStamp;
+    private String timeStampDB;
     private String tagName = "comment";
+    private int ID;
 
     public String getTagName() {
         return tagName;
@@ -31,6 +36,14 @@ public class Comment {
         this.pubID = pubID;
         this.text = text;
         this.timeStamp = timeStamp;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public Author getAuthor() {
@@ -63,5 +76,37 @@ public class Comment {
 
     public void setTimeStamp(TimeStamp timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public String getAuthorDB() {
+        return authorDB;
+    }
+
+    public void setAuthorDB(String authorDB) {
+        this.authorDB = authorDB;
+    }
+
+    public String getPubIDDB() {
+        return pubIDDB;
+    }
+
+    public void setPubIDDB(String pubIDDB) {
+        this.pubIDDB = pubIDDB;
+    }
+
+    public String getTextDB() {
+        return textDB;
+    }
+
+    public void setTextDB(String textDB) {
+        this.textDB = textDB;
+    }
+
+    public String getTimeStampDB() {
+        return timeStampDB;
+    }
+
+    public void setTimeStampDB(String timeStampDB) {
+        this.timeStampDB = timeStampDB;
     }
 }

@@ -1,8 +1,16 @@
 package com.risikous.android.xml.parser;
 
 
+import android.app.Activity;
+import android.os.AsyncTask;
+
 import com.risikous.android.model.publications.Publication;
 import com.risikous.android.model.publications.part.*;
+import com.risikous.android.request.GetRequest;
+import com.risikous.android.sqlite.SQLiteHelper_Comment;
+import com.risikous.android.sqlite.SQLiteHelper_Publication;
+import com.risikous.android.sqlite.SQLiteHelper_SubComment;
+import com.risikous.android.url_uri.Constants;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,66 +22,15 @@ import java.util.List;
 
 public class ParsePublication {
 
-    public Publication parseCompletedPublication(String xml, Publication publication) {
-        ParseXML2LIST p = new ParseXML2LIST();
 
-        String noEntry = "Kein Eintrag";
+    Activity activity;
 
-        List<String> title;
-        List<String> incidentReporter;
-        List<String> minRPZofReporter;
-        List<String> avgRPZofReporter;
-        List<String> maxRPZofReporter;
-        List<String> minRPZofQMB;
-        List<String> avgRPZofQMB;
-        List<String> maxRPZofQMB;
-        List<String> category;
-        List<String> action;
-        List<String> assignedReports;
-
-        title = p.parseXML(xml, Title.class.getSimpleName().toLowerCase());
-        incidentReporter = p.parseXML(xml, IncidentReport.class.getSimpleName().toLowerCase());
-        minRPZofReporter = p.parseXML(xml, MinRPZofReporter.class.getSimpleName().toLowerCase());
-        avgRPZofReporter = p.parseXML(xml, AvgRPZofReporter.class.getSimpleName().toLowerCase());
-        maxRPZofReporter = p.parseXML(xml, MaxRPZofReporter.class.getSimpleName().toLowerCase());
-        minRPZofQMB = p.parseXML(xml, MinRPZofQMB.class.getSimpleName().toLowerCase());
-        avgRPZofQMB = p.parseXML(xml, AvgRPZofQMB.class.getSimpleName().toLowerCase());
-        maxRPZofQMB = p.parseXML(xml, MaxRPZofQMB.class.getSimpleName().toLowerCase());
-        category = p.parseXML(xml, Category.class.getSimpleName().toLowerCase());
-        action = p.parseXML(xml, Action.class.getSimpleName().toLowerCase());
-        assignedReports = p.parseXML(xml, AssignedReports.class.getSimpleName().toLowerCase());
-
-        for (int i = 0; i < title.size(); i++) {
-
-            if(!title.isEmpty()) publication.setTitle(new Title(title.get(i)));
-            else publication.setTitle(new Title(noEntry));
-            if(!incidentReporter.isEmpty()) publication.setIncidentReport(new IncidentReport(incidentReporter.get(i)));
-            else publication.setIncidentReport(new IncidentReport(noEntry));
-            if(!minRPZofReporter.isEmpty()) publication.setMinRPZofReporter(new MinRPZofReporter(minRPZofReporter.get(i)));
-            else publication.setMinRPZofReporter(new MinRPZofReporter(noEntry));
-            if(!avgRPZofReporter.isEmpty()) publication.setAvgRPZofReporter(new AvgRPZofReporter(avgRPZofReporter.get(i)));
-            else publication.setAvgRPZofReporter(new AvgRPZofReporter(noEntry));
-            if(!maxRPZofReporter.isEmpty()) publication.setMaxRPZofReporter(new MaxRPZofReporter(maxRPZofReporter.get(i)));
-            else publication.setMaxRPZofReporter(new MaxRPZofReporter(noEntry));
-            if(!minRPZofQMB.isEmpty()) publication.setMinRPZofQMB(new MinRPZofQMB(minRPZofQMB.get(i)));
-            else publication.setMinRPZofQMB(new MinRPZofQMB(noEntry));
-            if(!avgRPZofQMB.isEmpty()) publication.setAvgRPZofQMB(new AvgRPZofQMB(avgRPZofQMB.get(i)));
-            else publication.setAvgRPZofQMB(new AvgRPZofQMB(noEntry));
-            if(!maxRPZofQMB.isEmpty()) publication.setMaxRPZofQMB(new MaxRPZofQMB(maxRPZofQMB.get(i)));
-            else publication.setMaxRPZofQMB(new MaxRPZofQMB(noEntry));
-            if(!category.isEmpty()) publication.setCategory(new Category(category.get(i)));
-            else publication.setCategory(new Category(noEntry));
-            if(!action.isEmpty()) publication.setAction(new Action(action.get(i)));
-            else publication.setAction(new Action(noEntry));
-            if(!assignedReports.isEmpty()) publication.setAssignedReports(new AssignedReports(assignedReports.get(i)));
-            else publication.setAssignedReports(new AssignedReports(noEntry));
-        }
-
-        return publication;
+    public ParsePublication(Activity activity) {
+        this.activity = activity;
     }
 
-    public List<Publication> parsePublication(String xml) {
-        ParseXML2LIST p = new ParseXML2LIST();
+    public void parsePublication(final String xml, final SQLiteHelper_Publication db) {
+        final ParseXML2LIST p = new ParseXML2LIST();
 
         List<String> pubID;
         List<String> entryDate;
@@ -91,23 +48,147 @@ public class ParsePublication {
         numberOfReports = p.parseXML(xml, NumberOfReports.class.getSimpleName().toLowerCase());
         numberOfComments = p.parseXML(xml, NumberOfComments.class.getSimpleName().toLowerCase());
 
-        List<Publication> publications = new LinkedList<>();
+
         for (int i = 0; i < pubID.size(); i++) {
-            Publication publication = new Publication();
-            if(pubID.get(i) != null) publication.setPubID(new PubID(pubID.get(i)));
-            if(entryDate.get(i) != null) publication.setEntryDate(new EntryDate(entryDate.get(i)));
-            if(revisionDate.get(i) != null) publication.setRevisionDate(new RevisionDate(revisionDate.get(i)));
-            if(title.get(i) != null) publication.setTitle(new Title(title.get(i)));
-            if(status.get(i) != null) publication.setStatus(new Status(status.get(i)));
-            if(numberOfReports.get(i) != null) publication.setNumberOfReports(new NumberOfReports(numberOfReports.get(i)));
-            if(numberOfComments.get(i) != null) publication.setNumberOfComments(new NumberOfComments(numberOfComments.get(i)));
-            publications.add(publication);
+            final Publication publication = new Publication();
+            if (pubID.get(i) != null) publication.setPubIDDB(pubID.get(i));
+            if (entryDate.get(i) != null) publication.setEntryDateDB(entryDate.get(i));
+            if (revisionDate.get(i) != null) publication.setRevisionDateDB(revisionDate.get(i));
+            if (title.get(i) != null) publication.setTitleDB(title.get(i));
+            if (status.get(i) != null) publication.setStatusDB(status.get(i));
+            if (numberOfReports.get(i) != null)
+                publication.setNumberOfReportsDB(numberOfReports.get(i));
+            if (numberOfComments.get(i) != null)
+                publication.setNumberOfCommentsDB(numberOfComments.get(i));
 
+            String completedXML_URL = Constants.PUBLICATION_GET_FULL_PUB_URL(pubID.get(i));
+
+            new GET(new ResponseCallback() {
+                @Override
+                public void onResponse(String completedXML) {
+
+                    ParseXML2LIST p = new ParseXML2LIST();
+                    List<String> newTitle;
+                    List<String> incidentReporter;
+                    List<String> minRPZofReporter;
+                    List<String> avgRPZofReporter;
+                    List<String> maxRPZofReporter;
+                    List<String> minRPZofQMB;
+                    List<String> avgRPZofQMB;
+                    List<String> maxRPZofQMB;
+                    List<String> category;
+                    List<String> action;
+                    List<String> assignedReports;
+
+                    newTitle = p.parseXML(completedXML, Title.class.getSimpleName().toLowerCase());
+                    incidentReporter = p.parseXML(completedXML, IncidentReport.class.getSimpleName().toLowerCase());
+                    minRPZofReporter = p.parseXML(completedXML, MinRPZofReporter.class.getSimpleName().toLowerCase());
+                    avgRPZofReporter = p.parseXML(completedXML, AvgRPZofReporter.class.getSimpleName().toLowerCase());
+                    maxRPZofReporter = p.parseXML(completedXML, MaxRPZofReporter.class.getSimpleName().toLowerCase());
+                    minRPZofQMB = p.parseXML(completedXML, MinRPZofQMB.class.getSimpleName().toLowerCase());
+                    avgRPZofQMB = p.parseXML(completedXML, AvgRPZofQMB.class.getSimpleName().toLowerCase());
+                    maxRPZofQMB = p.parseXML(completedXML, MaxRPZofQMB.class.getSimpleName().toLowerCase());
+                    category = p.parseXML(completedXML, Category.class.getSimpleName().toLowerCase());
+                    action = p.parseXML(completedXML, Action.class.getSimpleName().toLowerCase());
+                    assignedReports = p.parseXML(completedXML, AssignedReports.class.getSimpleName().toLowerCase());
+
+                    for (int j = 0; j < newTitle.size(); j++) {
+
+                        String noEntry = "Kein Eintrag";
+                        if (!newTitle.isEmpty()) publication.setTitleDB(newTitle.get(j));
+                        else publication.setTitleDB(noEntry);
+                        if (incidentReporter.get(j) != null) {
+                            publication.setIncidentReportDB(incidentReporter.get(j));
+                        } else publication.setIncidentReportDB(noEntry);
+                        if (!minRPZofReporter.isEmpty())
+                            publication.setMinRPZofReporterDB(minRPZofReporter.get(j));
+                        else publication.setMinRPZofReporterDB(noEntry);
+                        if (!avgRPZofReporter.isEmpty())
+                            publication.setAvgRPZofReporterDB(avgRPZofReporter.get(j));
+                        else publication.setAvgRPZofReporterDB(noEntry);
+                        if (!maxRPZofReporter.isEmpty())
+                            publication.setMaxRPZofReporterDB(maxRPZofReporter.get(j));
+                        else publication.setMaxRPZofReporterDB(noEntry);
+                        if (!minRPZofQMB.isEmpty())
+                            publication.setMinRPZofQMBDB(minRPZofQMB.get(j));
+                        else publication.setMinRPZofQMBDB(noEntry);
+                        if (!avgRPZofQMB.isEmpty())
+                            publication.setAvgRPZofQMBDB(avgRPZofQMB.get(j));
+                        else publication.setAvgRPZofQMBDB(noEntry);
+                        if (!maxRPZofQMB.isEmpty())
+                            publication.setMaxRPZofQMBDB(maxRPZofQMB.get(j));
+                        else publication.setMaxRPZofQMBDB(noEntry);
+                        if (!category.isEmpty()) publication.setCategoryDB(category.get(j));
+                        else publication.setCategoryDB(noEntry);
+                        if (!action.isEmpty()) publication.setActionDB(action.get(j));
+                        else publication.setActionDB(noEntry);
+                        if (!assignedReports.isEmpty())
+                            publication.setAssignedReportsDB(assignedReports.get(j));
+                        else publication.setAssignedReportsDB(noEntry);
+
+                        if (!db.verification(publication.getPubIDDB())) {
+                            db.addPublication(publication);
+                        } else db.updatePublication(publication);
+                    }
+                }
+            }, completedXML_URL).execute();
+
+            new GET(new ResponseCallback() {
+                @Override
+                public void onResponse(String commentXML) {
+
+                    GetComment(commentXML);
+                    GetSubComment(commentXML);
+
+                }
+            }, Constants.COMMENT_GET_URL(pubID.get(i))).execute();
         }
-
-        return publications;
     }
 
+    public class GET extends AsyncTask<Void, Void, String> {
 
+
+        private String data = null;
+        private ResponseCallback responseCallback;
+        private String url = null;
+
+
+        public GET(ResponseCallback callback, String url) {
+            this.url = url;
+            responseCallback = callback;
+        }
+
+        @Override
+        protected String doInBackground(Void... arg0) {
+            GetRequest gr = new GetRequest();
+            return gr.GetXML(url);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (responseCallback != null)
+                responseCallback.onResponse(result);
+
+        }
+    }
+
+    private interface ResponseCallback {
+        public void onResponse(String s);
+
+    }
+
+    private void GetComment(String xml) {
+        ParseComment p = new ParseComment();
+        SQLiteHelper_Comment db = new SQLiteHelper_Comment(activity);
+        p.parseComment(xml, db);
+        db.close();
+    }
+
+    private void GetSubComment(String xml) {
+        ParseSubComment p = new ParseSubComment();
+        SQLiteHelper_SubComment db = new SQLiteHelper_SubComment(activity);
+        p.parseComment(xml, db);
+        db.close();
+    }
 }
 
