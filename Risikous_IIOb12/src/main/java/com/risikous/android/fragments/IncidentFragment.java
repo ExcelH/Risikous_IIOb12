@@ -239,7 +239,7 @@ public class IncidentFragment extends Fragment {
 
                 questionnaire.setLocation(new Location(location_EditText.getText().toString()));
                 if (!questionnaire.getLocation().getName().equals("")) {
-                    if (!vC.validateCountChar(questionnaire.getLocation().getName(), 5)) {
+                    if (!vC.validateCountChar(questionnaire.getLocation().getName(), 50)) {
                         validateStatus = false;
                         Toast.makeText(getActivity(), "Das Feld 'Standort' darf höchstens 50 Zeichen beinhalten.", Toast.LENGTH_SHORT).show();
                     }

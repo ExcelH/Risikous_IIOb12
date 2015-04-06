@@ -18,6 +18,7 @@ import com.risikous.android.adapter.CommentsAdapter;
 import com.risikous.android.adapter.PublicationsAdapter;
 import com.risikous.android.model.comment.Comment;
 import com.risikous.android.model.comment.part.Author;
+import com.risikous.android.model.comment.part.ComID;
 import com.risikous.android.model.comment.part.PubID;
 import com.risikous.android.model.comment.part.Text;
 import com.risikous.android.model.publications.Publication;
@@ -98,7 +99,7 @@ public class PublicationFragment extends Fragment {
         v.findViewById(R.id.comment_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).startCommentActivity(ClickID);
+                ((MainActivity) getActivity()).startCommentFragment(ClickID);
             }
         });
 
@@ -108,6 +109,7 @@ public class PublicationFragment extends Fragment {
     public boolean onBackPressed() {
         if (commentsContainer.getVisibility() == View.VISIBLE) {
             commentsContainer.setVisibility(View.GONE);
+            getActivity().supportInvalidateOptionsMenu();
             return true;
         }
         return false;
@@ -146,7 +148,7 @@ public class PublicationFragment extends Fragment {
                         BuildComment bC = new BuildComment();
                         PostRequest pR = new PostRequest();
 
-                        comment.setPubID(new PubID(ClickID));
+                        comment.setComID(new ComID(ClickID));
                         comment.setAuthor(new Author(author.getText().toString().trim()));
                         comment.setText(new Text(commentText.getText().toString().trim()));
 
@@ -172,7 +174,10 @@ public class PublicationFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add_comment) {
-            showCommentDailog();
+            if (((MainActivity)getActivity()).isConnected())
+                showCommentDailog();
+            else
+                Toast.makeText(getActivity(), "Keine Internetverbindung!", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

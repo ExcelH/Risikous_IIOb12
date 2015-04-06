@@ -1,26 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
     tools:context="com.risikous.android.fragments.InfoFragment">
 
-
-    <RelativeLayout
-        android:id="@+id/info1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent">
-
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/info_process"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/process_risikous" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/info_process"
@@ -33,12 +23,18 @@
             android:text="CIRS Prozess"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/process_risikous" />
+
         <TextView
             android:id="@+id/cirs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView"
-            android:layout_centerHorizontal="true"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/subbackgroundgradient"
@@ -50,11 +46,9 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cirs"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="35dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="35dp"
             android:text="Ein Critical Incident Reporting System (CIRS, zu Deutsch: Berichtssystem für kritische Zwischenfälle) ist ein Berichtssystem zur anonymen Meldung von kritischen Ereignissen (critical incident) und Beinahe-Schäden (near miss)."
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -62,29 +56,25 @@
             android:id="@+id/info_how"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="37dp"
             android:background="@drawable/subbackgroundgradient"
             android:padding="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:text="Welche Folgen hat eine Meldung für mich?"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_below="@+id/textView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="37dp" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Eine CIRS-Meldung hat keine negativen Folgen für Sie. Sie erfolgt auf freiwilliger Basis absolut anonym, sanktionsfrei und wird vertraulich behandelt. Mit Ihrer Mitarbeit tragen Sie insbesondere zur Verbesserung der Patientensicherheit sowie zum Aufbau einer Fehlerkultur in der Klinik bei."
-            android:id="@+id/textView2"
-            android:layout_below="@+id/info_how"
-            android:layout_centerHorizontal="true"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="35dp" />
+            android:layout_marginTop="35dp"
+            android:text="Eine CIRS-Meldung hat keine negativen Folgen für Sie. Sie erfolgt auf freiwilliger Basis absolut anonym, sanktionsfrei und wird vertraulich behandelt. Mit Ihrer Mitarbeit tragen Sie insbesondere zur Verbesserung der Patientensicherheit sowie zum Aufbau einer Fehlerkultur in der Klinik bei."
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
+</ScrollView>
 
-</LinearLayout>

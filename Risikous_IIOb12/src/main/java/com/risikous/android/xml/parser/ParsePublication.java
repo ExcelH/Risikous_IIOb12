@@ -31,7 +31,7 @@ public class ParsePublication {
         this.activity = activity;
     }
 
-    public void parsePublication(final String xml, final SQLiteHelper_Publication db) {
+    public void parsePublication(final String xml, final SQLiteHelper_Publication db, final OnRequestsFinishedListener listener) {
         final ParseXML2LIST p = new ParseXML2LIST();
 
         commentDB = new SQLiteHelper_Comment(activity);
@@ -53,6 +53,21 @@ public class ParsePublication {
         numberOfReports = p.parseXML(xml, NumberOfReports.class.getSimpleName().toLowerCase());
         numberOfComments = p.parseXML(xml, NumberOfComments.class.getSimpleName().toLowerCase());
 
+
+        final int count = pubID.size() * 2;
+
+        final OnRequestsFinishedListener bla = new OnRequestsFinishedListener() {
+            volatile int counti = count;
+            @Override
+            public void onFinished() {
+                counti--;
+                if (counti == 0 && listener != null) {
+                    commentDB.close();
+                    subCommentDB.close();
+                    listener.onFinished();
+                }
+            }
+        };
 
         for (int i = 0; i < pubID.size(); i++) {
             final Publication publication = new Publication();
@@ -136,6 +151,7 @@ public class ParsePublication {
                             db.addPublication(publication);
                         } else db.updatePublication(publication);
                     }
+                    bla.onFinished();
                 }
             }, completedXML_URL).execute();
 
@@ -147,10 +163,9 @@ public class ParsePublication {
                     GetComment(commentXML, publicationID);
                     GetSubComment(commentXML, publicationID);
 
+                    bla.onFinished();
                 }
             }, Constants.COMMENT_GET_URL(pubID.get(i))).execute();
-            commentDB.close();
-            subCommentDB.close();
         }
     }
 
@@ -196,6 +211,10 @@ public class ParsePublication {
         ParseSubComment p = new ParseSubComment();
         p.parseComment(xml, subCommentDB, pubID);
 
+    }
+
+    public interface OnRequestsFinishedListener {
+        public void onFinished();
     }
 }
 

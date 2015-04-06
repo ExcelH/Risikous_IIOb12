@@ -1,16 +1,30 @@
 package com.risikous.android.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.risikous.android.R;
+import com.risikous.android.fragments.CommentFragment;
 import com.risikous.android.model.comment.Comment;
+import com.risikous.android.model.comment.part.Author;
+import com.risikous.android.model.comment.part.ComID;
+import com.risikous.android.model.comment.part.PubID;
+import com.risikous.android.model.comment.part.Text;
+import com.risikous.android.request.PostRequest;
+import com.risikous.android.url_uri.Constants;
+import com.risikous.android.xml.builder.BuildComment;
 
 import java.util.HashMap;
 import java.util.List;
@@ -90,7 +104,7 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        Comment headerTitle = (Comment) getGroup(groupPosition);
+        final Comment headerTitle = (Comment) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -105,12 +119,62 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
         text.setText(headerTitle.getText().getName());
         timeStamp.setText(headerTitle.getTimeStamp().getName());
 
-        convertView.findViewById(R.id.answercomment_Button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Antworten wird noch nicht unterstützt.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Button button = (Button) convertView.findViewById(R.id.answercomment_Button);
+
+        if (!headerTitle.getComID().getName().equals("-1")) {
+
+            button.setVisibility(View.VISIBLE);
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(_context);
+
+                    alertDialog.setTitle("Antwort hinzufügen");
+
+                    final EditText author = new EditText(_context);
+                    author.setHint("Author (optional)");
+                    final EditText commentText = new EditText(_context);
+                    commentText.setHint("Kommentar");
+
+                    LinearLayout ll = new LinearLayout(_context);
+                    ll.setOrientation(LinearLayout.VERTICAL);
+                    ll.addView(author);
+                    ll.addView(commentText);
+                    alertDialog.setView(ll);
+
+                    alertDialog.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String xml = null;
+                                    Comment comment = new Comment();
+                                    BuildComment bC = new BuildComment();
+                                    PostRequest pR = new PostRequest();
+
+                                    comment.setComID(new ComID(headerTitle.getComID().getName()));
+                                    comment.setAuthor(new Author(author.getText().toString().trim()));
+                                    comment.setText(new Text(commentText.getText().toString().trim()));
+
+                                    xml = bC.buildComment(comment);
+
+                                    new POST(Constants.SUBCOMMENT_POST_URL, xml).execute();
+
+
+                                }
+                            });
+
+                    alertDialog.setNegativeButton("Abbrechen",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    alertDialog.show();
+                    //Toast.makeText(_context, "'Antworten wird noch nicht unterstützt.'", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else button.setVisibility(View.GONE);
 
 
         return convertView;
@@ -124,5 +188,31 @@ public class CommentsAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public class POST extends AsyncTask<Void, Void, String> {
+
+        private String data = null;
+        private String url = null;
+
+        public POST(String url, String data) {
+            this.url = url;
+            this.data = data;
+        }
+
+        @Override
+        protected String doInBackground(Void... arg0) {
+            PostRequest pR = new PostRequest();
+
+            return pR.postXML(url, data);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            Toast.makeText(_context, result, Toast.LENGTH_LONG).show();
+
+        }
+
     }
 }

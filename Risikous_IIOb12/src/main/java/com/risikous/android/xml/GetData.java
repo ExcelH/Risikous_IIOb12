@@ -27,13 +27,13 @@ public class GetData {
 
     }
 
-    public GetData(Activity activity) {
+    public GetData(Activity activity, final ParsePublication.OnRequestsFinishedListener listener) {
 
         this.activity = activity;
         new GET(new ResponseCallback() {
             @Override
             public void onResponse(String s) {
-                GetPublication(s);
+                GetPublication(s, listener);
             }
         }, Constants.PUBLICATION_GET_URL).execute();
     }
@@ -65,11 +65,11 @@ public class GetData {
         }
     }
 
-    private void GetPublication(String xml) {
+    private void GetPublication(String xml, ParsePublication.OnRequestsFinishedListener listener) {
 
         SQLiteHelper_Publication db = new SQLiteHelper_Publication(activity);
         ParsePublication p = new ParsePublication(activity);
-        p.parsePublication(xml, db);
+        p.parsePublication(xml, db,listener);
         db.close();
     }
 

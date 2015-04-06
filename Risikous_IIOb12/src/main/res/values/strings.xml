@@ -51,6 +51,7 @@
     <string name="incident_button_send">Abschicken</string>
     <string name="title_activity_incident_report">IncidentReportActivity</string>
     <string name="action_add_comment">Kommentieren</string>
+    <string name="action_refresh">Aktualisieren</string>
 
     <string-array name="nav_title_arrays">
         <item>Info</item>

@@ -51,8 +51,8 @@ public class ParseXML2LIST {
                 public void endElement(String uri, String localName,
                                        String tagName) throws SAXException {
                     if (tagName.equalsIgnoreCase("comment")) {
-                        if (!mWasIDFound && mIsComment && target.equalsIgnoreCase("id")) {
-                            list.add(new String());
+                        if (!mWasIDFound && mIsComment) {
+                            list.add(new String("-1"));
                         }
                         mIsComment = false;
                         mWasIDFound = false;

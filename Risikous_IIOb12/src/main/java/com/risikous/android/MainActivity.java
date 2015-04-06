@@ -25,6 +25,9 @@ import com.risikous.android.fragments.HelpFragment;
 import com.risikous.android.fragments.IncidentFragment;
 import com.risikous.android.fragments.InfoFragment;
 import com.risikous.android.fragments.PublicationFragment;
+import com.risikous.android.xml.GetData;
+import com.risikous.android.xml.parser.ParsePublication;
+
 // Erik war hier :)
 public class MainActivity extends ActionBarActivity {
 
@@ -37,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
     private CharSequence mTitle;
     private int _currentPosition = -1;
     private Fragment replaceFragement;
+    private String mClickID;
 
     public MainActivity() {
     }
@@ -118,6 +122,34 @@ public class MainActivity extends ActionBarActivity {
 
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
+        } else if (item.getItemId() == R.id.action_refresh) {
+            if (isConnected()) {
+                findViewById(R.id.progressBar2).setVisibility(View.VISIBLE);
+                this.deleteDatabase("commentDB");
+                this.deleteDatabase("subCommentDB");
+                new GetData(this, new ParsePublication.OnRequestsFinishedListener() {
+                    @Override
+                    public void onFinished() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                findViewById(R.id.progressBar2).setVisibility(View.GONE);
+                                Toast.makeText(MainActivity.this,"Aktualisiert",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        if(mCurrentFragment instanceof PublicationFragment){
+                            selectItem(2, true);
+                        }
+                        if(mCurrentFragment instanceof CommentFragment){
+                            startCommentFragment(mClickID);
+                        }
+                    }
+                });
+
+            } else {
+                Toast.makeText(this,"Keine Internetverbindung!",Toast.LENGTH_SHORT).show();
+            }
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -188,8 +220,9 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public void startCommentActivity(String clickID) {
+    public void startCommentFragment(String clickID) {
         Fragment fragment = new CommentFragment();
+        mClickID = clickID;
         mCurrentFragment = fragment;
         Bundle bundle = new Bundle();
         bundle.putString("pubID", clickID);
@@ -224,7 +257,7 @@ public class MainActivity extends ActionBarActivity {
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Wollen Sie die Anwenung schließen?").setPositiveButton("OK", dialogClickListener)
+            builder.setMessage("Wollen Sie die Anwendung schließen?").setPositiveButton("OK", dialogClickListener)
                     .setNegativeButton("Abbrechen", dialogClickListener).show();
         }
 

@@ -17,10 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.risikous.android.MainActivity;
 import com.risikous.android.R;
 import com.risikous.android.adapter.CommentsAdapter;
 import com.risikous.android.model.comment.Comment;
 import com.risikous.android.model.comment.part.Author;
+import com.risikous.android.model.comment.part.ComID;
 import com.risikous.android.model.comment.part.PubID;
 import com.risikous.android.model.comment.part.Text;
 import com.risikous.android.model.publications.Publication;
@@ -91,7 +93,8 @@ public class CommentFragment extends Fragment {
             Iterator<Comment> i = subComment.iterator();
             while (i.hasNext()) {
                 Comment tmpSubComment = i.next();
-                if (tmpSubComment.getPubID() != null && tmpComment.getPubID() != null && tmpComment.getPubID().getName().equalsIgnoreCase(tmpSubComment.getPubID().getName())) {
+                if (tmpSubComment.getComID() != null && tmpComment.getComID() != null && tmpComment.getComID().getName().equalsIgnoreCase(tmpSubComment.getComID().getName())
+                        && !tmpComment.getComID().getName().equals("-1")) {
                     tmpSubComments.add(tmpSubComment);
                     i.remove();
                 }
@@ -137,7 +140,7 @@ public class CommentFragment extends Fragment {
                         BuildComment bC = new BuildComment();
                         PostRequest pR = new PostRequest();
 
-                        comment.setPubID(new PubID(ClickID));
+                        comment.setComID(new ComID(ClickID));
                         comment.setAuthor(new Author(author.getText().toString().trim()));
                         comment.setText(new Text(commentText.getText().toString().trim()));
 
@@ -163,7 +166,10 @@ public class CommentFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add_comment) {
-            showCommentDailog();
+            if (((MainActivity)getActivity()).isConnected())
+                showCommentDailog();
+            else
+                Toast.makeText(getActivity(), "Keine Internetverbindung!", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -225,6 +231,8 @@ public class CommentFragment extends Fragment {
         }
 
     }
+
+
 
 
 }

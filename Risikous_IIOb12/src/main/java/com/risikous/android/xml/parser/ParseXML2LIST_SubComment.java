@@ -30,6 +30,7 @@ public class ParseXML2LIST_SubComment {
     private boolean mIsTimeStamp;
     private boolean mIsMainCommentID;
     private boolean mIsTarget;
+    private boolean mIsComment;
 
     private Comment mNewComment;
     private String mCurrentCommentID;
@@ -51,7 +52,13 @@ public class ParseXML2LIST_SubComment {
                         mIsMainCommentID = true;
 
                     if (mIsTarget) {
-                        if (tagName.equalsIgnoreCase("author"))
+                        if (tagName.equalsIgnoreCase("comment")) {
+                            mIsComment = true;
+                            mNewComment = new Comment();
+                            ComID comID = new ComID();
+                            comID.setName(mCurrentCommentID);
+                            mNewComment.setComID(comID);
+                        } else if (tagName.equalsIgnoreCase("author"))
                             mIsAuthor = true;
                         else if (tagName.equalsIgnoreCase("text"))
                             mIsText = true;
@@ -61,20 +68,18 @@ public class ParseXML2LIST_SubComment {
 
                     if (tagName.equalsIgnoreCase(target)) {
                         mIsTarget = true;
-                        mNewComment = new Comment();
-                        ComID comID = new ComID();
-                        comID.setName(mCurrentCommentID);
-                        mNewComment.setComID(comID);
                     }
 
                 }
 
                 public void endElement(String uri, String localName,
                                        String tagName) throws SAXException {
-                    if (tagName.equalsIgnoreCase(target)) {
-                        mIsTarget = false;
+                    if(mIsComment && tagName.equalsIgnoreCase("comment")) {
                         mSubComments.add(mNewComment);
                         mNewComment = null;
+                        mIsComment = false;
+                    } else if (tagName.equalsIgnoreCase(target)) {
+                        mIsTarget = false;
                     }
                 }
 

@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.risikous.android.model.comment.Comment;
 import com.risikous.android.model.comment.part.Author;
+import com.risikous.android.model.comment.part.ComID;
 import com.risikous.android.model.comment.part.PubID;
 import com.risikous.android.model.comment.part.Text;
 import com.risikous.android.model.comment.part.TimeStamp;
@@ -31,8 +32,10 @@ public class SQLiteHelper_SubComment extends SQLiteOpenHelper {
     private static final String SUBCOMMENTPUBID = "subCommentPubID";
     private static final String SUBCOMMENTTEXT = "subCommentText";
     private static final String SUBCOMMENTTIMESTAMP = "subCommentTimestamp";
+    private static final String SUBCOMMENTCOMID = "subCommentComID";
 
-    private static final String[] COLUMNS = {KEY_ID, SUBCOMMENTAUTHOR, SUBCOMMENTPUBID, SUBCOMMENTTEXT, SUBCOMMENTTIMESTAMP};
+
+    private static final String[] COLUMNS = {KEY_ID, SUBCOMMENTAUTHOR, SUBCOMMENTPUBID, SUBCOMMENTTEXT, SUBCOMMENTTIMESTAMP, SUBCOMMENTCOMID};
 
 
     public SQLiteHelper_SubComment(Context context) {
@@ -50,7 +53,8 @@ public class SQLiteHelper_SubComment extends SQLiteOpenHelper {
                 "subCommentAuthor TEXT, " +
                 "subCommentPubID TEXT, " +
                 "subCommentText TEXT, " +
-                "subCommentTimestamp TEXT)";
+                "subCommentTimestamp TEXT, " +
+                "subCommentComID TEXT)";
 
         db.execSQL(CREATE_SUBCOMMENTS_TABLE);
     }
@@ -76,6 +80,7 @@ public class SQLiteHelper_SubComment extends SQLiteOpenHelper {
         values.put(SUBCOMMENTPUBID, comment.getPubIDDB());
         values.put(SUBCOMMENTTEXT, comment.getTextDB());
         values.put(SUBCOMMENTTIMESTAMP, comment.getTimeStampDB());
+        values.put(SUBCOMMENTCOMID, comment.getComIDDB());
 
         db.insert(TABLE_SUBCOMMENTS, null, values);
         db.close();
@@ -99,6 +104,7 @@ public class SQLiteHelper_SubComment extends SQLiteOpenHelper {
                 comment.setPubID(new PubID(cursor.getString(2)));
                 comment.setText(new Text(cursor.getString(3)));
                 comment.setTimeStamp(new TimeStamp(cursor.getString(4)));
+                comment.setComID(new ComID(cursor.getString(5)));
 
                 subComments.add(comment);
             } while (cursor.moveToNext());
