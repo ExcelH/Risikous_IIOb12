@@ -26,6 +26,7 @@
         android:text="by Excel H."
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/imgLogo"
-        android:gravity="bottom|right" />
+        android:gravity="bottom|right"
+        android:visibility="gone"/>
 
 </RelativeLayout>
